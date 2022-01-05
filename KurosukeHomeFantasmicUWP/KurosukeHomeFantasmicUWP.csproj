@@ -146,22 +146,24 @@
     <Compile Include="Models\FantasmicProject.cs" />
     <Compile Include="Models\JSON\TimelineVideoItemEntity.cs" />
     <Compile Include="Models\JSON\VideoAssetEntity.cs" />
-    <Compile Include="Models\Scene.cs" />
+    <Compile Include="Models\ShowScene.cs" />
     <Compile Include="Models\SQL\RecentProjectEntity.cs" />
     <Compile Include="Models\Timeline\ITimelineItem.cs" />
-    <Compile Include="Models\VideoTimeline.cs" />
+    <Compile Include="Models\Timeline\VideoTimeline.cs" />
     <Compile Include="Models\Timeline\ITimeline.cs" />
     <Compile Include="Models\JSON\ITimelineItemEntity.cs" />
     <Compile Include="Models\Timeline\TimelineVideoItem.cs" />
     <Compile Include="Models\VideoAsset.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\AppGlobalVariables.cs" />
+    <Compile Include="Utils\DBHelpers\SceneAssetHelper.cs" />
     <Compile Include="Utils\DBHelpers\StorageFolderExtention.cs" />
     <Compile Include="Utils\DBHelpers\VideoAssetHelper.cs" />
     <Compile Include="Utils\DebugHelper.cs" />
     <Compile Include="Utils\UIHelpers\StorageThumbnailExtension.cs" />
     <Compile Include="Utils\UIHelpers\WindowLauncher.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\TimelinePages\SceneDetailsTimelinePageViewModel.cs" />
+    <Compile Include="ViewModels\ProjectWorkspace\TimelinePages\SceneListPageViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\VideoAssetListPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\WelcomeScreen\CreateNewProjectPageViewModel.cs" />
@@ -171,6 +173,9 @@
     </Compile>
     <Compile Include="Views\ProjectWorkspace\TimelinePages\SceneDetailsTimelinePage.xaml.cs">
       <DependentUpon>SceneDetailsTimelinePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectWorkspace\TimelinePages\SceneListPage.xaml.cs">
+      <DependentUpon>SceneListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProjectWorkspace\VideoAssetPages\VideoAssetListPage.xaml.cs">
       <DependentUpon>VideoAssetListPage.xaml</DependentUpon>
@@ -245,6 +250,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProjectWorkspace\TimelinePages\SceneDetailsTimelinePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProjectWorkspace\TimelinePages\SceneListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

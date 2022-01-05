@@ -58,6 +58,9 @@
                         Margin="20,0" FontSize="17" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             </Grid>
         </Grid>
-        <muxc:ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"/>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Visibility="{x:Bind ViewModel.LoadingPanelVisibility, Mode=OneWay}">
+            <muxc:ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"/>
+            <TextBlock Text="{x:Bind ViewModel.LoadingMessage, Mode=OneWay}" HorizontalAlignment="Center"/>
+        </StackPanel>
     </Grid>
 </Page>

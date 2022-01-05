@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KurosukeHomeFantasmicUWP.Models
+namespace KurosukeHomeFantasmicUWP.Models.Timeline
 {
     /// <summary>
     /// VideoTimeline is a single timeline combined with one window which can have a target display. (The window will be always placed to a specified display device.)

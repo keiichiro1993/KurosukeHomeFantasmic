@@ -9,15 +9,9 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace
 {
     public class VideoAssetListPageViewModel : ViewModelBase
     {
-        private ObservableCollection<VideoAsset> _VideoAssets;
         public ObservableCollection<VideoAsset> VideoAssets
         {
-            get { return _VideoAssets; }
-            set
-            {
-                _VideoAssets = value;
-                RaisePropertyChanged();
-            }
+            get { return Utils.OnMemoryCache.VideoAssetCache; }
         }
         private VideoAsset _SelectedVideo;
         public VideoAsset SelectedVideo
@@ -26,21 +20,6 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace
             set
             {
                 _SelectedVideo = value;
-            }
-        }
-
-        public async void Init()
-        {
-            if (Utils.OnMemoryCache.VideoAssetCache == null)
-            {
-                VideoAssets = new ObservableCollection<VideoAsset>();
-                var videos = await Utils.AppGlobalVariables.VideoAssetDB.GetVideoAssets();
-                foreach (var videoAssetEntity in videos) { VideoAssets.Add(new VideoAsset(videoAssetEntity)); }
-                Utils.OnMemoryCache.VideoAssetCache = VideoAssets;
-            }
-            else
-            {
-                VideoAssets = Utils.OnMemoryCache.VideoAssetCache;
             }
         }
 

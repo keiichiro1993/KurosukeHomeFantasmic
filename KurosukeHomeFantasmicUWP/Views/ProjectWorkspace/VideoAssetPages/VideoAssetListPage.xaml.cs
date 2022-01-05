@@ -31,7 +31,7 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.VideoAssetPages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            ViewModel.Init();
+            //ViewModel.Init();
         }
 
         private async void AddVideoButton_Click(object sender, RoutedEventArgs e)

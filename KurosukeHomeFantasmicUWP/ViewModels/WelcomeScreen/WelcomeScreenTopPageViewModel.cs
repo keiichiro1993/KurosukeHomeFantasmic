@@ -1,7 +1,9 @@
-﻿using KurosukeHomeFantasmicUWP.Models.SQL;
+﻿using KurosukeHomeFantasmicUWP.Models;
+using KurosukeHomeFantasmicUWP.Models.SQL;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -70,8 +72,19 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
                     Utils.AppGlobalVariables.ProjectFile = file;
                     Utils.AppGlobalVariables.ProjectFolder = await file.GetParentAsync();
 
+                    LoadingMessage = "Loading Video Asset files...";
                     Utils.AppGlobalVariables.AssetsFolder = await Utils.AppGlobalVariables.ProjectFolder.CreateFolderAsync("Assets", Windows.Storage.CreationCollisionOption.OpenIfExists);
                     Utils.AppGlobalVariables.VideoAssetDB = new Utils.DBHelpers.VideoAssetsHelper();
+                    var videoAssets = new ObservableCollection<VideoAsset>();
+                    var videos = await Utils.AppGlobalVariables.VideoAssetDB.GetVideoAssets();
+                    foreach (var videoAssetEntity in videos) { videoAssets.Add(new VideoAsset(videoAssetEntity)); }
+                    Utils.OnMemoryCache.VideoAssetCache = videoAssets;
+
+                    LoadingMessage = "Loading Scene data...";
+                    Utils.AppGlobalVariables.SceneAssetDB = new Utils.DBHelpers.SceneAssetHelper();
+                    Utils.OnMemoryCache.Scenes = new ObservableCollection<ShowScene>(await Utils.AppGlobalVariables.SceneAssetDB.GetSceneAssets());
+
+                    LoadingMessage = "Loading project settings...";
                     using (var projectJsonStream = await file.OpenReadAsync())
                     {
                         Utils.AppGlobalVariables.CurrentProject = await JsonSerializer.DeserializeAsync<Models.FantasmicProject>(projectJsonStream.AsStream());
@@ -80,7 +93,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
             }
             catch (Exception ex)
             {
-                await Utils.DebugHelper.ShowErrorDialog(ex, "プロジェクトを開くことができません。");
+                await Utils.DebugHelper.ShowErrorDialog(ex, "プロジェクトを開くことができません。(" + LoadingMessage + ")");
             }
 
             IsLoading = false;

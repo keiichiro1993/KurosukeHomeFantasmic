@@ -21,7 +21,6 @@ namespace KurosukeHomeFantasmicUWP.Utils.DBHelpers
             if (assetDBFolder == null)
             {
                 assetDBFolder = await AppGlobalVariables.AssetsFolder.CreateFolderAsync(".assetdb", CreationCollisionOption.OpenIfExists);
-                var item = await assetDBFolder.TryGetItemAsync(fileName);
                 if (!await assetDBFolder.FileExists(fileName))
                 {
                     //create file if not exist
@@ -49,6 +48,7 @@ namespace KurosukeHomeFantasmicUWP.Utils.DBHelpers
 
         public async Task<int> AddVideoAsset(VideoAssetEntity entity)
         {
+            await Init();
             videoAssetDBContent.Add(entity);
             var json = JsonSerializer.Serialize(videoAssetDBContent);
             await FileIO.WriteTextAsync(videoAssetDBFile, json);

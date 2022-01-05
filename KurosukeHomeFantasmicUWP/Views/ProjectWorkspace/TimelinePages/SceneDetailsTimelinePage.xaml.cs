@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models.Timeline;
+﻿using KurosukeHomeFantasmicUWP.Models;
+using KurosukeHomeFantasmicUWP.Models.Timeline;
 using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.TimelinePages;
 using System;
 using System.Collections.Generic;
@@ -35,11 +36,12 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.TimelinePages
         {
             base.OnNavigatedTo(e);
             ViewModel.Timelines = new ObservableCollection<Models.Timeline.ITimeline>();
-            var timeline = new ITimeline();
+            var timeline = new VideoTimeline();
             timeline.Id = Guid.NewGuid().ToString();
             timeline.Name = "test timeline 1";
             timeline.Description = "test timeline description";
             timeline.TimelineType = ITimeline.TimelineTypeEnum.Video;
+            timeline.TargetDisplayId = Guid.NewGuid().ToString();
             ViewModel.Timelines.Add(timeline);
         }
     }

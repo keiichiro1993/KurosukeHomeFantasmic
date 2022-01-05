@@ -12,10 +12,12 @@ namespace KurosukeHomeFantasmicUWP.Utils
         public static StorageFile ProjectFile;
         public static StorageFolder AssetsFolder;
         public static VideoAssetsHelper VideoAssetDB;
+        public static SceneAssetHelper SceneAssetDB;
     }
 
     public static class OnMemoryCache
     {
         public static ObservableCollection<VideoAsset> VideoAssetCache; //cache on memory since this holds bitmap images
+        public static ObservableCollection<ShowScene> Scenes;
     }
 }

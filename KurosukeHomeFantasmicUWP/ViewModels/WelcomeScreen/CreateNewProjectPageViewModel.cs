@@ -1,5 +1,6 @@
 ﻿using KurosukeHomeFantasmicUWP.Models;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -67,6 +68,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
         {
             IsCreateButtonEnabled = false;
             IsLoading = true;
+            LoadingMessage = "Preparing new project...";
 
             var project = new FantasmicProject();
             project.Name = ProjectName;
@@ -86,6 +88,18 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
 
                     Utils.AppGlobalVariables.AssetsFolder = await Utils.AppGlobalVariables.ProjectFolder.CreateFolderAsync("Assets", Windows.Storage.CreationCollisionOption.OpenIfExists);
                     Utils.AppGlobalVariables.VideoAssetDB = new Utils.DBHelpers.VideoAssetsHelper();
+                    Utils.OnMemoryCache.VideoAssetCache = new ObservableCollection<VideoAsset>();
+
+                    Utils.AppGlobalVariables.SceneAssetDB = new Utils.DBHelpers.SceneAssetHelper();
+                    Utils.OnMemoryCache.Scenes = new ObservableCollection<ShowScene>();
+
+                    var newScene = new ShowScene();
+                    newScene.Name = "Scene 01";
+                    newScene.Description = "Auto created on project creation.";
+                    newScene.Id = Guid.NewGuid().ToString();
+                    newScene.Timelines = new ObservableCollection<Models.Timeline.ITimeline>();
+                    Utils.OnMemoryCache.Scenes.Add(newScene);
+
                     Utils.AppGlobalVariables.CurrentProject = project;
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.UI.Xaml;
 
 namespace KurosukeHomeFantasmicUWP.ViewModels
 {
@@ -19,6 +20,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels
             {
                 _IsLoading = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged("LoadingPanelVisibility");
             }
         }
 
@@ -31,6 +33,11 @@ namespace KurosukeHomeFantasmicUWP.ViewModels
                 _LoadingMessage = value;
                 RaisePropertyChanged();
             }
+        }
+
+        public Visibility LoadingPanelVisibility
+        {
+            get { return IsLoading ? Visibility.Visible : Visibility.Collapsed; }
         }
     }
 }

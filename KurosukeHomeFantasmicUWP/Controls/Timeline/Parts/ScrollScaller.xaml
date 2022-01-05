@@ -1,0 +1,44 @@
+﻿<UserControl
+    x:Class="KurosukeHomeFantasmicUWP.Controls.Timeline.ScrollScaller"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KurosukeHomeFantasmicUWP.Controls.Timeline"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Height="30"
+    mc:Ignorable="d"
+    d:DesignHeight="50"
+    d:DesignWidth="400">
+
+    <Grid>
+        <Canvas x:Name="scalerCanvas" Height="20" SizeChanged="scalerCanvas_SizeChanged" HorizontalAlignment="Stretch">
+            <Canvas.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Height" Value="15"/>
+                    <Setter Property="Width" Value="15"/>
+                    <Setter Property="CornerRadius" Value="90"/>
+                    <Setter Property="BorderBrush" Value="Gray"/>
+                    <Setter Property="BorderThickness" Value="3"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                </Style>
+            </Canvas.Resources>
+            <Grid Width="{x:Bind ViewModel.Width, Mode=OneWay}" Canvas.Left="{x:Bind ViewModel.Left, Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="AUTO"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="AUTO"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0"
+                        PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
+                        ManipulationMode="TranslateX" ManipulationDelta="ResizeLeftButton_ManipulationDelta"/>
+                <Rectangle Grid.Column="1" Height="10" Fill="Gray" Margin="-3,0.5,-2,0" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                           ManipulationStarted="UserControl_ManipulationStarted" ManipulationCompleted="UserControl_ManipulationCompleted"
+                           ManipulationMode="TranslateX" ManipulationDelta="UserControl_ManipulationDelta"/>
+                <Button Grid.Column="2"
+                        PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
+                        ManipulationMode="TranslateX" ManipulationDelta="ResizeRightButton_ManipulationDelta"/>
+            </Grid>
+        </Canvas>
+    </Grid>
+</UserControl>

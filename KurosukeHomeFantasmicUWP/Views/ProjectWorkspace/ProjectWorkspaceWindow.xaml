@@ -1,0 +1,42 @@
+﻿<Page
+    x:Class="KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.ProjectWorkspaceWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KurosukeHomeFantasmicUWP.Views.ProjectWorkspace"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls="using:KurosukeHomeFantasmicUWP.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="AUTO"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <controls:ProjectMenuTitleBar  Grid.Row="0" Grid.ColumnSpan="3"/>
+
+            <!--video list/preview-->
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Frame x:Name="videoAssetFrame"/>
+            </Grid>
+
+            <toolkit:GridSplitter Grid.Row="1" Grid.Column="1" Width="10" CursorBehavior="ChangeOnSplitterHover" />
+            <toolkit:GridSplitter Grid.Row="2" Grid.ColumnSpan="3" Height="10" CursorBehavior="ChangeOnSplitterHover" />
+
+            <Grid Grid.Row="3" Grid.ColumnSpan="3">
+                <Frame x:Name="timelineFrame"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

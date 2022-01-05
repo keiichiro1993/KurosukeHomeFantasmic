@@ -1,0 +1,38 @@
+﻿<UserControl
+    x:Class="KurosukeHomeFantasmicUWP.Controls.Timeline.TimelineControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KurosukeHomeFantasmicUWP.Controls.Timeline"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid x:Name="rootGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="AUTO"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0" x:Name="timelineHeader"
+                      HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" ZoomMode="Disabled"
+                      ScrollViewer.VerticalScrollMode="Disabled"
+                      ViewChanged="timelineScrollViewer_ViewChanged">
+            <local:ScalableScale x:Name="timelineScale" TotalCanvasDuration="{x:Bind TotalCanvasDuration, Mode=OneWay}"  
+                                 Width="{x:Bind ViewModel.TimelineWidth, Mode=OneWay}"/>
+        </ScrollViewer>
+        <ScrollViewer Grid.Row="1" x:Name="timelineScrollViewer"
+                      HorizontalScrollMode="Auto" HorizontalScrollBarVisibility="Hidden" ZoomMode="Disabled"
+                      ViewChanged="timelineScrollViewer_ViewChanged">
+            <ScrollViewer.Resources>
+                <Style TargetType="local:SingleTimeline">
+                    <Setter Property="Margin" Value="0,5,0,5"/>
+                </Style>
+            </ScrollViewer.Resources>
+            <StackPanel x:Name="timelineParentPanel" Orientation="Vertical" Width="{x:Bind ViewModel.TimelineWidth, Mode=OneWay}" />
+        </ScrollViewer>
+        <local:ScrollScaller Grid.Row="2" x:Name="timelineScroller"
+                             HorizontalAlignment="Stretch" PositionChanged="ScrollScaller_PositionChanged"/>
+    </Grid>
+</UserControl>

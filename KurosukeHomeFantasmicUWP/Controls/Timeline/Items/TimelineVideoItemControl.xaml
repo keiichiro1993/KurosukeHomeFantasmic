@@ -1,0 +1,91 @@
+﻿<UserControl
+    x:Class="KurosukeHomeFantasmicUWP.Controls.Timeline.Items.TimelineVideoItemControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KurosukeHomeFantasmicUWP.Controls.Timeline.Items"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:videoasset="using:KurosukeHomeFantasmicUWP.Controls.VideoAsset"
+    Canvas.Left="{x:Bind VideoItem.Left, Mode=OneWay}"
+    Width="{x:Bind VideoItem.Width, Mode=OneWay}"
+    mc:Ignorable="d"
+    d:DesignHeight="100"
+    d:DesignWidth="200">
+
+    <Grid Background="{StaticResource SkyBlueAcrylicBrush}" CornerRadius="3" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="15"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Column="0" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="3,0,0,3"
+                PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
+                ManipulationMode="TranslateX"
+                ManipulationStarted="UserControl_ManipulationStarted" 
+                ManipulationCompleted="UserControl_ManipulationCompleted" 
+                ManipulationDelta="ResizeStartButton_ManipulationDelta">
+            <FontIcon Glyph="&#xE76F;" FontFamily="Segoe MDL2 Assets" RenderTransformOrigin="0.5,0.5">
+                <FontIcon.RenderTransform>
+                    <RotateTransform Angle="90"/>
+                </FontIcon.RenderTransform>
+            </FontIcon>
+        </Button>
+        <Button Grid.Column="2" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="0,3,3,0"
+                PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
+                ManipulationMode="TranslateX"
+                ManipulationStarted="UserControl_ManipulationStarted" 
+                ManipulationCompleted="UserControl_ManipulationCompleted" 
+                ManipulationDelta="ResizeEndButton_ManipulationDelta">
+            <FontIcon Glyph="&#xE76F;" FontFamily="Segoe MDL2 Assets" RenderTransformOrigin="0.5,0.5">
+                <FontIcon.RenderTransform>
+                    <RotateTransform Angle="90"/>
+                </FontIcon.RenderTransform>
+            </FontIcon>
+        </Button>
+
+        <Grid Grid.Column="1" Background="Transparent"
+              ManipulationMode="TranslateX"
+              ManipulationDelta="UserControl_ManipulationDelta"
+              ManipulationStarted="UserControl_ManipulationStarted"
+              ManipulationCompleted="UserControl_ManipulationCompleted">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="35"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{x:Bind VideoItem.VideoAsset.ThumbnailUri, Mode=OneWay}"/>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <TextBlock Text="{x:Bind VideoItem.VideoAsset.VideoAssetEntity.Name, Mode=OneWay}" FontSize="17"/>
+                        <TextBlock Text="{x:Bind VideoItem.VideoAsset.VideoAssetEntity.FilePath, Mode=OneWay}" FontSize="10"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <ToggleButton HorizontalAlignment="Right" Width="30" Height="30" Padding="0"
+                              IsChecked="{x:Bind VideoItem.Locked, Mode=TwoWay}">
+                    <FontIcon Glyph="&#xE72E;" FontFamily="Segoe MDL2 Assets"/>
+                </ToggleButton>
+            </Grid>
+            <Grid Grid.Row="1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="Trimmed:"/>
+                    <TextBlock Text="{x:Bind VideoItem.VideoStartPosition, Mode=OneWay}"/>
+                    <TextBlock Text="-"/>
+                    <TextBlock Text="{x:Bind VideoItem.VideoEndPosition, Mode=OneWay}"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="2">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                    <TextBlock Text="Start"/>
+                    <TextBlock Text="{x:Bind VideoItem.StartTime, Mode=OneWay}"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                    <TextBlock HorizontalAlignment="Right" Text="End"/>
+                    <TextBlock Text="{x:Bind VideoItem.EndTime, Mode=OneWay}"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

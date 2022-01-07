@@ -31,7 +31,7 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace
         {
             base.OnNavigatedTo(e);
             videoAssetFrame.Navigate(typeof(VideoAssetPages.VideoAssetListPage));
-            timelineFrame.Navigate(typeof(TimelinePages.SceneDetailsTimelinePage));
+            timelineFrame.Navigate(typeof(TimelinePages.SceneListPage));
         }
     }
 }

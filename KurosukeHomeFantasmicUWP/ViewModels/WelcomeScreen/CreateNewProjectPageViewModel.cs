@@ -93,13 +93,6 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
                     Utils.AppGlobalVariables.SceneAssetDB = new Utils.DBHelpers.SceneAssetHelper();
                     Utils.OnMemoryCache.Scenes = new ObservableCollection<ShowScene>();
 
-                    var newScene = new ShowScene();
-                    newScene.Name = "Scene 01";
-                    newScene.Description = "Auto created on project creation.";
-                    newScene.Id = Guid.NewGuid().ToString();
-                    newScene.Timelines = new ObservableCollection<Models.Timeline.ITimeline>();
-                    Utils.OnMemoryCache.Scenes.Add(newScene);
-
                     Utils.AppGlobalVariables.CurrentProject = project;
                 }
             }

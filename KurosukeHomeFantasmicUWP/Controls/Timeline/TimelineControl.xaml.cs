@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 
 // ユーザー コントロールの項目テンプレートについては、https://go.microsoft.com/fwlink/?LinkId=234236 を参照してください
 
@@ -46,16 +47,22 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
 
         private void Timelines_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            AddNewTimelineElements(e.NewItems);
-
-            foreach (var removeItem in e.OldItems)
+            if (e.NewItems != null)
             {
-                var removeElement = from item in timelineParentPanel.Children
-                                    where ((SingleTimeline)item).TimelineData.Id == ((ITimeline)removeItem).Id
-                                    select item;
-                if (removeElement.Any())
+                AddNewTimelineElements(e.NewItems);
+            }
+
+            if (e.OldItems != null)
+            {
+                foreach (var removeItem in e.OldItems)
                 {
-                    foreach (var element in removeElement) { timelineParentPanel.Children.Remove(element); }
+                    var removeElement = from item in timelineParentPanel.Children
+                                        where ((SingleTimeline)item).TimelineData.Id == ((ITimeline)removeItem).Id
+                                        select item;
+                    if (removeElement.Any())
+                    {
+                        foreach (var element in removeElement) { timelineParentPanel.Children.Remove(element); }
+                    }
                 }
             }
         }
@@ -64,8 +71,11 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
         {
             foreach (var item in newItems)
             {
-                var timelineElement = new SingleTimeline();
-                timelineElement.TimelineData = (ITimeline)item;
+                var timelineElement = new SingleTimeline
+                {
+                    TimelineData = (ITimeline)item,
+                    TotalCanvasDuration = TotalCanvasDuration
+                };
                 timelineParentPanel.Children.Add(timelineElement);
             }
         }

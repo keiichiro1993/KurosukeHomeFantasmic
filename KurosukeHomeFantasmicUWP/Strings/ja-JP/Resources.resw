@@ -117,6 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNewSceneContentDialog-DescriptionTitle.Text" xml:space="preserve">
+    <value>説明:</value>
+  </data>
+  <data name="AddNewSceneContentDialog-NameTitle.Text" xml:space="preserve">
+    <value>名前:</value>
+  </data>
+  <data name="AddNewSceneContentDialog.Title" xml:space="preserve">
+    <value>新しいシーン</value>
+  </data>
+  <data name="AddNewTimelineContentDialog-DescriptionTitle.Text" xml:space="preserve">
+    <value>説明:</value>
+  </data>
+  <data name="AddNewTimelineContentDialog-NameTitle.Text" xml:space="preserve">
+    <value>名前:</value>
+  </data>
+  <data name="AddNewTimelineContentDialog-TypeTitle.Text" xml:space="preserve">
+    <value>タイムラインのタイプ:</value>
+  </data>
+  <data name="AddNewTimelineContentDialog.Title" xml:space="preserve">
+    <value>新しいタイムライン</value>
+  </data>
   <data name="NewProjectPage-CreateButtonTitle.Content" xml:space="preserve">
     <value>作成</value>
   </data>

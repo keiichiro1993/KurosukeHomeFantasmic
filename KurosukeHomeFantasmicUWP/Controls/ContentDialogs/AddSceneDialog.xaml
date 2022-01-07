@@ -1,0 +1,40 @@
+﻿<ContentDialog
+    x:Class="KurosukeHomeFantasmicUWP.Controls.ContentDialogs.AddSceneDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KurosukeHomeFantasmicUWP.Controls.ContentDialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Uid="AddNewSceneContentDialog"
+    PrimaryButtonText="Add"
+    SecondaryButtonText="Cancel"
+    IsPrimaryButtonEnabled="{x:Bind ViewModel.IsPrimaryButtonEnabled, Mode=OneWay}"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    <ContentDialog.PrimaryButtonStyle>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource SystemControlBackgroundAccentBrush}"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+    </ContentDialog.PrimaryButtonStyle>
+    <ContentDialog.SecondaryButtonStyle>
+        <Style TargetType="Button">
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+    </ContentDialog.SecondaryButtonStyle>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="AUTO"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch">
+            <TextBlock x:Uid="AddNewSceneContentDialog-NameTitle" />
+            <TextBox Text="{x:Bind ViewModel.Name, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch">
+            <TextBlock x:Uid="AddNewSceneContentDialog-DescriptionTitle"/>
+            <TextBox Text="{x:Bind ViewModel.Description, Mode=TwoWay}"/>
+        </StackPanel>
+    </Grid>
+</ContentDialog>

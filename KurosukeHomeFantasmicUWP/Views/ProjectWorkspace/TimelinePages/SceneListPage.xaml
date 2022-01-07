@@ -4,11 +4,60 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.TimelinePages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:models="using:KurosukeHomeFantasmicUWP.Models" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <controls:DropShadowPanel Grid.Row="0" ShadowOpacity="1" OffsetX="2" OffsetY="2" Color="Black" IsMasked="False"
+                                  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" 
+                    Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="Width" Value="40"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                    <Style TargetType="FontIcon">
+                        <Setter Property="FontSize" Value="25"/>
+                        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Button Click="AddSceneButton_Click">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;"/>
+                </Button>
+            </StackPanel>
+        </controls:DropShadowPanel>
+        <ListView Grid.Row="1" AllowDrop="True" ReorderMode="Enabled" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch"
+                  ItemsSource="{x:Bind ViewModel.Scenes, Mode=OneWay}" SelectionMode="None" 
+                  IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="VerticalContentAlignment"  Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment"  Value="Stretch"/>
+                    <Setter Property="Padding"  Value="0"/>
+                    <Setter Property="Margin"  Value="0,0,1,0"/>
+                    <Setter Property="CanDrag" Value="True"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:ShowScene">
+                    <Grid CornerRadius="3" Background="{StaticResource SkyBlueAcrylicBrush}" VerticalAlignment="Stretch">
+                        <TextBlock Text="{x:Bind Name}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

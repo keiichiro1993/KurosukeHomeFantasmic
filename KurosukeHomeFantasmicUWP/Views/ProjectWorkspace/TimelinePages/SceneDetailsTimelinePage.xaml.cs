@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models;
+﻿using KurosukeHomeFantasmicUWP.Controls.ContentDialogs;
+using KurosukeHomeFantasmicUWP.Models;
 using KurosukeHomeFantasmicUWP.Models.Timeline;
 using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.TimelinePages;
 using System;
@@ -35,14 +36,26 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.TimelinePages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            ViewModel.Timelines = new ObservableCollection<Models.Timeline.ITimeline>();
-            var timeline = new VideoTimeline();
-            timeline.Id = Guid.NewGuid().ToString();
-            timeline.Name = "test timeline 1";
-            timeline.Description = "test timeline description";
-            timeline.TimelineType = ITimeline.TimelineTypeEnum.Video;
-            timeline.TargetDisplayId = Guid.NewGuid().ToString();
-            ViewModel.Timelines.Add(timeline);
+            var scene = e.Parameter as ShowScene;
+            if (scene.Timelines == null)
+            {
+                scene.Timelines = new ObservableCollection<ITimeline>();
+            }
+            ViewModel.Scene = scene;
+        }
+
+        private async void AddTimelineButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new AddTimelineDialog(ViewModel.Scene);
+            await dialog.ShowAsync();
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Frame.CanGoBack)
+            {
+                Frame.GoBack();
+            }
         }
     }
 }

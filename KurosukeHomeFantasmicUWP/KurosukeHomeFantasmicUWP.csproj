@@ -119,6 +119,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ContentDialogs\AddSceneDialog.xaml.cs">
+      <DependentUpon>AddSceneDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ContentDialogs\AddTimelineDialog.xaml.cs">
+      <DependentUpon>AddTimelineDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProjectMenuTitleBar.xaml.cs">
       <DependentUpon>ProjectMenuTitleBar.xaml</DependentUpon>
     </Compile>
@@ -136,6 +142,9 @@
     </Compile>
     <Compile Include="Controls\Timeline\Parts\SingleTimeline.xaml.cs">
       <DependentUpon>SingleTimeline.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Timeline\Parts\TimeSpanTextBox.xaml.cs">
+      <DependentUpon>TimeSpanTextBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Timeline\TimelineControl.xaml.cs">
       <DependentUpon>TimelineControl.xaml</DependentUpon>
@@ -213,6 +222,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\ContentDialogs\AddSceneDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ContentDialogs\AddTimelineDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ProjectMenuTitleBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -234,6 +251,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Timeline\Parts\SingleTimeline.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Timeline\Parts\TimeSpanTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

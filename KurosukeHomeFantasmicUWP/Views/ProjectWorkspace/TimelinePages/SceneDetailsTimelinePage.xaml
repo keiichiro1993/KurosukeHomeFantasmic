@@ -5,11 +5,49 @@
     xmlns:local="using:KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.TimelinePages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:timeline="using:KurosukeHomeFantasmicUWP.Controls.Timeline"
+    xmlns:timeline="using:KurosukeHomeFantasmicUWP.Controls.Timeline" 
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" xmlns:parts="using:KurosukeHomeFantasmicUWP.Controls.Timeline.Parts"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <timeline:TimelineControl Timelines="{x:Bind ViewModel.Timelines, Mode=OneWay}" TotalCanvasDuration="{x:Bind ViewModel.TotalCanvasDuration, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <controls:DropShadowPanel Grid.Row="0" ShadowOpacity="1" OffsetX="2" OffsetY="2" Color="Black" IsMasked="False"
+                                  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="Width" Value="40"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                    <Style TargetType="FontIcon">
+                        <Setter Property="FontSize" Value="25"/>
+                        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="AUTO"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <Button Click="BackButton_Click">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE830;"/>
+                    </Button>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <Button Click="AddTimelineButton_Click" HorizontalAlignment="Right">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;"/>
+                    </Button>
+                    <parts:TimeSpanTextBox TotalCanvasDuration="{x:Bind ViewModel.TotalCanvasDuration, Mode=TwoWay}"
+                                       HorizontalAlignment="Right"/>
+                </StackPanel>
+            </Grid>
+        </controls:DropShadowPanel>
+        <timeline:TimelineControl Grid.Row="1" Timelines="{x:Bind ViewModel.Scene.Timelines, Mode=OneWay}" TotalCanvasDuration="{x:Bind ViewModel.TotalCanvasDuration, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </Page>

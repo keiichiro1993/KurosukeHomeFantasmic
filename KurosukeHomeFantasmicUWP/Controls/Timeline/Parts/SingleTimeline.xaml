@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="800">
-    <toolkit:DropShadowPanel ShadowOpacity="1" OffsetX="2" OffsetY="2" Color="Black" IsMasked="True"
+    <toolkit:DropShadowPanel ShadowOpacity="1" OffsetX="2" OffsetY="2" Color="Black" IsMasked="False"
                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                              Height="100">
         <Grid SizeChanged="Grid_SizeChanged">

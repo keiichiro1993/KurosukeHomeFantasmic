@@ -44,7 +44,12 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.VideoAssetPages
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Frame.Navigate(typeof(VideoAssetPages.VideoPlaybackPage), ViewModel.SelectedVideo);
+            //Frame.Navigate(typeof(VideoAssetPages.VideoPlaybackPage), ViewModel.SelectedVideo);
+        }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(VideoAssetPages.VideoPlaybackPage), e.ClickedItem);
         }
     }
 }

@@ -19,13 +19,13 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.TimelinePages
             }
         }
 
-        private ObservableCollection<ITimeline> _Timelines;
-        public ObservableCollection<ITimeline> Timelines
+        private ShowScene _Scene;
+        public ShowScene Scene
         {
-            get { return _Timelines; }
+            get { return _Scene; }
             set
             {
-                _Timelines = value;
+                _Scene = value;
                 RaisePropertyChanged();
             }
         }

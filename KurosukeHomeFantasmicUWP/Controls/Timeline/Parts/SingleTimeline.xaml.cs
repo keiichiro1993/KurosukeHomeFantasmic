@@ -85,6 +85,12 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
 
         private void SingleTimeline_Loaded(object sender, RoutedEventArgs e)
         {
+            foreach(var item in TimelineData.TimelineItems) 
+            {
+                var control = new TimelineVideoItemControl();
+                control.VideoItem = (TimelineVideoItem)item;
+                singleTimeline.Children.Add(control);
+            }
             TimelineData.TimelineItems.CollectionChanged += TimelineItems_CollectionChanged;
         }
 

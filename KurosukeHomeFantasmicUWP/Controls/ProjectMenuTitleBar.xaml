@@ -28,7 +28,7 @@
                             <KeyboardAccelerator Modifiers="Control" Key="O"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    <MenuFlyoutItem Text="Save">
+                    <MenuFlyoutItem Text="Save" Click="SaveMenuFlyoutItem_Click">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="S"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
@@ -40,7 +40,7 @@
                     </MenuFlyoutItem>
                 </muxc:MenuBarItem>
 
-                <muxc:MenuBarItem Title="Edit">
+                <!--<muxc:MenuBarItem Title="Edit">
                     <MenuFlyoutItem Text="Undo">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Modifiers="Control" Key="Z"/>
@@ -61,7 +61,7 @@
                             <KeyboardAccelerator Modifiers="Control" Key="V"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                </muxc:MenuBarItem>
+                </muxc:MenuBarItem>-->
 
                 <muxc:MenuBarItem Title="Help">
                     <MenuFlyoutItem Text="About">

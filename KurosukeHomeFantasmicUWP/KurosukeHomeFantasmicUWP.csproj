@@ -125,6 +125,9 @@
     <Compile Include="Controls\ContentDialogs\AddTimelineDialog.xaml.cs">
       <DependentUpon>AddTimelineDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ContentDialogs\SaveDialog.xaml.cs">
+      <DependentUpon>SaveDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProjectMenuTitleBar.xaml.cs">
       <DependentUpon>ProjectMenuTitleBar.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,7 @@
     <Compile Include="Utils\AppGlobalVariables.cs" />
     <Compile Include="Utils\DBHelpers\SceneAssetHelper.cs" />
     <Compile Include="Utils\DBHelpers\StorageFolderExtention.cs" />
+    <Compile Include="Utils\DBHelpers\TimeSpanJsonConverter.cs" />
     <Compile Include="Utils\DBHelpers\VideoAssetHelper.cs" />
     <Compile Include="Utils\DebugHelper.cs" />
     <Compile Include="Utils\UIHelpers\StorageThumbnailExtension.cs" />
@@ -227,6 +231,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ContentDialogs\AddTimelineDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ContentDialogs\SaveDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

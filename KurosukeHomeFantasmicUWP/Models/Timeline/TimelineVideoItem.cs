@@ -142,18 +142,11 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         }
 
         // from saved json
-        public async Task Init(TimelineVideoItemEntity entity)
+        public async Task Init(ITimelineItemEntity entity)
         {
-            VideoAssetId = entity.VideoAssetId;
-            StartTime = entity.StartTime;
-            VideoStartPosition = entity.VideoStartPosition;
-            VideoEndPosition = entity.VideoEndPosition;
-            Locked = entity.Locked;
-
             var videoAssets = from item in Utils.OnMemoryCache.VideoAssetCache
-                             where item.VideoAssetEntity.Id == VideoAssetId
-                             select item;
-
+                             where item.VideoAssetEntity.Id == entity.VideoAssetId
+                              select item;
             if (videoAssets.Any())
             {
                 VideoAsset = videoAssets.First();
@@ -164,8 +157,14 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
             }
             else
             {
-                throw new InvalidOperationException("Video Asset with ID " + VideoAssetId + " not found in Asset List.");
+                throw new InvalidOperationException("Video Asset with ID " + entity.VideoAssetId + " not found in Asset List.");
             }
+
+            VideoAssetId = entity.VideoAssetId;
+            _StartTime = entity.StartTime;
+            _VideoStartPosition = entity.VideoStartPosition;
+            _VideoEndPosition = entity.VideoEndPosition;
+            Locked = entity.Locked;
         }
 
         public TimelineVideoItemEntity ToEntity()

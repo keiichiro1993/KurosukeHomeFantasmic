@@ -11,5 +11,8 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
     {
         public TimeSpan StartTime { get; set; }
         public bool Locked { get; set; }
+        public string VideoAssetId { get; set; }
+        public TimeSpan VideoStartPosition { get; set; }
+        public TimeSpan VideoEndPosition { get; set; }
     }
 }

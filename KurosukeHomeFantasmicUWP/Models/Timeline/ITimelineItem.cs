@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KurosukeHomeFantasmicUWP.Models.JSON;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
     {
         TimeSpan TotalCanvasDuration { get; set; }
         double CanvasWidth { get; set; }
+
+        TimelineVideoItemEntity ToEntity();
     }
 }

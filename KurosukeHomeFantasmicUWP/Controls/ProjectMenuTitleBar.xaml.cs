@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KurosukeHomeFantasmicUWP.Controls.ContentDialogs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,6 +32,12 @@ namespace KurosukeHomeFantasmicUWP.Controls
             titleTextBlock.Margin = new Thickness(-(menuWidth + 27), 0, 0, 0);
 
             Window.Current.SetTitleBar(titleGrid);
+        }
+
+        private async void SaveMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            var saveDialog = new SaveDialog();
+            await saveDialog.ShowAsync();
         }
     }
 }

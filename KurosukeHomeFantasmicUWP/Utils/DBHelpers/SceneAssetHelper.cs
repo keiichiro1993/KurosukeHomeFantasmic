@@ -16,6 +16,13 @@ namespace KurosukeHomeFantasmicUWP.Utils.DBHelpers
         string fileName = "scenes.db";
         StorageFile sceneAssetDBFile;
         List<ShowScene> sceneAssetsDBContent;
+        JsonSerializerOptions serializerOptions = new JsonSerializerOptions()
+        {
+            Converters =
+            {
+                new TimeSpanJsonConverter()
+            }
+        };
 
         private async Task Init()
         {
@@ -34,7 +41,15 @@ namespace KurosukeHomeFantasmicUWP.Utils.DBHelpers
                     sceneAssetDBFile = await assetDBFolder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
                     using (var jsonStream = await sceneAssetDBFile.OpenReadAsync())
                     {
-                        sceneAssetsDBContent = await JsonSerializer.DeserializeAsync<List<ShowScene>>(jsonStream.AsStream());
+                        sceneAssetsDBContent = await JsonSerializer.DeserializeAsync<List<ShowScene>>(jsonStream.AsStream(), serializerOptions);
+                    }
+                }
+
+                foreach (var scene in sceneAssetsDBContent)
+                {
+                    foreach (var timeline in scene.Timelines)
+                    {
+                        await timeline.DecodeTimelineItemEntities();
                     }
                 }
             }
@@ -57,7 +72,7 @@ namespace KurosukeHomeFantasmicUWP.Utils.DBHelpers
         {
             using (var stream = await sceneAssetDBFile.OpenStreamForWriteAsync())
             {
-                await JsonSerializer.SerializeAsync(stream, scenes);
+                await JsonSerializer.SerializeAsync(stream, scenes, serializerOptions);
             }
         }
     }

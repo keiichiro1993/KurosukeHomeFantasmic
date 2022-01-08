@@ -30,7 +30,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                     if (TimelineType == TimelineTypeEnum.Video)
                     {
                         var item = new TimelineVideoItem();
-                        await item.Init((TimelineVideoItemEntity)entity);
+                        await item.Init(entity);
                         TimelineItems.Add(item);
                     }
                     else
@@ -39,6 +39,12 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                     }
                 }
             }
+        }
+
+        public void EncodeTimelineItemToEntity()
+        {
+            TimelineItemEntities = new List<ITimelineItemEntity>();
+            foreach (var entity in TimelineItems) { TimelineItemEntities.Add(entity.ToEntity()); }
         }
     }
 }

@@ -5,6 +5,7 @@
     xmlns:local="using:KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.VideoAssetPages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -13,7 +14,7 @@
             <RowDefinition Height="AUTO"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Stretch"  ui:Effects.Shadow="{StaticResource ToolbarShadow}">
             <StackPanel.Resources>
                 <Style TargetType="Button">
                     <Setter Property="Height" Value="40"/>

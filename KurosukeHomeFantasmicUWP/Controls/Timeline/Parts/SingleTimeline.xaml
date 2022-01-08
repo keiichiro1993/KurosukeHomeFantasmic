@@ -6,17 +6,38 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="800">
-    <toolkit:DropShadowPanel ShadowOpacity="1" OffsetX="2" OffsetY="2" Color="Black" IsMasked="False"
-                             HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                             Height="100">
-        <Grid SizeChanged="Grid_SizeChanged">
+
+    <Grid SizeChanged="Grid_SizeChanged">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="AUTO"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="0" Width="{x:Bind ViewModel.ScrollViewerHorizontalOffset, Mode=OneWay}" Fill="Transparent"/>
+            <toolkit:DropShadowPanel Grid.Column="1" ShadowOpacity="0.7" OffsetX="3" OffsetY="-2" Color="Black" IsMasked="False"
+                                  HorizontalAlignment="Left" VerticalContentAlignment="Stretch" Margin="10,0">
+                <StackPanel Orientation="Horizontal" CornerRadius="3,3,0,0" VerticalAlignment="Stretch"
+                            Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+                    <TextBlock Text="{x:Bind ViewModel.TimelineData.Name, Mode=OneWay}" VerticalAlignment="Center" Margin="10,0"/>
+                    <TextBlock Text="-" VerticalAlignment="Center"/>
+                    <TextBlock Text="{x:Bind ViewModel.TimelineData.TimelineType, Mode=OneWay}" VerticalAlignment="Center" Margin="10,0"/>
+                </StackPanel>
+            </toolkit:DropShadowPanel>
+        </Grid>
+        <Grid Grid.Row="1" ui:Effects.Shadow="{StaticResource CommonShadow}">
             <Canvas x:Name="singleTimeline" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                 AllowDrop="True" DragOver="singleTimeline_DragOver" Drop="singleTimeline_Drop">
-                <Grid x:Name="singleTimelineBackground" Background="{StaticResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <Grid x:Name="singleTimelineBackground" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent"/>
             </Canvas>
         </Grid>
-    </toolkit:DropShadowPanel>
+    </Grid>
 </UserControl>

@@ -74,7 +74,8 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
                 var timelineElement = new SingleTimeline
                 {
                     TimelineData = (ITimeline)item,
-                    TotalCanvasDuration = TotalCanvasDuration
+                    TotalCanvasDuration = TotalCanvasDuration,
+                    ScrollViewerHorizontalOffset = timelineScrollViewer.HorizontalOffset
                 };
                 timelineParentPanel.Children.Add(timelineElement);
             }
@@ -108,19 +109,25 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
 
         private void timelineScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
+            var offset = ((ScrollViewer)sender).HorizontalOffset;
             if (sender == timelineHeader)
             {
                 if (((ScrollViewer)sender).HorizontalOffset != timelineScrollViewer.HorizontalOffset)
                 {
-                    timelineScrollViewer.ChangeView(((ScrollViewer)sender).HorizontalOffset, null, null, true);
+                    timelineScrollViewer.ChangeView(offset, null, null, true);
                 }
             }
             else
             {
                 if (((ScrollViewer)sender).HorizontalOffset != timelineHeader.HorizontalOffset)
                 {
-                    timelineHeader.ChangeView(((ScrollViewer)sender).HorizontalOffset, null, null, true);
+                    timelineHeader.ChangeView(offset, null, null, true);
                 }
+            }
+
+            foreach (var item in timelineParentPanel.Children)
+            {
+                ((SingleTimeline)item).ScrollViewerHorizontalOffset = offset;
             }
         }
     }

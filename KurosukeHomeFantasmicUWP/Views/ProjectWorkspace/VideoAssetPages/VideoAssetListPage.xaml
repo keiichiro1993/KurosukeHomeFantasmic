@@ -18,27 +18,24 @@
                 <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <controls:DropShadowPanel Grid.Row="0" ShadowOpacity="1" OffsetX="2" OffsetY="2" Color="Black" IsMasked="False"
-                                      HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                <StackPanel x:Name="menuPanel" Orientation="Horizontal" HorizontalAlignment="Stretch"
-                        Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-                    <StackPanel.Resources>
-                        <Style TargetType="Button">
-                            <Setter Property="Height" Value="40"/>
-                            <Setter Property="Width" Value="40"/>
-                            <Setter Property="Padding" Value="0"/>
-                            <Setter Property="CornerRadius" Value="3"/>
-                        </Style>
-                        <Style TargetType="FontIcon">
-                            <Setter Property="FontSize" Value="25"/>
-                            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-                        </Style>
-                    </StackPanel.Resources>
-                    <Button Click="AddVideoButton_Click">
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;"/>
-                    </Button>
-                </StackPanel>
-            </controls:DropShadowPanel>
+            <StackPanel Grid.Row="0" x:Name="menuPanel" Orientation="Horizontal" HorizontalAlignment="Stretch"
+                        ui:Effects.Shadow="{StaticResource ToolbarShadow}">
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="Width" Value="40"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                    <Style TargetType="FontIcon">
+                        <Setter Property="FontSize" Value="25"/>
+                        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Button Click="AddVideoButton_Click">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;"/>
+                </Button>
+            </StackPanel>
             <ListView Grid.Row="1" SelectionMode="Single" 
                       SelectionChanged="ListView_SelectionChanged"
                       IsItemClickEnabled="True" ItemClick="ListView_ItemClick"

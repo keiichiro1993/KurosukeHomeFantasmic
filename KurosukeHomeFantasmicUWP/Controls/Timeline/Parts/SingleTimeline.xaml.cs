@@ -23,12 +23,14 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
 {
     public sealed partial class SingleTimeline : UserControl
     {
+        SingleTimelineViewModel ViewModel { get; set; } = new SingleTimelineViewModel();
         public SingleTimeline()
         {
             this.InitializeComponent();
             this.Loaded += SingleTimeline_Loaded;
         }
 
+        #region bindable properties
         public ITimeline TimelineData
         {
             get => (ITimeline)GetValue(TimelineDataProperty);
@@ -37,7 +39,13 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
 
         public static readonly DependencyProperty TimelineDataProperty =
           DependencyProperty.Register(nameof(TimelineData), typeof(ITimeline), typeof(SingleTimeline),
-              new PropertyMetadata(null, null));
+              new PropertyMetadata(null, TimelineDataChanged));
+
+        private static void TimelineDataChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var instance = (SingleTimeline)d;
+            instance.ViewModel.TimelineData = e.NewValue as ITimeline;
+        }
 
         public TimeSpan TotalCanvasDuration
         {
@@ -57,6 +65,23 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
                 item.TotalCanvasDuration = (TimeSpan)e.NewValue;
             }
         }
+
+        public double ScrollViewerHorizontalOffset
+        {
+            get => (double)GetValue(HorizontalOffsetProperty);
+            set => SetValue(HorizontalOffsetProperty, value);
+        }
+
+        public static readonly DependencyProperty HorizontalOffsetProperty =
+          DependencyProperty.Register(nameof(ScrollViewerHorizontalOffset), typeof(double), typeof(SingleTimeline),
+              new PropertyMetadata(null, HorizontalOffsetChanged));
+
+        private static void HorizontalOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var instance = (SingleTimeline)d;
+            instance.ViewModel.ScrollViewerHorizontalOffset = (double)e.NewValue;
+        }
+        #endregion
 
         private void SingleTimeline_Loaded(object sender, RoutedEventArgs e)
         {
@@ -126,6 +151,31 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
             foreach (var item in TimelineData.TimelineItems)
             {
                 item.CanvasWidth = grid.ActualWidth;
+            }
+        }
+    }
+
+    public class SingleTimelineViewModel : ViewModels.ViewModelBase
+    {
+        private ITimeline _TimelineData;
+        public ITimeline TimelineData
+        {
+            get { return _TimelineData; }
+            set
+            {
+                _TimelineData = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private double _ScrollViewerHorizontalOffset;
+        public double ScrollViewerHorizontalOffset
+        {
+            get { return _ScrollViewerHorizontalOffset; }
+            set
+            {
+                _ScrollViewerHorizontalOffset = value;
+                RaisePropertyChanged();
             }
         }
     }

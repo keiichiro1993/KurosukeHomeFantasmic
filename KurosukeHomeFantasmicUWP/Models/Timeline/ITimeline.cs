@@ -20,6 +20,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
 
         [JsonIgnore]
         public ObservableCollection<ITimelineItem> TimelineItems { get; set; } = new ObservableCollection<ITimelineItem>();
+
         public async Task DecodeTimelineItemEntities()
         {
             if (TimelineItemEntities != null)

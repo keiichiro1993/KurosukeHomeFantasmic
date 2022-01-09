@@ -14,7 +14,6 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
     public sealed partial class TimelineControl : UserControl
     {
         public TimelineControlViewModel ViewModel { get; set; } = new TimelineControlViewModel();
-        //public ObservableCollection<ITimeline> Timelines { get; set; } = new ObservableCollection<ITimeline>();
         public TimelineControl()
         {
             this.InitializeComponent();
@@ -136,8 +135,9 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
         // Manipulations
         private void UserControl_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
         {
-                var x = e.Delta.Translation.X;
-                CurrentPosition += TotalCanvasDuration * (x / ViewModel.TimelineWidth);
+            var x = e.Delta.Translation.X;
+            var newPosition = CurrentPosition + TotalCanvasDuration * (x / ViewModel.TimelineWidth);
+            CurrentPosition = newPosition < TimeSpan.Zero ? TimeSpan.Zero : newPosition > TotalCanvasDuration ? TotalCanvasDuration : newPosition;
         }
     }
 

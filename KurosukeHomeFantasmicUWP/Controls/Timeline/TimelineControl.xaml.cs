@@ -26,6 +26,22 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
             ViewModel.TimelineWidth = rootGrid.ActualWidth;
         }
 
+        public TimeSpan CurrentPosition
+        {
+            get => (TimeSpan)GetValue(CurrentPositionProperty);
+            set => SetValue(CurrentPositionProperty, value);
+        }
+
+        public static readonly DependencyProperty CurrentPositionProperty =
+          DependencyProperty.Register(nameof(CurrentPosition), typeof(TimeSpan), typeof(TimelineControl),
+              new PropertyMetadata(null, CurrentPositionChanged));
+
+        private static void CurrentPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var timelineControl = (TimelineControl)d;
+            timelineControl.ViewModel.CurrentPosition = (TimeSpan)e.NewValue;
+        }
+
         public ObservableCollection<ITimeline> Timelines
         {
             get => (ObservableCollection<ITimeline>)GetValue(TimelinesProperty);
@@ -104,31 +120,24 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
         {
             ViewModel.TimelineWidth = rootGrid.ActualWidth * args.Scale;
             timelineScrollViewer.ChangeView(ViewModel.TimelineWidth * args.CurrentPosition, null, null);
-            timelineHeader.ChangeView(ViewModel.TimelineWidth * args.CurrentPosition, null, null);
+            //timelineHeader.ChangeView(ViewModel.TimelineWidth * args.CurrentPosition, null, null);
         }
 
         private void timelineScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             var offset = ((ScrollViewer)sender).HorizontalOffset;
-            if (sender == timelineHeader)
-            {
-                if (((ScrollViewer)sender).HorizontalOffset != timelineScrollViewer.HorizontalOffset)
-                {
-                    timelineScrollViewer.ChangeView(offset, null, null, true);
-                }
-            }
-            else
-            {
-                if (((ScrollViewer)sender).HorizontalOffset != timelineHeader.HorizontalOffset)
-                {
-                    timelineHeader.ChangeView(offset, null, null, true);
-                }
-            }
 
             foreach (var item in timelineParentPanel.Children)
             {
                 ((SingleTimeline)item).ScrollViewerHorizontalOffset = offset;
             }
+        }
+
+        // Manipulations
+        private void UserControl_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
+        {
+                var x = e.Delta.Translation.X;
+                CurrentPosition += TotalCanvasDuration * (x / ViewModel.TimelineWidth);
         }
     }
 
@@ -141,6 +150,17 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
             set
             {
                 _TimelineWidth = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private TimeSpan _CurrentPosition;
+        public TimeSpan CurrentPosition
+        {
+            get { return _CurrentPosition; }
+            set
+            {
+                _CurrentPosition = value;
                 RaisePropertyChanged();
             }
         }

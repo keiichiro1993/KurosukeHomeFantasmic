@@ -19,6 +19,17 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.TimelinePages
             }
         }
 
+        private TimeSpan _CurrentPosition = TimeSpan.Zero;
+        public TimeSpan CurrentPosition
+        {
+            get { return _CurrentPosition; }
+            set
+            {
+                _CurrentPosition = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private ShowScene _Scene;
         public ShowScene Scene
         {

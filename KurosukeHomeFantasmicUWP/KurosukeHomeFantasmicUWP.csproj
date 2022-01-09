@@ -134,6 +134,9 @@
     <Compile Include="Controls\Timeline\Items\TimelineVideoItemControl.xaml.cs">
       <DependentUpon>TimelineVideoItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Timeline\Parts\CurrentPositionArrow.xaml.cs">
+      <DependentUpon>CurrentPositionArrow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Timeline\Parts\ScalableScale.xaml.cs">
       <DependentUpon>ScalableScale.xaml</DependentUpon>
     </Compile>
@@ -243,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Timeline\Items\TimelineVideoItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Timeline\Parts\CurrentPositionArrow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

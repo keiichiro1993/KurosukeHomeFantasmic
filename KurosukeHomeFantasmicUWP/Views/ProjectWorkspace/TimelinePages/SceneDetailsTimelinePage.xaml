@@ -39,13 +39,18 @@
                 </Button>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Stretch">
-                <Button Click="AddTimelineButton_Click" HorizontalAlignment="Right">
+                <Button Click="AddTimelineButton_Click" HorizontalAlignment="Right" Margin="0,0,5,0">
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;"/>
                 </Button>
+                <parts:TimeSpanTextBox TotalCanvasDuration="{x:Bind ViewModel.CurrentPosition, Mode=TwoWay}"
+                                       HorizontalAlignment="Right" Margin="0,0,5,0"/>
                 <parts:TimeSpanTextBox TotalCanvasDuration="{x:Bind ViewModel.TotalCanvasDuration, Mode=TwoWay}"
                                        HorizontalAlignment="Right"/>
             </StackPanel>
         </Grid>
-        <timeline:TimelineControl Grid.Row="1" Timelines="{x:Bind ViewModel.Scene.Timelines, Mode=OneWay}" TotalCanvasDuration="{x:Bind ViewModel.TotalCanvasDuration, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <timeline:TimelineControl Grid.Row="1" Timelines="{x:Bind ViewModel.Scene.Timelines, Mode=OneWay}" 
+                                  TotalCanvasDuration="{x:Bind ViewModel.TotalCanvasDuration, Mode=OneWay}" 
+                                  CurrentPosition="{x:Bind ViewModel.CurrentPosition, Mode=TwoWay}"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </Page>

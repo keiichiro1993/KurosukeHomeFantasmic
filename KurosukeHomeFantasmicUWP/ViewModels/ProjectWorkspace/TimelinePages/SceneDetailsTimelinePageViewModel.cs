@@ -8,6 +8,8 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.TimelinePages
 {
     public class SceneDetailsTimelinePageViewModel : ViewModelBase
     {
+        public ProjectWorkspaceViewModel GlobalViewModel { get { return Utils.AppGlobalVariables.GlobalViewModel; } }
+
         private TimeSpan _TotalCanvasDuration = new TimeSpan(0, 15, 0);
         public TimeSpan TotalCanvasDuration
         {
@@ -15,17 +17,6 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.TimelinePages
             set
             {
                 _TotalCanvasDuration = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private TimeSpan _CurrentPosition = TimeSpan.Zero;
-        public TimeSpan CurrentPosition
-        {
-            get { return _CurrentPosition; }
-            set
-            {
-                _CurrentPosition = value;
                 RaisePropertyChanged();
             }
         }

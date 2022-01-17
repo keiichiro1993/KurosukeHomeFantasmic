@@ -1,5 +1,6 @@
 ﻿using KurosukeHomeFantasmicUWP.Models;
 using KurosukeHomeFantasmicUWP.Utils.DBHelpers;
+using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace;
 using System.Collections.ObjectModel;
 using Windows.Storage;
 
@@ -13,6 +14,8 @@ namespace KurosukeHomeFantasmicUWP.Utils
         public static StorageFolder AssetsFolder;
         public static VideoAssetsHelper VideoAssetDB;
         public static SceneAssetHelper SceneAssetDB;
+
+        public static ProjectWorkspaceViewModel GlobalViewModel;
     }
 
     public static class OnMemoryCache

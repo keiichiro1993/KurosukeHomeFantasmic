@@ -30,8 +30,15 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            if (Utils.AppGlobalVariables.GlobalViewModel == null)
+            {
+                Utils.AppGlobalVariables.GlobalViewModel = new ViewModels.ProjectWorkspace.ProjectWorkspaceViewModel();
+            }
+
             videoAssetFrame.Navigate(typeof(VideoAssetPages.VideoAssetListPage));
             timelineFrame.Navigate(typeof(TimelinePages.SceneListPage));
+            previewFrame.Navigate(typeof(PreviewPages.PreviewPage));
         }
     }
 }

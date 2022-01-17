@@ -32,6 +32,11 @@
             </Grid>
 
             <toolkit:GridSplitter Grid.Row="1" Grid.Column="1" Width="10" CursorBehavior="ChangeOnSplitterHover" />
+
+            <Grid Grid.Row="1" Grid.Column="2">
+                <Frame x:Name="previewFrame"/>
+            </Grid>
+
             <toolkit:GridSplitter Grid.Row="2" Grid.ColumnSpan="3" Height="10" CursorBehavior="ChangeOnSplitterHover" />
 
             <Grid Grid.Row="3" Grid.ColumnSpan="3">

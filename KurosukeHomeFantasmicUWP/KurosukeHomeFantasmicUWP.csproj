@@ -128,6 +128,12 @@
     <Compile Include="Controls\ContentDialogs\SaveDialog.xaml.cs">
       <DependentUpon>SaveDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Preview\VideoTimelinePreviewChildControl.xaml.cs">
+      <DependentUpon>VideoTimelinePreviewChildControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Preview\VideoTimelinePreviewControl.xaml.cs">
+      <DependentUpon>VideoTimelinePreviewControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProjectMenuTitleBar.xaml.cs">
       <DependentUpon>ProjectMenuTitleBar.xaml</DependentUpon>
     </Compile>
@@ -178,12 +184,17 @@
     <Compile Include="Utils\DebugHelper.cs" />
     <Compile Include="Utils\UIHelpers\StorageThumbnailExtension.cs" />
     <Compile Include="Utils\UIHelpers\WindowLauncher.cs" />
+    <Compile Include="ViewModels\ProjectWorkspace\PreviewPages\PreviewPageViewModel.cs" />
+    <Compile Include="ViewModels\ProjectWorkspace\ProjectWorkspaceViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\TimelinePages\SceneDetailsTimelinePageViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\TimelinePages\SceneListPageViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\VideoAssetListPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\WelcomeScreen\CreateNewProjectPageViewModel.cs" />
     <Compile Include="ViewModels\WelcomeScreen\WelcomeScreenTopPageViewModel.cs" />
+    <Compile Include="Views\ProjectWorkspace\PreviewPages\PreviewPage.xaml.cs">
+      <DependentUpon>PreviewPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProjectWorkspace\ProjectWorkspaceWindow.xaml.cs">
       <DependentUpon>ProjectWorkspaceWindow.xaml</DependentUpon>
     </Compile>
@@ -241,6 +252,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Preview\VideoTimelinePreviewChildControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Preview\VideoTimelinePreviewControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ProjectMenuTitleBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -278,6 +297,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\VideoAsset\VideoAssetListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProjectWorkspace\PreviewPages\PreviewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

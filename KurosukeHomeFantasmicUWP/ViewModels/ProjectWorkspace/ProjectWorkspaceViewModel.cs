@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KurosukeHomeFantasmicUWP.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,6 +42,18 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace
                 }
             }
         }
+
+        private ShowScene _CurrentScene;
+        public ShowScene CurrentScene
+        {
+            get { return _CurrentScene; }
+            set
+            {
+                _CurrentScene = value;
+                RaisePropertyChanged();
+            }
+        }
+
 
         private TimeSpan period = TimeSpan.FromMilliseconds(80);
         private DateTime? playStartTime = null;

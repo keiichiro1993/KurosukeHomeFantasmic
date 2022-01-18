@@ -13,8 +13,6 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.PreviewPages
     {
         public ProjectWorkspaceViewModel GlobalViewModel { get { return Utils.AppGlobalVariables.GlobalViewModel; } }
 
-        public ObservableCollection<Timeline> Timelines { get { return Utils.OnMemoryCache.Scenes.First().Timelines; } }
-
         private Visibility _PlayButtonVisibility = Visibility.Visible;
         public Visibility PlayButtonVisibility
         {

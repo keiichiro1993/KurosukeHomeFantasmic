@@ -17,7 +17,7 @@
             <RowDefinition Height="AUTO"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <ListView ItemsSource="{x:Bind ViewModel.Timelines, Mode=OneWay}">
+            <ListView ItemsSource="{x:Bind ViewModel.GlobalViewModel.CurrentScene.Timelines, Mode=OneWay}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <controls:WrapPanel Padding="0,0,0,45" Margin="0" />

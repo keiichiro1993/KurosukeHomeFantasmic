@@ -42,6 +42,13 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.TimelinePages
                 scene.Timelines = new ObservableCollection<Timeline>();
             }
             ViewModel.Scene = scene;
+            Utils.AppGlobalVariables.GlobalViewModel.CurrentScene = scene;
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            Utils.AppGlobalVariables.GlobalViewModel.CurrentScene = null;
         }
 
         private async void AddTimelineButton_Click(object sender, RoutedEventArgs e)

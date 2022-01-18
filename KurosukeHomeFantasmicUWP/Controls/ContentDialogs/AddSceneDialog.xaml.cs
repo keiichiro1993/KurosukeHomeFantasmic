@@ -35,7 +35,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             newScene.Name = ViewModel.Name;
             newScene.Description = ViewModel.Description;
             newScene.Id = Guid.NewGuid().ToString();
-            newScene.Timelines = new ObservableCollection<Models.Timeline.ITimeline>();
+            newScene.Timelines = new ObservableCollection<Models.Timeline.Timeline>();
             Utils.OnMemoryCache.Scenes.Add(newScene);
         }
 

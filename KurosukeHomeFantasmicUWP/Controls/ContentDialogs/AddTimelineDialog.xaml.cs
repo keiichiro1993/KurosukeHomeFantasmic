@@ -35,12 +35,12 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             switch (ViewModel.SelectedType)
             {
                 case "Video":
-                    var newTimeline = new VideoTimeline
+                    var newTimeline = new Models.Timeline.Timeline
                     {
                         Id = Guid.NewGuid().ToString(),
                         Name = ViewModel.Name,
                         Description = ViewModel.Description,
-                        TimelineType = (ITimeline.TimelineTypeEnum)Enum.Parse(typeof(ITimeline.TimelineTypeEnum), ViewModel.SelectedType),
+                        TimelineType = (Models.Timeline.Timeline.TimelineTypeEnum)Enum.Parse(typeof(Models.Timeline.Timeline.TimelineTypeEnum), ViewModel.SelectedType),
                         TimelineItems = new ObservableCollection<ITimelineItem>(),
                         TargetDisplayId = Guid.NewGuid().ToString()
                     };

@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Media.Core;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.UI.Xaml;
@@ -124,6 +125,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
 
         public bool Locked { get; set; }
 
+        public MediaSource VideoMediaSource { get; set; }
 
         // newly added video
         public async Task Init(VideoAsset videoAsset)
@@ -133,6 +135,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
             _VideoAsset = videoAsset;
             VideoAssetId = videoAsset.VideoAssetEntity.Id;
             videoFile = await videoAsset.GetVideoAssetFile();
+            VideoMediaSource = MediaSource.CreateFromStorageFile(videoFile);
             videoProperties = await videoFile.Properties.GetVideoPropertiesAsync();
 
             _VideoStartPosition = new TimeSpan(0, 0, 0);
@@ -145,12 +148,13 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         public async Task Init(ITimelineItemEntity entity)
         {
             var videoAssets = from item in Utils.OnMemoryCache.VideoAssetCache
-                             where item.VideoAssetEntity.Id == entity.VideoAssetId
+                              where item.VideoAssetEntity.Id == entity.VideoAssetId
                               select item;
             if (videoAssets.Any())
             {
                 VideoAsset = videoAssets.First();
                 videoFile = await VideoAsset.GetVideoAssetFile();
+                VideoMediaSource = MediaSource.CreateFromStorageFile(videoFile);
                 videoProperties = await videoFile.Properties.GetVideoPropertiesAsync();
                 //CanvasWidth = canvasWidth;
                 //TotalCanvasDuration = totalCanvasDuration;

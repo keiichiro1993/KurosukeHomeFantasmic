@@ -170,8 +170,7 @@
     <Compile Include="Models\ShowScene.cs" />
     <Compile Include="Models\SQL\RecentProjectEntity.cs" />
     <Compile Include="Models\Timeline\ITimelineItem.cs" />
-    <Compile Include="Models\Timeline\VideoTimeline.cs" />
-    <Compile Include="Models\Timeline\ITimeline.cs" />
+    <Compile Include="Models\Timeline\Timeline.cs" />
     <Compile Include="Models\JSON\ITimelineItemEntity.cs" />
     <Compile Include="Models\Timeline\TimelineVideoItem.cs" />
     <Compile Include="Models\VideoAsset.cs" />

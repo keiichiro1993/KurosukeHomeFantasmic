@@ -10,7 +10,12 @@
     d:DesignWidth="400">
 
     <Grid>
-        <local:VideoTimelinePreviewChildControl 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="{x:Bind ViewModel.Timeline.Name, Mode=OneWay}"/>
+        <local:VideoTimelinePreviewChildControl Grid.Row="1"
             CurrentPosition="{x:Bind ViewModel.GlobalViewModel.GlobalCurrentPosition, Mode=OneWay}"
             PlaybackState="{x:Bind ViewModel.GlobalViewModel.GlobalPlaybackState, Mode=OneWay}"
             VideoTimeline="{x:Bind ViewModel.Timeline, Mode=OneWay}"/>

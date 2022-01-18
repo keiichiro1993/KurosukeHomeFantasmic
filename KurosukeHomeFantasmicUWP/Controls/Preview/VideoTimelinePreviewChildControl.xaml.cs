@@ -52,21 +52,21 @@ namespace KurosukeHomeFantasmicUWP.Controls.Preview
           DependencyProperty.Register(nameof(CurrentPosition), typeof(TimeSpan), typeof(VideoTimelinePreviewChildControl),
               new PropertyMetadata(null, CurrentPositionChanged));
 
-        private static async void CurrentPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void CurrentPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var previewControl = (VideoTimelinePreviewChildControl)d;
-            await previewControl.UpdatePosition();
+            previewControl.UpdatePosition();
             previewControl.UpdatePlaybackState();
         }
 
-        public MediaPlaybackState PlaybackState
+        public MediaPlaybackState? PlaybackState
         {
-            get => (MediaPlaybackState)GetValue(PlaybackStateProperty);
+            get => (MediaPlaybackState?)GetValue(PlaybackStateProperty);
             set => SetValue(PlaybackStateProperty, value);
         }
 
         public static readonly DependencyProperty PlaybackStateProperty =
-            DependencyProperty.Register(nameof(PlaybackState), typeof(MediaPlaybackState), typeof(VideoTimelinePreviewChildControl),
+            DependencyProperty.Register(nameof(PlaybackState), typeof(MediaPlaybackState?), typeof(VideoTimelinePreviewChildControl),
                 new PropertyMetadata(null, PlaybackStateChanged));
 
         private static void PlaybackStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -91,25 +91,25 @@ namespace KurosukeHomeFantasmicUWP.Controls.Preview
             }
         }
 
-        public ITimeline VideoTimeline
+        public Models.Timeline.Timeline VideoTimeline
         {
-            get => (ITimeline)GetValue(VideoTimelineProperty);
+            get => (Models.Timeline.Timeline)GetValue(VideoTimelineProperty);
             set => SetValue(VideoTimelineProperty, value);
         }
 
         public static readonly DependencyProperty VideoTimelineProperty =
-            DependencyProperty.Register(nameof(VideoTimeline), typeof(ITimeline), typeof(VideoTimelinePreviewChildControl),
+            DependencyProperty.Register(nameof(VideoTimeline), typeof(Models.Timeline.Timeline), typeof(VideoTimelinePreviewChildControl),
                 new PropertyMetadata(null, VideoTimelineChanged));
 
-        private static async void VideoTimelineChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void VideoTimelineChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var previewControl = (VideoTimelinePreviewChildControl)d;
-            await previewControl.UpdatePosition();
+            previewControl.UpdatePosition();
             previewControl.UpdatePlaybackState();
         }
 
-        private Models.VideoAsset videoAsset;
-        public async Task UpdatePosition()
+        private TimelineVideoItem videoItem;
+        public void UpdatePosition()
         {
             if (VideoTimeline != null && CurrentPosition != null)
             {
@@ -122,10 +122,14 @@ namespace KurosukeHomeFantasmicUWP.Controls.Preview
                     var targetItem = (from item in candidates
                                       orderby ((TimelineVideoItem)item).StartTime descending
                                       select item).First() as TimelineVideoItem;
-                    if (videoAsset == null || videoAsset.VideoAssetEntity.Id != targetItem.VideoAsset.VideoAssetEntity.Id)
+                    if (videoItem == null || videoItem.VideoAsset.VideoAssetEntity.Id != targetItem.VideoAsset.VideoAssetEntity.Id)
                     {
-                        playerElement.MediaPlayer.Source = MediaSource.CreateFromStorageFile(await targetItem.VideoAsset.GetVideoAssetFile());
-                        videoAsset = targetItem.VideoAsset;
+                        videoItem = targetItem;
+                    }
+
+                    if (videoItem != null && playerElement.MediaPlayer.Source == null)
+                    {
+                        playerElement.MediaPlayer.Source = videoItem.VideoMediaSource;
                     }
 
                     var videoPosition = CurrentPosition - targetItem.StartTime;
@@ -137,7 +141,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Preview
                 }
                 else
                 {
-                    videoAsset = null;
+                    videoItem = null;
                     playerElement.MediaPlayer.Source = null;
                 }
             }

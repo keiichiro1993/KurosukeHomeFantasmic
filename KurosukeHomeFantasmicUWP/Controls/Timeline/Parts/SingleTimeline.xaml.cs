@@ -31,20 +31,20 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
         }
 
         #region bindable properties
-        public ITimeline TimelineData
+        public Models.Timeline.Timeline TimelineData
         {
-            get => (ITimeline)GetValue(TimelineDataProperty);
+            get => (Models.Timeline.Timeline)GetValue(TimelineDataProperty);
             set => SetValue(TimelineDataProperty, value);
         }
 
         public static readonly DependencyProperty TimelineDataProperty =
-          DependencyProperty.Register(nameof(TimelineData), typeof(ITimeline), typeof(SingleTimeline),
+          DependencyProperty.Register(nameof(TimelineData), typeof(Models.Timeline.Timeline), typeof(SingleTimeline),
               new PropertyMetadata(null, TimelineDataChanged));
 
         private static void TimelineDataChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var instance = (SingleTimeline)d;
-            instance.ViewModel.TimelineData = e.NewValue as ITimeline;
+            instance.ViewModel.TimelineData = e.NewValue as Models.Timeline.Timeline;
         }
 
         public TimeSpan TotalCanvasDuration
@@ -163,8 +163,8 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
 
     public class SingleTimelineViewModel : ViewModels.ViewModelBase
     {
-        private ITimeline _TimelineData;
-        public ITimeline TimelineData
+        private Models.Timeline.Timeline _TimelineData;
+        public Models.Timeline.Timeline TimelineData
         {
             get { return _TimelineData; }
             set

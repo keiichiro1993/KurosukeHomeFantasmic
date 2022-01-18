@@ -42,7 +42,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace
             }
         }
 
-        private TimeSpan period = TimeSpan.FromMilliseconds(100);
+        private TimeSpan period = TimeSpan.FromMilliseconds(80);
         private DateTime? playStartTime = null;
         private TimeSpan? basePosition = null;
         private ThreadPoolTimer currentPositionTimer;

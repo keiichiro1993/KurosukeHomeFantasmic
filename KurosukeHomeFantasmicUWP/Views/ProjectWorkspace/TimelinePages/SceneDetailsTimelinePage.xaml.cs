@@ -39,7 +39,7 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.TimelinePages
             var scene = e.Parameter as ShowScene;
             if (scene.Timelines == null)
             {
-                scene.Timelines = new ObservableCollection<ITimeline>();
+                scene.Timelines = new ObservableCollection<Timeline>();
             }
             ViewModel.Scene = scene;
         }

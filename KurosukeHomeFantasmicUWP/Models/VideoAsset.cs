@@ -4,6 +4,7 @@ using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Windows.Media.Core;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
 

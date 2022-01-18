@@ -20,12 +20,14 @@
             <ListView ItemsSource="{x:Bind ViewModel.Timelines, Mode=OneWay}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <controls:WrapPanel Padding="0,0,0,45" Margin="0"/>
+                        <controls:WrapPanel Padding="0,0,0,45" Margin="0" />
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <preview:VideoTimelinePreviewControl VideoTimeline="{Binding}" />
+                        <Grid Width="270" Height="200" Padding="10">
+                            <preview:VideoTimelinePreviewControl  VideoTimeline="{Binding}" VerticalAlignment="Top" />
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

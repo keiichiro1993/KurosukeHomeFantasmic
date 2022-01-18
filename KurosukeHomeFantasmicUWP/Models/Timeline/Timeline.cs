@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KurosukeHomeFantasmicUWP.Models.Timeline
 {
-    public class ITimeline
+    public class Timeline
     {
         public string Id { get; set; }
         public string Name { get; set; }
@@ -17,6 +17,9 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
 
         public enum TimelineTypeEnum { Video }
         public TimelineTypeEnum TimelineType { get; set; }
+
+        public string TargetDisplayId { get; set; }
+
 
         [JsonIgnore]
         public ObservableCollection<ITimelineItem> TimelineItems { get; set; } = new ObservableCollection<ITimelineItem>();

@@ -31,28 +31,28 @@ namespace KurosukeHomeFantasmicUWP.Controls.Preview
             this.InitializeComponent();
         }
 
-        public VideoTimeline VideoTimeline
+        public Models.Timeline.Timeline VideoTimeline
         {
-            get => (VideoTimeline)GetValue(VideoTimelineProperty);
+            get => (Models.Timeline.Timeline)GetValue(VideoTimelineProperty);
             set => SetValue(VideoTimelineProperty, value);
         }
 
         public static readonly DependencyProperty VideoTimelineProperty =
-            DependencyProperty.Register(nameof(VideoTimeline), typeof(VideoTimeline), typeof(VideoTimelinePreviewControl),
+            DependencyProperty.Register(nameof(VideoTimeline), typeof(Models.Timeline.Timeline), typeof(VideoTimelinePreviewControl),
                 new PropertyMetadata(null, VideoTimelineChanged));
 
         private static void VideoTimelineChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var previewControl = (VideoTimelinePreviewControl)d;
-            previewControl.ViewModel.Timeline = (ITimeline)e.NewValue;
+            previewControl.ViewModel.Timeline = (Models.Timeline.Timeline)e.NewValue;
         }
     }
 
     public class VideoTimelinePreviewControlViewModel : ViewModels.ViewModelBase
     {
         public ProjectWorkspaceViewModel GlobalViewModel { get { return Utils.AppGlobalVariables.GlobalViewModel; } }
-        private ITimeline _Timeline;
-        public ITimeline Timeline
+        private Models.Timeline.Timeline _Timeline;
+        public Models.Timeline.Timeline Timeline
         {
             get { return _Timeline; }
             set

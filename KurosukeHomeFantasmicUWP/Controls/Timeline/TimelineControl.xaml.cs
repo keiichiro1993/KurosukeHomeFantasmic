@@ -41,20 +41,20 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
             timelineControl.ViewModel.CurrentPosition = (TimeSpan)e.NewValue;
         }
 
-        public ObservableCollection<ITimeline> Timelines
+        public ObservableCollection<Models.Timeline.Timeline> Timelines
         {
-            get => (ObservableCollection<ITimeline>)GetValue(TimelinesProperty);
+            get => (ObservableCollection<Models.Timeline.Timeline>)GetValue(TimelinesProperty);
             set => SetValue(TimelinesProperty, value);
         }
 
         public static readonly DependencyProperty TimelinesProperty =
-          DependencyProperty.Register(nameof(Timelines), typeof(ObservableCollection<ITimeline>), typeof(TimelineControl),
+          DependencyProperty.Register(nameof(Timelines), typeof(ObservableCollection<Models.Timeline.Timeline>), typeof(TimelineControl),
               new PropertyMetadata(null, TimelinesChanged));
 
         private static void TimelinesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var timelineControl = (TimelineControl)d;
-            var newValue = (ObservableCollection<ITimeline>)e.NewValue;
+            var newValue = (ObservableCollection<Models.Timeline.Timeline>)e.NewValue;
             timelineControl.timelineParentPanel.Children.Clear();
             timelineControl.AddNewTimelineElements(newValue);
             newValue.CollectionChanged += timelineControl.Timelines_CollectionChanged;
@@ -72,7 +72,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
                 foreach (var removeItem in e.OldItems)
                 {
                     var removeElement = from item in timelineParentPanel.Children
-                                        where ((SingleTimeline)item).TimelineData.Id == ((ITimeline)removeItem).Id
+                                        where ((SingleTimeline)item).TimelineData.Id == ((Models.Timeline.Timeline)removeItem).Id
                                         select item;
                     if (removeElement.Any())
                     {
@@ -88,7 +88,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
             {
                 var timelineElement = new SingleTimeline
                 {
-                    TimelineData = (ITimeline)item,
+                    TimelineData = (Models.Timeline.Timeline)item,
                     TotalCanvasDuration = TotalCanvasDuration,
                     ScrollViewerHorizontalOffset = timelineScrollViewer.HorizontalOffset
                 };

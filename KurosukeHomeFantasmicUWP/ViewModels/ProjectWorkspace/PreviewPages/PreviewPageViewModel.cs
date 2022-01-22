@@ -11,7 +11,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.PreviewPages
 {
     public class PreviewPageViewModel : ViewModelBase
     {
-        public ProjectWorkspaceViewModel GlobalViewModel { get { return Utils.AppGlobalVariables.GlobalViewModel; } }
+        public ProjectWorkspaceViewModel GlobalViewModel { get { return Utils.OnMemoryCache.GlobalViewModel; } }
 
         private Visibility _PlayButtonVisibility = Visibility.Visible;
         public Visibility PlayButtonVisibility

@@ -138,6 +138,9 @@
   <data name="AddNewTimelineContentDialog.Title" xml:space="preserve">
     <value>新しいタイムライン</value>
   </data>
+  <data name="AuthContentDialog.Title" xml:space="preserve">
+    <value>デバイスの追加</value>
+  </data>
   <data name="NewProjectPage-CreateButtonTitle.Content" xml:space="preserve">
     <value>作成</value>
   </data>

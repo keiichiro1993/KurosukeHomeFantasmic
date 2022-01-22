@@ -1,4 +1,4 @@
-﻿using KurosukeHomeFantasmicUWP.Views.ProjectWorkspace;
+﻿using KurosukeHomeFantasmicUWP.Views;
 using System;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -19,7 +19,7 @@ namespace KurosukeHomeFantasmicUWP.Utils.UIHelpers
             var frame = Window.Current.Content as Frame;
             if (frame != null)
             {
-                frame.Navigate(typeof(ProjectWorkspaceWindow));
+                frame.Navigate(typeof(ParentWindow));
             }
         }
     }

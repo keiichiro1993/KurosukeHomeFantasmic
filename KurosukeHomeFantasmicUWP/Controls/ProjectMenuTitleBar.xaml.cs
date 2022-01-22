@@ -34,10 +34,32 @@ namespace KurosukeHomeFantasmicUWP.Controls
             Window.Current.SetTitleBar(titleGrid);
         }
 
+        public Frame MainFrame
+        {
+            get => (Frame)GetValue(MainFrameProperty);
+            set => SetValue(MainFrameProperty, value);
+        }
+
+        public static readonly DependencyProperty MainFrameProperty =
+          DependencyProperty.Register(nameof(MainFrame), typeof(Frame), typeof(ProjectMenuTitleBar), new PropertyMetadata(null, null));
+
+
+        #region Handling Menu Button clicks
+
         private async void SaveMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             var saveDialog = new SaveDialog();
             await saveDialog.ShowAsync();
         }
+
+        private void SettingsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (MainFrame != null)
+            {
+                MainFrame.Navigate(typeof(Views.Settings.SettingsMainPage));
+            }
+        }
+
+        #endregion
     }
 }

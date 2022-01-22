@@ -63,6 +63,14 @@
                     </MenuFlyoutItem>
                 </muxc:MenuBarItem>-->
 
+                <muxc:MenuBarItem Title="Tools">
+                    <MenuFlyoutItem Text="Settings" Click="SettingsMenuFlyoutItem_Click">
+                        <!--<MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Modifiers="Control" Key="I"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>-->
+                    </MenuFlyoutItem>
+                </muxc:MenuBarItem>
+
                 <muxc:MenuBarItem Title="Help">
                     <MenuFlyoutItem Text="About">
                         <MenuFlyoutItem.KeyboardAccelerators>

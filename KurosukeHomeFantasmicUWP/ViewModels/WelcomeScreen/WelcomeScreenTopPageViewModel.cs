@@ -84,6 +84,9 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
                     Utils.AppGlobalVariables.SceneAssetDB = new Utils.DBHelpers.SceneAssetHelper();
                     Utils.OnMemoryCache.Scenes = new ObservableCollection<ShowScene>(await Utils.AppGlobalVariables.SceneAssetDB.GetSceneAssets());
 
+                    LoadingMessage = "Loading User Accounts...";
+                    Utils.AppGlobalVariables.DeviceUsers = new ObservableCollection<AuthCommon.Models.IUser>(await Utils.Auth.AccountManager.GetAuthorizedUserList());
+
                     LoadingMessage = "Loading project settings...";
                     using (var projectJsonStream = await file.OpenReadAsync())
                     {

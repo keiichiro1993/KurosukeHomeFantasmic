@@ -50,7 +50,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Preview
 
     public class VideoTimelinePreviewControlViewModel : ViewModels.ViewModelBase
     {
-        public ProjectWorkspaceViewModel GlobalViewModel { get { return Utils.AppGlobalVariables.GlobalViewModel; } }
+        public ProjectWorkspaceViewModel GlobalViewModel { get { return Utils.OnMemoryCache.GlobalViewModel; } }
         private Models.Timeline.Timeline _Timeline;
         public Models.Timeline.Timeline Timeline
         {

@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models;
+﻿using AuthCommon.Models;
+using KurosukeHomeFantasmicUWP.Models;
 using KurosukeHomeFantasmicUWP.Utils.DBHelpers;
 using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace;
 using System.Collections.ObjectModel;
@@ -8,6 +9,7 @@ namespace KurosukeHomeFantasmicUWP.Utils
 {
     public static class AppGlobalVariables
     {
+
         public static FantasmicProject CurrentProject;
         public static StorageFolder ProjectFolder;
         public static StorageFile ProjectFile;
@@ -15,12 +17,14 @@ namespace KurosukeHomeFantasmicUWP.Utils
         public static VideoAssetsHelper VideoAssetDB;
         public static SceneAssetHelper SceneAssetDB;
 
-        public static ProjectWorkspaceViewModel GlobalViewModel;
+        public static ObservableCollection<IUser> DeviceUsers;
     }
 
     public static class OnMemoryCache
     {
         public static ObservableCollection<VideoAsset> VideoAssetCache; //cache on memory since this holds bitmap images
         public static ObservableCollection<ShowScene> Scenes;
+
+        public static ProjectWorkspaceViewModel GlobalViewModel;
     }
 }

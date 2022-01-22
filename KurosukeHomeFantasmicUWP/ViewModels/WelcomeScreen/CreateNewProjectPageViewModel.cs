@@ -93,6 +93,8 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
                     Utils.AppGlobalVariables.SceneAssetDB = new Utils.DBHelpers.SceneAssetHelper();
                     Utils.OnMemoryCache.Scenes = new ObservableCollection<ShowScene>();
 
+                    Utils.AppGlobalVariables.DeviceUsers = new ObservableCollection<AuthCommon.Models.IUser>(await Utils.Auth.AccountManager.GetAuthorizedUserList());
+
                     Utils.AppGlobalVariables.CurrentProject = project;
                 }
             }

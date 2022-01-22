@@ -32,10 +32,11 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            Models.Timeline.Timeline newTimeline;
             switch (ViewModel.SelectedType)
             {
                 case "Video":
-                    var newTimeline = new Models.Timeline.Timeline
+                    newTimeline = new Models.Timeline.Timeline
                     {
                         Id = Guid.NewGuid().ToString(),
                         Name = ViewModel.Name,
@@ -43,6 +44,17 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
                         TimelineType = (Models.Timeline.Timeline.TimelineTypeEnum)Enum.Parse(typeof(Models.Timeline.Timeline.TimelineTypeEnum), ViewModel.SelectedType),
                         TimelineItems = new ObservableCollection<ITimelineItem>(),
                         TargetDisplayId = Guid.NewGuid().ToString()
+                    };
+                    ViewModel.Scene.Timelines.Add(newTimeline);
+                    break;
+                case "Hue":
+                    newTimeline = new Models.Timeline.Timeline
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Name = ViewModel.Name,
+                        Description = ViewModel.Description,
+                        TimelineType = (Models.Timeline.Timeline.TimelineTypeEnum)Enum.Parse(typeof(Models.Timeline.Timeline.TimelineTypeEnum), ViewModel.SelectedType),
+                        TimelineItems = new ObservableCollection<ITimelineItem>(),
                     };
                     ViewModel.Scene.Timelines.Add(newTimeline);
                     break;
@@ -84,7 +96,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
 
         public string Description { get; set; }
 
-        public List<string> TimelineTypes { get; set; } = new List<string> { "Video" };
+        public List<string> TimelineTypes { get; set; } = new List<string> { "Video", "Hue" };
 
         public string SelectedType { get; set; } = "Video";
     }

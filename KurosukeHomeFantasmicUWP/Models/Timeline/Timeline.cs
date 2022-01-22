@@ -15,7 +15,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
 
         public List<ITimelineItemEntity> TimelineItemEntities { get; set; }
 
-        public enum TimelineTypeEnum { Video }
+        public enum TimelineTypeEnum { Video, Hue }
         public TimelineTypeEnum TimelineType { get; set; }
 
         public string TargetDisplayId { get; set; }

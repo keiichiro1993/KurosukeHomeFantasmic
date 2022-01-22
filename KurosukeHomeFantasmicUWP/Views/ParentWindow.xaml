@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="KurosukeHomeFantasmicUWP.Views.ParentWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KurosukeHomeFantasmicUWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:KurosukeHomeFantasmicUWP.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls:ProjectMenuTitleBar  Grid.Row="0" MainFrame="{x:Bind mainFrame}" />
+        <Frame Grid.Row="1" x:Name="mainFrame" />
+    </Grid>
+</Page>

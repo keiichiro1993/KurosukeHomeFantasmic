@@ -1,0 +1,22 @@
+﻿<ContentDialog
+    x:Class="KurosukeHomeFantasmicUWP.Controls.ContentDialogs.AuthDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KurosukeHomeFantasmicUWP.Controls.ContentDialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    SecondaryButtonText="Cancel"
+    mc:Ignorable="d"
+    x:Uid="AuthContentDialog">
+    <ContentDialog.SecondaryButtonStyle>
+        <Style TargetType="Button">
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+    </ContentDialog.SecondaryButtonStyle>
+
+    <Grid>
+        <Grid>
+            <Frame x:Name="contentFrame"></Frame>
+        </Grid>
+    </Grid>
+</ContentDialog>

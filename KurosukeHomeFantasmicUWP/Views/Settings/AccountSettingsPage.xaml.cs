@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KurosukeHomeFantasmicUWP.ViewModels.Settings;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,30 +16,24 @@ using Windows.UI.Xaml.Navigation;
 
 // 空白ページの項目テンプレートについては、https://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
 
-namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace
+namespace KurosukeHomeFantasmicUWP.Views.Settings
 {
     /// <summary>
     /// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
     /// </summary>
-    public sealed partial class ProjectWorkspaceWindow : Page
+    public sealed partial class AccountSettingsPage : Page
     {
-        public ProjectWorkspaceWindow()
+        public AccountSettingsPageViewModel ViewModel { get; set; } = new AccountSettingsPageViewModel();
+
+        public AccountSettingsPage()
         {
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        private async void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            base.OnNavigatedTo(e);
-
-            if (Utils.AppGlobalVariables.GlobalViewModel == null)
-            {
-                Utils.AppGlobalVariables.GlobalViewModel = new ViewModels.ProjectWorkspace.ProjectWorkspaceViewModel();
-            }
-
-            videoAssetFrame.Navigate(typeof(VideoAssetPages.VideoAssetListPage));
-            timelineFrame.Navigate(typeof(TimelinePages.SceneListPage));
-            previewFrame.Navigate(typeof(PreviewPages.PreviewPage));
+            var dialog = new Controls.ContentDialogs.AuthDialog();
+            await dialog.ShowAsync();
         }
     }
 }

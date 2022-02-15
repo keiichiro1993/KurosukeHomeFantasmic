@@ -74,6 +74,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
             project.Name = ProjectName;
             project.Version = "1.0.0";
             project.Id = Guid.NewGuid().ToString();
+            project.Settings = new ProjectSettings();
 
             try
             {

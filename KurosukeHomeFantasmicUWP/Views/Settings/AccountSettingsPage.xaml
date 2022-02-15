@@ -42,7 +42,7 @@
                             <TextBlock Text="{x:Bind Path=UserName}" FontSize="25"/>
                         </StackPanel>
                         <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="10,0,0,0">
-                            <Button>
+                            <Button Click="DeleteButton_Click">
                                 <SymbolIcon Symbol="Delete"/>
                             </Button>
                         </StackPanel>

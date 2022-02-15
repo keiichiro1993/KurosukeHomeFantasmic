@@ -16,6 +16,11 @@
                                 TintOpacity="0.7" 
                                 TintColor="SkyBlue" 
                                 FallbackColor="SkyBlue" />
+                    <media:AcrylicBrush x:Key="GreenYellowAcrylicBrush"
+                                BackgroundSource="Backdrop"
+                                TintOpacity="0.7" 
+                                TintColor="LightGreen" 
+                                FallbackColor="LightGreen" />
                     <toolkitmedia:AttachedCardShadow x:Key="CommonShadow" Offset="2" Opacity="0.8" />
                     <toolkitmedia:AttachedCardShadow x:Key="ToolbarShadow" Offset="3" Opacity="1" CornerRadius="0" />
                     <ui:AttachedDropShadow x:Key="CommonMaskedShadow" Offset="3" Opacity="1" IsMasked="True" />

@@ -90,7 +90,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
                     LoadingMessage = "Loading project settings...";
                     using (var projectJsonStream = await file.OpenReadAsync())
                     {
-                        Utils.AppGlobalVariables.CurrentProject = await JsonSerializer.DeserializeAsync<Models.FantasmicProject>(projectJsonStream.AsStream());
+                        Utils.AppGlobalVariables.CurrentProject = await JsonSerializer.DeserializeAsync<FantasmicProject>(projectJsonStream.AsStream());
                     }
                 }
             }

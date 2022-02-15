@@ -12,7 +12,7 @@ namespace KurosukeHomeFantasmicUWP.Utils.Auth
 {
     public class AccountManager
     {
-        private const string ResourceNamePrefix = "KHomeFantasmic.";
+        private const string resourceNamePrefix = "KHomeFantasmic.";
 
         public static async Task<List<IUser>> GetAuthorizedUserList()
         {
@@ -24,7 +24,7 @@ namespace KurosukeHomeFantasmicUWP.Utils.Auth
                 var vault = new PasswordVault();
                 try
                 {
-                    credentialList = vault.FindAllByResource(ResourceNamePrefix + type.ToString());
+                    credentialList = vault.FindAllByResource(resourceNamePrefix + type.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -49,20 +49,31 @@ namespace KurosukeHomeFantasmicUWP.Utils.Auth
 
         public static void DeleteUser(IUser user)
         {
+            var resourceName = resourceNamePrefix + user.UserType.ToString();
             var vault = new PasswordVault();
-            var cred = vault.Retrieve(ResourceNamePrefix + user.UserType.ToString(), user.Id);
+            var cred = vault.Retrieve(resourceName, user.Id);
             vault.Remove(cred);
+
+            // Additional creds for each device type
+            switch (user.UserType)
+            {
+                case UserType.Hue:
+                    resourceName += "EntertainmentKey";
+                    cred = vault.Retrieve(resourceName, user.Id);
+                    vault.Remove(cred);
+                    break;
+            }
         }
 
         private static async Task acquireAndAddUser(List<IUser> userList, UserType type, PasswordCredential cred)
         {
-            var token = new TokenBase();
-            token.UserType = type;
-            token.Id = cred.UserName;
-            token.AccessToken = cred.Password;
             switch (type)
             {
                 case UserType.Hue:
+                    var token = new HueToken();
+                    token.UserType = type;
+                    token.Id = cred.UserName;
+                    token.AccessToken = cred.Password;
                     var user = await HueAuthClient.FindHueBridge(token);
                     userList.Add(user);
                     break;
@@ -71,9 +82,19 @@ namespace KurosukeHomeFantasmicUWP.Utils.Auth
 
         public static void SaveUserToVault(IUser user)
         {
-            var resourceName = ResourceNamePrefix + user.UserType.ToString();
+            var resourceName = resourceNamePrefix + user.UserType.ToString();
             var vault = new PasswordVault();
+
             vault.Add(new PasswordCredential(resourceName, user.Id, user.Token.AccessToken));
+
+            // Additional creds for each device type
+            switch (user.UserType)
+            {
+                case UserType.Hue:
+                    resourceName += "EntertainmentKey";
+                    vault.Add(new PasswordCredential(resourceName, user.Id, user.Token.EntertainmentKey));
+                    break;
+            }
         }
     }
 }

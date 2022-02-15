@@ -1,4 +1,9 @@
 ﻿using AuthCommon.Models;
+using KurosukeHueClient.Utils.Helpers;
+using Q42.HueApi.ColorConverters;
+using Q42.HueApi.ColorConverters.Original;
+using System;
+using Windows.UI;
 using Windows.UI.Xaml;
 
 namespace KurosukeHueClient.Models.HueObjects
@@ -17,6 +22,23 @@ namespace KurosukeHueClient.Models.HueObjects
         public string DeviceName { get { return HueLight.Name; } }
 
         public string DeviceType { get { return HueLight.Type; } }
+
+        private Color _Color;
+        public Color Color
+        {
+            get
+            {
+                if (_Color == null) 
+                {
+                    _Color = ColorConverter.HexToColor("#" + HueLight.State.ToHex());
+                }
+                return _Color;
+            }
+            set
+            {
+                _Color = value;
+            }
+        }
 
         public string IconImage
         {

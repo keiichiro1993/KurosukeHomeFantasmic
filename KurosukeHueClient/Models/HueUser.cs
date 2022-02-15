@@ -13,10 +13,14 @@ namespace KurosukeHueClient.Models
         public Bridge Bridge;
 
         public string UserName { get; set; }
-        public TokenBase Token { get; set; }
+        public IToken Token { get; set; }
         public UserType UserType { get; set; }
         public string ProfilePictureUrl { get; set; }
         public string Id { get; set; }
+
+        //TODO: これらのInitializeと変更UI等
+        public bool IsActive { get; set; }
+        public Models.HueObjects.Group ActiveGroup { get; set; }
 
         public HueUser(Bridge bridge)
         {

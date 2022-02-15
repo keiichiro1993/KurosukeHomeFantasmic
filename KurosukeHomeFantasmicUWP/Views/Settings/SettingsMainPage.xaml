@@ -13,6 +13,11 @@
         <muxc:NavigationView IsSettingsVisible="False" x:Name="mainNavigation" ItemInvoked="mainNavigation_ItemInvoked">
             <muxc:NavigationView.MenuItems>
                 <muxc:NavigationViewItem Icon="Contact" Content="Accounts" Tag="AccountSettings"/>
+                <muxc:NavigationViewItem Content="Hue" Tag="HueSettings">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xEA80;"/>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
                 <!--<muxc:NavigationViewItem Content="Control Groups" Tag="ControlGroupSettings">
                     <muxc:NavigationViewItem.Icon>
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF168;"/>

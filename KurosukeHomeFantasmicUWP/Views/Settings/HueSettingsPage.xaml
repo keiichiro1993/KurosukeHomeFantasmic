@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="KurosukeHomeFantasmicUWP.Views.Settings.HueSettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KurosukeHomeFantasmicUWP.Views.Settings"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+    xmlns:brushes="using:Microsoft.UI.Xaml.Media" 
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid Margin="20">
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="10,0"/>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock HorizontalAlignment="Right" Text="Active Hue Bridge:" Grid.Row="0" Grid.Column="0" />
+            <ComboBox Grid.Row="0" Grid.Column="1" Margin="0,0,0,5" MinWidth="300" DisplayMemberPath="UserName" IsEnabled="{x:Bind ViewModel.IsUIAvailable, Mode=OneWay}"
+                      ItemsSource="{x:Bind ViewModel.AvailableHueBridges, Mode=OneWay}"
+                      SelectedItem="{x:Bind ViewModel.SelectedHueBridge, Mode=TwoWay}"/>
+
+            <TextBlock HorizontalAlignment="Right" Text="Target Entertainment Group:" Grid.Row="1" Grid.Column="0" />
+            <ComboBox Grid.Row="1" Grid.Column="1" Margin="0,0,0,5" MinWidth="200" DisplayMemberPath="DeviceGroupName" IsEnabled="{x:Bind ViewModel.IsUIAvailable, Mode=OneWay}"
+                      ItemsSource="{x:Bind ViewModel.HueGroups, Mode=OneWay}"
+                      SelectedItem="{x:Bind ViewModel.SelectedHueGroup, Mode=TwoWay}"/>
+        </Grid>
+        <controls:Loading x:Name="LoadingControl" IsLoading="{x:Bind ViewModel.IsLoading, Mode=OneWay}" IsEnabled="{x:Bind ViewModel.IsLoading, Mode=OneWay}">
+            <controls:Loading.Background>
+                <brushes:AcrylicBrush BackgroundSource="Backdrop"
+                              TintColor="Black"
+                              TintOpacity="0.4"/>
+            </controls:Loading.Background>
+            <muxc:ProgressRing />
+        </controls:Loading>
+    </Grid>
+</Page>

@@ -6,6 +6,7 @@ namespace KurosukeHueClient.Extensions
 {
     public static class StateExtensions
     {
+        /*
         public static bool CheckEquals(this State state, JsonState other)
         {
             return state.On == other.On &&
@@ -20,5 +21,6 @@ namespace KurosukeHueClient.Extensions
                    (state.ColorMode == "hsb" ? state.Saturation == other.Saturation : true) &&
                    state.TransitionTime == other.TransitionTime;
         }
+        */
     }
 }

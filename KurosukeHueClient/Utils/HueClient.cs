@@ -3,6 +3,9 @@ using KurosukeHueClient.Models;
 using Q42.HueApi;
 using Q42.HueApi.ColorConverters;
 using Q42.HueApi.ColorConverters.Original;
+using Q42.HueApi.Interfaces;
+using Q42.HueApi.Models;
+using Q42.HueApi.Streaming;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +14,9 @@ using System.Threading.Tasks;
 
 namespace KurosukeHueClient.Utils
 {
-    public class HueClient
+    public class HueClient : IDisposable
     {
+        private StreamingHueClient streamingClient;
         private LocalHueClient client;
         private Bridge bridge;
         private HueUser user;
@@ -20,40 +24,69 @@ namespace KurosukeHueClient.Utils
         {
             this.user = user;
             bridge = user.Bridge;
-            client = new LocalHueClient(bridge.Config.IpAddress);
-            client.Initialize(user.Token.AccessToken);
+            streamingClient = new StreamingHueClient(bridge.Config.IpAddress, user.Token.AccessToken, user.Token.EntertainmentKey);
+            client = (LocalHueClient)streamingClient.LocalHueClient;
+        }
+
+        public void Dispose()
+        {
+            client = null;
+            streamingClient.Dispose();
+        }
+
+        public async Task<List<Models.HueObjects.Group>> GetEntertainmentGroupsAsync()
+        {
+            var hueDeviceGroups = new List<Models.HueObjects.Group>();
+            var allLights = new List<Models.HueObjects.Light>();
+            var allHueGroups = await client.GetEntertainmentGroups();
+            var allHueLights = await client.GetLightsAsync();
+
+            foreach (var light in allHueLights)
+            {
+                allLights.Add(new Models.HueObjects.Light(light, user));
+            }
+
+            foreach (var hueGroup in allHueGroups)
+            {
+                var lights = from light in allLights
+                             where hueGroup.Lights.Contains(light.HueLight.Id)
+                             select light;
+                hueDeviceGroups.Add(new Models.HueObjects.Group(hueGroup, lights.ToList(), null));
+            }
+
+            return hueDeviceGroups;
         }
 
         public async Task<List<Models.HueObjects.Group>> GetDeviceGroupsAsync()
         {
             var hueDeviceGroups = new List<Models.HueObjects.Group>();
-            var groups = await client.GetGroupsAsync();
-            var rooms = (from item in groups
-                         where item.Type == Q42.HueApi.Models.Groups.GroupType.Room
-                         select item).ToList();
-
-            var scenes = await client.GetScenesAsync();
-
-            foreach (var room in rooms)
+            var allHueGroups = await client.GetGroupsAsync();
+            var allHueScenes = await client.GetScenesAsync();
+            var allHueLights = await client.GetLightsAsync();
+            var allLights = new List<Models.HueObjects.Light>();
+            foreach (var light in allHueLights)
             {
-                var deviceGroup = new Models.HueObjects.Group(room);
-                var lights = new List<IDevice>();
-                foreach (var lightId in room.Lights)
-                {
-                    lights.Add(new Models.HueObjects.Light(await client.GetLightAsync(lightId), user));
-                }
-                deviceGroup.Devices = lights;
+                allLights.Add(new Models.HueObjects.Light(light, user));
+            }
 
-                if (scenes != null)
+            foreach (var hueGroup in allHueGroups)
+            {
+                var lights = from light in allLights
+                             where hueGroup.Lights.Contains(light.HueLight.Id)
+                             select light;
+
+
+                List<Scene> scenes = new List<Scene>();
+                if (allHueScenes != null)
                 {
-                    deviceGroup.HueScenes.AddRange(from scene in scenes
-                                                      where scene.Type != null
-                                                         && scene.Type == Q42.HueApi.Models.SceneType.GroupScene
-                                                         && scene.Group == room.Id
-                                                      select scene);
+                    scenes.AddRange(from scene in allHueScenes
+                                    where scene.Type != null
+                                       && scene.Type == SceneType.GroupScene
+                                       && scene.Group == hueGroup.Id
+                                    select scene);
                 }
 
-                hueDeviceGroups.Add(deviceGroup);
+                hueDeviceGroups.Add(new Models.HueObjects.Group(hueGroup, lights.ToList(), scenes.ToList()));
             }
 
             return hueDeviceGroups;
@@ -76,7 +109,6 @@ namespace KurosukeHueClient.Utils
 
             command.On = light.State.On;
             command.Brightness = light.State.Brightness;
-
             await client.SendCommandAsync(command, new List<string>() { light.Id });
             return await client.GetLightAsync(light.Id);
         }

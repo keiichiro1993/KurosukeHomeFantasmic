@@ -122,7 +122,7 @@
   <ItemGroup>
     <Compile Include="Models\IDevice.cs" />
     <Compile Include="Models\IDeviceGroup.cs" />
-    <Compile Include="Models\TokenBase.cs" />
+    <Compile Include="Models\IToken.cs" />
     <Compile Include="Models\IUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\AuthCommon.rd.xml" />

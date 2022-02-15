@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.Json;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -30,14 +32,19 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
         {
             try
             {
+                //save scenes
                 foreach (var item in Utils.OnMemoryCache.Scenes)
                 {
                     foreach (var timeline in item.Timelines)
                     {
                         timeline.EncodeTimelineItemToEntity();
                     }
-                }
+                }           
                 await Utils.AppGlobalVariables.SceneAssetDB.SaveSceneAssets(Utils.OnMemoryCache.Scenes.ToList());
+                //save project settings
+                var projectJson = JsonSerializer.Serialize(Utils.AppGlobalVariables.CurrentProject);
+                await FileIO.WriteTextAsync(Utils.AppGlobalVariables.ProjectFile, projectJson);
+                
                 this.Hide();
             }
             catch (Exception ex)

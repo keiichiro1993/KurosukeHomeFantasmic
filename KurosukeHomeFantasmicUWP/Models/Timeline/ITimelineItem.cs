@@ -11,6 +11,14 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
     {
         TimeSpan TotalCanvasDuration { get; set; }
         double CanvasWidth { get; set; }
+        bool Locked { get; set; }
+
+        double Left { get; }
+        double Width { get; }
+
+        TimeSpan StartTime { get; set; }
+        TimeSpan EndTime { get; }
+        TimeSpan Duration { get; set; }
 
         TimelineVideoItemEntity ToEntity();
     }

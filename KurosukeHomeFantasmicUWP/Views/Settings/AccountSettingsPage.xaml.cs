@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.ViewModels.Settings;
+﻿using AuthCommon.Models;
+using KurosukeHomeFantasmicUWP.ViewModels.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -34,6 +36,24 @@ namespace KurosukeHomeFantasmicUWP.Views.Settings
         {
             var dialog = new Controls.ContentDialogs.AuthDialog();
             await dialog.ShowAsync();
+        }
+
+        private async void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new MessageDialog("Are you sure to delete account?", "Delete user");
+            dialog.Commands.Add(new UICommand("Delete"));
+            dialog.Commands.Add(new UICommand("Cancel"));
+            dialog.DefaultCommandIndex = 0;
+            dialog.CancelCommandIndex = 1;
+
+            var result = await dialog.ShowAsync();
+
+            if (result.Label == "Delete")
+            {
+                IUser user = ((Button)sender).DataContext as IUser;
+                Utils.Auth.AccountManager.DeleteUser(user);
+                Utils.AppGlobalVariables.DeviceUsers.Remove(user);
+            }
         }
     }
 }

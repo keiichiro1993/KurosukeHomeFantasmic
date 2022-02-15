@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.AssetPages;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,30 +16,17 @@ using Windows.UI.Xaml.Navigation;
 
 // 空白ページの項目テンプレートについては、https://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
 
-namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace
+namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.AssetPages
 {
     /// <summary>
     /// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
     /// </summary>
-    public sealed partial class ProjectWorkspacePage : Page
+    public sealed partial class HueEffectListPage : Page
     {
-        public ProjectWorkspacePage()
+        public HueEffectListPageViewModel ViewModel { get; set; } = new HueEffectListPageViewModel();
+        public HueEffectListPage()
         {
             this.InitializeComponent();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-            if (Utils.OnMemoryCache.GlobalViewModel == null)
-            {
-                Utils.OnMemoryCache.GlobalViewModel = new ViewModels.ProjectWorkspace.ProjectWorkspaceViewModel();
-            }
-
-            videoAssetFrame.Navigate(typeof(AssetPages.AssetParentPage));
-            timelineFrame.Navigate(typeof(TimelinePages.SceneListPage));
-            previewFrame.Navigate(typeof(PreviewPages.PreviewPage));
         }
     }
 }

@@ -173,6 +173,7 @@
     <Compile Include="Models\FantasmicProject.cs" />
     <Compile Include="Models\JSON\TimelineVideoItemEntity.cs" />
     <Compile Include="Models\JSON\VideoAssetEntity.cs" />
+    <Compile Include="Models\ProjectSettings.cs" />
     <Compile Include="Models\ShowScene.cs" />
     <Compile Include="Models\SQL\RecentProjectEntity.cs" />
     <Compile Include="Models\Timeline\ITimelineItem.cs" />
@@ -193,12 +194,14 @@
     <Compile Include="Utils\UIHelpers\WindowLauncher.cs" />
     <Compile Include="ViewModels\Auth\AuthDialogHuePageViewModel.cs" />
     <Compile Include="ViewModels\Auth\AuthDialogMainPageViewModel.cs" />
+    <Compile Include="ViewModels\ProjectWorkspace\AssetPages\HueEffectListPageViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\PreviewPages\PreviewPageViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\ProjectWorkspaceViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\TimelinePages\SceneDetailsTimelinePageViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\TimelinePages\SceneListPageViewModel.cs" />
-    <Compile Include="ViewModels\ProjectWorkspace\VideoAssetListPageViewModel.cs" />
+    <Compile Include="ViewModels\ProjectWorkspace\AssetPages\VideoAssetListPageViewModel.cs" />
     <Compile Include="ViewModels\Settings\AccountSettingsPageViewModel.cs" />
+    <Compile Include="ViewModels\Settings\HueSettingsPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\WelcomeScreen\CreateNewProjectPageViewModel.cs" />
     <Compile Include="ViewModels\WelcomeScreen\WelcomeScreenTopPageViewModel.cs" />
@@ -210,6 +213,15 @@
     </Compile>
     <Compile Include="Views\ParentWindow.xaml.cs">
       <DependentUpon>ParentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectWorkspace\AssetPages\AssetParentPage.xaml.cs">
+      <DependentUpon>AssetParentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectWorkspace\AssetPages\HueEffectListPage.xaml.cs">
+      <DependentUpon>HueEffectListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectWorkspace\AssetPages\HueSceneListPage.xaml.cs">
+      <DependentUpon>HueSceneListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProjectWorkspace\PreviewPages\PreviewPage.xaml.cs">
       <DependentUpon>PreviewPage.xaml</DependentUpon>
@@ -223,14 +235,17 @@
     <Compile Include="Views\ProjectWorkspace\TimelinePages\SceneListPage.xaml.cs">
       <DependentUpon>SceneListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProjectWorkspace\VideoAssetPages\VideoAssetListPage.xaml.cs">
+    <Compile Include="Views\ProjectWorkspace\AssetPages\VideoAssetListPage.xaml.cs">
       <DependentUpon>VideoAssetListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProjectWorkspace\VideoAssetPages\VideoPlaybackPage.xaml.cs">
+    <Compile Include="Views\ProjectWorkspace\AssetPages\VideoPlaybackPage.xaml.cs">
       <DependentUpon>VideoPlaybackPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\AccountSettingsPage.xaml.cs">
       <DependentUpon>AccountSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\HueSettingsPage.xaml.cs">
+      <DependentUpon>HueSettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\SettingsMainPage.xaml.cs">
       <DependentUpon>SettingsMainPage.xaml</DependentUpon>
@@ -345,6 +360,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ProjectWorkspace\AssetPages\AssetParentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProjectWorkspace\AssetPages\HueEffectListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProjectWorkspace\AssetPages\HueSceneListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ProjectWorkspace\PreviewPages\PreviewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -361,15 +388,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ProjectWorkspace\VideoAssetPages\VideoAssetListPage.xaml">
+    <Page Include="Views\ProjectWorkspace\AssetPages\VideoAssetListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ProjectWorkspace\VideoAssetPages\VideoPlaybackPage.xaml">
+    <Page Include="Views\ProjectWorkspace\AssetPages\VideoPlaybackPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Settings\AccountSettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\HueSettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,6 +1,6 @@
 ﻿using AuthCommon.Models;
 using KurosukeHueClient.Models;
-using Q42.HueApi;
+using Q42.HueApi.Streaming;
 using Q42.HueApi.Interfaces;
 using Q42.HueApi.Models.Bridge;
 using System;
@@ -9,10 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
+using Q42.HueApi;
 
 namespace KurosukeHueClient.Utils
 {
-    public class HueAuthClient
+    public static class HueAuthClient
     {
         public static async Task<IEnumerable<LocatedBridge>> DiscoverHueBridges()
         {
@@ -20,7 +21,7 @@ namespace KurosukeHueClient.Utils
             return await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
         }
 
-        public static async Task<HueUser> FindHueBridge(TokenBase token)
+        public static async Task<HueUser> FindHueBridge(IToken token)
         {
             IBridgeLocator locator = new HttpBridgeLocator();
             var bridges = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
@@ -73,12 +74,11 @@ namespace KurosukeHueClient.Utils
                 {
                     try
                     {
-                        var appKey = await client.RegisterAsync("KurosukeInfoBoard", hostname.DisplayName);
-                        client.Initialize(appKey);
-                        var bridgeInfo = await client.GetBridgeAsync();
+                        var entKey = await client.RegisterAsync("KurosukeInfoBoard", hostname.DisplayName, true);
+                        var streamingclient = new StreamingHueClient(entKey.Ip, entKey.Username, entKey.StreamingClientKey);
+                        var bridgeInfo = await streamingclient.LocalHueClient.GetBridgeAsync();
                         var bridgeId = bridgeInfo.Config.BridgeId;
-
-                        var token = new HueToken(appKey, bridgeId);
+                        var token = new HueToken(entKey.Username, entKey.StreamingClientKey, bridgeId);
                         var user = new HueUser(bridgeInfo);
                         user.Token = token;
 

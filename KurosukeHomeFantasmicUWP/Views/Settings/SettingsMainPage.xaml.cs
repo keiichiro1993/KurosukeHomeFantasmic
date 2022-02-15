@@ -30,7 +30,8 @@ namespace KurosukeHomeFantasmicUWP.Views.Settings
 
         private readonly List<(string Tag, Type Page)> pages = new List<(string Tag, Type Page)>
         {
-            ("AccountSettings", typeof(AccountSettingsPage))
+            ("AccountSettings", typeof(AccountSettingsPage)),
+            ("HueSettings", typeof(HueSettingsPage))
         };
 
         private void mainNavigation_ItemInvoked(muxc.NavigationView sender, muxc.NavigationViewItemInvokedEventArgs args)

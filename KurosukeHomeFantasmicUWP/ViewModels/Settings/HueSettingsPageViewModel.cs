@@ -135,8 +135,10 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.Settings
         {
             try
             {
-                var client = new KurosukeHueClient.Utils.HueClient(bridge);
-                HueGroups = await client.GetEntertainmentGroupsAsync();
+                using (var client = new KurosukeHueClient.Utils.HueClient(bridge))
+                {
+                    HueGroups = await client.GetEntertainmentGroupsAsync();
+                }
             }
             catch (Exception ex)
             {

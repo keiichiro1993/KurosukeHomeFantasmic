@@ -10,7 +10,13 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <muxc:NavigationView IsSettingsVisible="False" x:Name="mainNavigation" ItemInvoked="mainNavigation_ItemInvoked">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" x:Name="titleGrid" Background="{StaticResource HostBackdropAcrylicBrush}"/>
+        <muxc:NavigationView Grid.Row="1" IsSettingsVisible="False" x:Name="mainNavigation" ItemInvoked="mainNavigation_ItemInvoked"
+                             Background="{StaticResource HostBackdropAcrylicBrush}">
             <muxc:NavigationView.MenuItems>
                 <muxc:NavigationViewItem Icon="Contact" Content="Accounts" Tag="AccountSettings"/>
                 <muxc:NavigationViewItem Content="Hue" Tag="HueSettings">

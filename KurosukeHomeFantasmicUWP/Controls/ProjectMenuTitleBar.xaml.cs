@@ -43,6 +43,15 @@ namespace KurosukeHomeFantasmicUWP.Controls
         public static readonly DependencyProperty MainFrameProperty =
           DependencyProperty.Register(nameof(MainFrame), typeof(Frame), typeof(ProjectMenuTitleBar), new PropertyMetadata(null, null));
 
+        public Frame ParentFrame
+        {
+            get => (Frame)GetValue(ParentFrameProperty);
+            set => SetValue(ParentFrameProperty, value);
+        }
+
+        public static readonly DependencyProperty ParentFrameProperty =
+          DependencyProperty.Register(nameof(ParentFrame), typeof(Frame), typeof(ProjectMenuTitleBar), new PropertyMetadata(null, null));
+
 
         #region Handling Menu Button clicks
 
@@ -56,7 +65,7 @@ namespace KurosukeHomeFantasmicUWP.Controls
         {
             if (MainFrame != null)
             {
-                MainFrame.Navigate(typeof(Views.Settings.SettingsMainPage));
+                ParentFrame.Navigate(typeof(Views.Settings.SettingsMainPage));
             }
         }
 

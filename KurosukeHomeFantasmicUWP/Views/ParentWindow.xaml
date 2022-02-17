@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <controls:ProjectMenuTitleBar  Grid.Row="0" MainFrame="{x:Bind mainFrame}" />
+        <controls:ProjectMenuTitleBar  Grid.Row="0" MainFrame="{x:Bind mainFrame}" ParentFrame="{x:Bind Frame}"/>
         <Frame Grid.Row="1" x:Name="mainFrame" />
     </Grid>
 </Page>

@@ -52,6 +52,8 @@ namespace KurosukeHomeFantasmicUWP.Views.Settings
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            Window.Current.SetTitleBar(titleGrid);
+
             var item = pages.First();
             mainNavigation.SelectedItem = mainNavigation.MenuItems.First();
             contentFrame.Navigate(item.Page);

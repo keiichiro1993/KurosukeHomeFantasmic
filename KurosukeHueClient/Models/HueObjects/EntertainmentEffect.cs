@@ -10,6 +10,8 @@ namespace KurosukeHueClient.Models.HueObjects
 {
     public class EntertainmentEffect
     {
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan Duration { get; set; }
         public IEnumerable<EntertainmentAction> Actions { get; set; }
         public IteratorEffectMode EffectMode { get; set; }
         public TimeSpan EffectMargin { get; set; }

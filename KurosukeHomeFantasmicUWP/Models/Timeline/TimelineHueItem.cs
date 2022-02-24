@@ -10,15 +10,15 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
 {
     public class TimelineHueItem : ViewModels.ViewModelBase, ITimelineItem
     {
-        public enum TimelineHueItemType { Scene, Entertainment }
+        public enum TimelineHueItemType { State, Iteration }
         public TimelineHueItemType Type { get; set; }
-        public Visibility IsEntertainment { get { return Type == TimelineHueItemType.Entertainment ? Visibility.Visible : Visibility.Collapsed; } }
+        public Visibility IsRelizable { get { return Type == TimelineHueItemType.Iteration ? Visibility.Visible : Visibility.Collapsed; } }
         public string Name { get; set; }
         public bool Locked { get; set; }
 
         public double Left { get { return CanvasWidth * (StartTime / TotalCanvasDuration); } }
 
-        public double Width { get { return Type == TimelineHueItemType.Scene ? 50 : CanvasWidth * (Duration / TotalCanvasDuration); } }
+        public double Width { get { return CanvasWidth * (Duration / TotalCanvasDuration); } }
 
         private TimeSpan _StartTime;
         public TimeSpan StartTime

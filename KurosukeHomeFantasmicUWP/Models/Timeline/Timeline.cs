@@ -38,7 +38,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                     }
                     else
                     {
-                        throw new NotImplementedException("The entity time except TimelineVideoItemEntity is not implemented yet.");
+                        throw new NotImplementedException("The entity type except TimelineVideoItemEntity is not implemented yet.");
                     }
                 }
             }

@@ -103,7 +103,6 @@ namespace KurosukeHueClient.Utils
             //set light state
             lights.SetState(cancellationTokenSource.Token, action.Color, action.Brightness, action.Duration);
         }
-
         #endregion
 
         #region Non-Entertainment APIs

@@ -88,7 +88,7 @@ namespace KurosukeHueClient.Utils
             effectLayer.AutoCalculateEffectUpdate(cancellationTokenSource.Token);
         }
 
-        public void SendEntertainmentAction(EntertainmentAction action)
+        public void SendEntertainmentAction(HueAction action)
         {
             if (baseLayer == null)
             {

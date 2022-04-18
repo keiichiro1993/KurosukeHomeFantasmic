@@ -119,6 +119,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ContentDialogs\AddHueActionDialog.xaml.cs">
+      <DependentUpon>AddHueActionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ContentDialogs\AddSceneDialog.xaml.cs">
       <DependentUpon>AddSceneDialog.xaml</DependentUpon>
     </Compile>
@@ -189,11 +192,11 @@
     <Compile Include="Utils\DBHelpers\StorageFolderExtention.cs" />
     <Compile Include="Utils\DBHelpers\TimeSpanJsonConverter.cs" />
     <Compile Include="Utils\DBHelpers\VideoAssetHelper.cs" />
-    <Compile Include="Utils\DebugHelper.cs" />
     <Compile Include="Utils\UIHelpers\StorageThumbnailExtension.cs" />
     <Compile Include="Utils\UIHelpers\WindowLauncher.cs" />
     <Compile Include="ViewModels\Auth\AuthDialogHuePageViewModel.cs" />
     <Compile Include="ViewModels\Auth\AuthDialogMainPageViewModel.cs" />
+    <Compile Include="ViewModels\ProjectWorkspace\AssetPages\HueActionListPageViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\AssetPages\HueEffectListPageViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\PreviewPages\PreviewPageViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\ProjectWorkspaceViewModel.cs" />
@@ -217,11 +220,11 @@
     <Compile Include="Views\ProjectWorkspace\AssetPages\AssetParentPage.xaml.cs">
       <DependentUpon>AssetParentPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ProjectWorkspace\AssetPages\HueActionListPage.xaml.cs">
+      <DependentUpon>HueActionListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProjectWorkspace\AssetPages\HueEffectListPage.xaml.cs">
       <DependentUpon>HueEffectListPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProjectWorkspace\AssetPages\HueSceneListPage.xaml.cs">
-      <DependentUpon>HueSceneListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProjectWorkspace\PreviewPages\PreviewPage.xaml.cs">
       <DependentUpon>PreviewPage.xaml</DependentUpon>
@@ -280,6 +283,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\ContentDialogs\AddHueActionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ContentDialogs\AddSceneDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -364,11 +371,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ProjectWorkspace\AssetPages\HueEffectListPage.xaml">
+    <Page Include="Views\ProjectWorkspace\AssetPages\HueActionListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ProjectWorkspace\AssetPages\HueSceneListPage.xaml">
+    <Page Include="Views\ProjectWorkspace\AssetPages\HueEffectListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -466,6 +473,10 @@
     <ProjectReference Include="..\AuthCommon\AuthCommon.csproj">
       <Project>{7fc2705b-ca32-49ed-8da8-1dd4b1f6fa6f}</Project>
       <Name>AuthCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">
+      <Project>{63cee799-e84d-4bd5-b5c1-c663f9f92da4}</Project>
+      <Name>CommonUtils</Name>
     </ProjectReference>
     <ProjectReference Include="..\KurosukeHueClient\KurosukeHueClient.csproj">
       <Project>{8dc3a0ed-e7be-4a3d-95c9-b6209273a80d}</Project>

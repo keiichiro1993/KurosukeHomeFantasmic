@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
 using Q42.HueApi;
+using CommonUtils;
 
 namespace KurosukeHueClient.Utils
 {
@@ -86,11 +87,11 @@ namespace KurosukeHueClient.Utils
                     }
                     catch (LinkButtonNotPressedException ex)
                     {
-                        //DebugHelper.Debugger.WriteDebugLog("Hue Bridge link button not yet pressed. " + ex.Message);
+                        DebugHelper.WriteDebugLog("Hue Bridge link button not yet pressed. " + ex.Message);
                     }
                     catch (Exception ex)
                     {
-                        //DebugHelper.Debugger.WriteErrorLog("Error while Hue Bridge registration. This might be because the list contains invalid bridge. Ignoring...", ex);
+                        DebugHelper.WriteErrorLog(ex, "Error while Hue Bridge registration. This might be because the list contains invalid bridge. Ignoring...");
                     }
                 }
             }

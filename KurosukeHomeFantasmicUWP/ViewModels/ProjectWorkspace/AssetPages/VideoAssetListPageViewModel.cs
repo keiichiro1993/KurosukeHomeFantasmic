@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Models;
 using KurosukeHomeFantasmicUWP.Models.JSON;
 using System;
 using System.Collections.ObjectModel;
@@ -60,7 +61,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace
             }
             catch (Exception ex)
             {
-                await Utils.DebugHelper.ShowErrorDialog(ex, "ビデオファイルのインポートに失敗しました。");
+                await DebugHelper.ShowErrorDialog(ex, "ビデオファイルのインポートに失敗しました。");
             }
 
             IsLoading = false;

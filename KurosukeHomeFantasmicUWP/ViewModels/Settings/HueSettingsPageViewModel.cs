@@ -1,4 +1,5 @@
-﻿using KurosukeHueClient.Models;
+﻿using CommonUtils;
+using KurosukeHueClient.Models;
 using KurosukeHueClient.Models.HueObjects;
 using System;
 using System.Collections.Generic;
@@ -142,7 +143,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.Settings
             }
             catch (Exception ex)
             {
-                await Utils.DebugHelper.ShowErrorDialog(ex, "Failed to get Entertainment Groups for " + bridge.UserName);
+                await DebugHelper.ShowErrorDialog(ex, "Failed to get Entertainment Groups for " + bridge.UserName);
             }
         }
     }

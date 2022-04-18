@@ -44,8 +44,8 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.AssetPages
                 case "Video":
                     pageType = typeof(VideoAssetListPage);
                     break;
-                case "Hue Scenes":
-                    pageType = typeof(HueSceneListPage);
+                case "Hue Actions":
+                    pageType = typeof(HueActionListPage);
                     break;
                 case "Hue Effects":
                     pageType = typeof(HueEffectListPage);

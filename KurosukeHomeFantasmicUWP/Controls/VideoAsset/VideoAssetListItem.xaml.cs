@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models.JSON;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Models.JSON;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -75,7 +76,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.VideoAsset
                 }
                 catch (Exception ex)
                 {
-                    await Utils.DebugHelper.ShowErrorDialog(ex, "ビデオアセットの読み込みに失敗しました。対象のビデオ " + VideoAsset.VideoAssetEntity.FilePath + " が存在しない可能性があります。");
+                    await DebugHelper.ShowErrorDialog(ex, "ビデオアセットの読み込みに失敗しました。対象のビデオ " + VideoAsset.VideoAssetEntity.FilePath + " が存在しない可能性があります。");
                 }
 
                 this.VideoAsset = videoAsset;

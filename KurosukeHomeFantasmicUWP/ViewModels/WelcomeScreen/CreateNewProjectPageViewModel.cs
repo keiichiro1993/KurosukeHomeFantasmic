@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -101,7 +102,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
             }
             catch (Exception ex)
             {
-                await Utils.DebugHelper.ShowErrorDialog(ex, "プロジェクトの作成に失敗しました。同名のプロジェクトが同一パスに存在していないかをご確認ください。");
+                await DebugHelper.ShowErrorDialog(ex, "プロジェクトの作成に失敗しました。同名のプロジェクトが同一パスに存在していないかをご確認ください。");
             }
 
             IsLoading = false;

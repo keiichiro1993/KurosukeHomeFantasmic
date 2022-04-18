@@ -1,4 +1,5 @@
 ﻿using AuthCommon.Models;
+using CommonUtils;
 using KurosukeHueClient.Models;
 using KurosukeHueClient.Utils;
 using System;
@@ -28,7 +29,7 @@ namespace KurosukeHomeFantasmicUWP.Utils.Auth
                 }
                 catch (Exception ex)
                 {
-                    //Debugger.WriteErrorLog("There's no credential. Ignoring.", ex);
+                    DebugHelper.WriteErrorLog(ex, "There's no credential. Ignoring.");
                 }
 
                 if (credentialList != null && credentialList.Count() > 0)

@@ -20,9 +20,9 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.AssetPages
     /// <summary>
     /// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
     /// </summary>
-    public sealed partial class HueSceneListPage : Page
+    public sealed partial class HueActionListPage : Page
     {
-        public HueSceneListPage()
+        public HueActionListPage()
         {
             this.InitializeComponent();
         }

@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
 
         <Button Grid.Column="0" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="3,0,0,3" Width="15"
-                Visibility="{x:Bind HueItem.IsEntertainment}"
+                Visibility="{x:Bind HueItem.IsRelizable}"
                 PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
                 ManipulationMode="TranslateX"
                 ManipulationStarted="UserControl_ManipulationStarted" 
@@ -32,7 +32,7 @@
             </FontIcon>
         </Button>
         <Button Grid.Column="2" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="0,3,3,0" Width="15"
-                Visibility="{x:Bind HueItem.IsEntertainment}"
+                Visibility="{x:Bind HueItem.IsRelizable}"
                 PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
                 ManipulationMode="TranslateX"
                 ManipulationStarted="UserControl_ManipulationStarted" 
@@ -82,7 +82,7 @@
                     <TextBlock Text="{x:Bind HueItem.StartTime, Mode=OneWay}"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                            Visibility="{x:Bind HueItem.IsEntertainment}">
+                            Visibility="{x:Bind HueItem.IsRelizable}">
                     <TextBlock HorizontalAlignment="Right" Text="End"/>
                     <TextBlock Text="{x:Bind HueItem.EndTime, Mode=OneWay}"/>
                 </StackPanel>

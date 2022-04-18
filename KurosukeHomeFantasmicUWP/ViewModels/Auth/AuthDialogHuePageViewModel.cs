@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Controls.ContentDialogs;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Controls.ContentDialogs;
 using KurosukeHomeFantasmicUWP.Utils;
 using KurosukeHomeFantasmicUWP.Utils.Auth;
 using KurosukeHueClient.Utils;

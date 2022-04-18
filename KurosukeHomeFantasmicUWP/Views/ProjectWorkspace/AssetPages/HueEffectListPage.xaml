@@ -5,10 +5,64 @@
     xmlns:local="using:KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.AssetPages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+    xmlns:models="using:KurosukeHueClient.Models.HueObjects"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" x:Name="menuPanel" Orientation="Horizontal" HorizontalAlignment="Stretch"
+                        ui:Effects.Shadow="{StaticResource ToolbarShadow}">
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Height" Value="40"/>
+                        <Setter Property="Width" Value="40"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="CornerRadius" Value="3"/>
+                    </Style>
+                    <Style TargetType="FontIcon">
+                        <Setter Property="FontSize" Value="25"/>
+                        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Button Click="AddHueEffectButton_Click">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;"/>
+                </Button>
+            </StackPanel>
+            <ListView Grid.Row="1" SelectionMode="Single" 
+                      IsItemClickEnabled="True"
+                      ItemsSource="{x:Bind ViewModel.Effects, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedEffect, Mode=TwoWay}">
+                <!--SelectionChanged="ListView_SelectionChanged" ItemClick="ListView_ItemClick"-->
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:HueEffect">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Effect:"/>
+                                <TextBlock Margin="5,0,0,0" Text="{x:Bind Path=Name}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{x:Bind Path=ActionsCount}"/>
+                                <TextBlock Margin="5,0,0,0" Text="actions"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <controls:Loading x:Name="LoadingControl" IsEnabled="{x:Bind ViewModel.IsLoading, Mode=OneWay}">
+            <controls:Loading.Background>
+                <AcrylicBrush TintOpacity="0.6" TintColor="DarkGray" FallbackColor="DarkGray" />
+            </controls:Loading.Background>
+            <StackPanel Orientation="Horizontal">
+                <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"/>
+                <TextBlock Text="{x:Bind ViewModel.LoadingMessage, Mode=OneWay}"/>
+            </StackPanel>
+        </controls:Loading>
     </Grid>
 </Page>

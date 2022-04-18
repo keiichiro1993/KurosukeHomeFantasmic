@@ -13,7 +13,7 @@
                              ItemInvoked="navigation_ItemInvoked">
             <muxc:NavigationView.MenuItems>
                 <muxc:NavigationViewItem  Content="Video" Tag="VideoAssetListPage" />
-                <muxc:NavigationViewItem  Content="Hue Scenes" Tag="HueSceneListPage" />
+                <muxc:NavigationViewItem  Content="Hue Actions" Tag="HueActionListPage" />
                 <muxc:NavigationViewItem  Content="Hue Effects" Tag="HueEffectListPage" />
             </muxc:NavigationView.MenuItems>
             <Frame x:Name="contentFrame"/>

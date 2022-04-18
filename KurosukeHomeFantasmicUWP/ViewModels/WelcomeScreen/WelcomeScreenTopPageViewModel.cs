@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Models;
 using KurosukeHomeFantasmicUWP.Models.SQL;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -96,7 +97,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
             }
             catch (Exception ex)
             {
-                await Utils.DebugHelper.ShowErrorDialog(ex, "プロジェクトを開くことができません。(" + LoadingMessage + ")");
+                await DebugHelper.ShowErrorDialog(ex, "プロジェクトを開くことができません。(" + LoadingMessage + ")");
             }
 
             IsLoading = false;

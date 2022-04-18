@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace KurosukeHueClient.Models.HueObjects
 {
-    public class EntertainmentAction
+    public class HueAction
     {
+        public string Id { get; set; }
+        public string Name { get; set; }
         public IEnumerable<EntertainmentLight> TargetLights { get; set; }
         public RGBColor Color { get; set; }
         public double Brightness { get; set; } 

@@ -29,9 +29,12 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.AssetPages
             this.InitializeComponent();
         }
 
-        private void AddHueEffectButton_Click(object sender, RoutedEventArgs e)
+        private async void AddHueEffectButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ((Button)sender).IsEnabled = false;
+            var dialog = new Controls.ContentDialogs.AddHueEffectDialog();
+            await dialog.ShowAsync();
+            ((Button)sender).IsEnabled = true;
         }
     }
 }

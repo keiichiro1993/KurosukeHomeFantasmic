@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.AssetPages;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,19 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.AssetPages
     /// </summary>
     public sealed partial class HueActionListPage : Page
     {
+        public HueActionListPageViewModel ViewModel { get; set; } = new HueActionListPageViewModel();
+
         public HueActionListPage()
         {
             this.InitializeComponent();
+        }
+
+        private async void AddHueActionButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((Button)sender).IsEnabled = false;
+            var dialog = new Controls.ContentDialogs.AddHueActionDialog();
+            await dialog.ShowAsync();
+            ((Button)sender).IsEnabled = true;
         }
     }
 }

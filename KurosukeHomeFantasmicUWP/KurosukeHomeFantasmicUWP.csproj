@@ -122,6 +122,9 @@
     <Compile Include="Controls\ContentDialogs\AddHueActionDialog.xaml.cs">
       <DependentUpon>AddHueActionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ContentDialogs\AddHueEffectDialog.xaml.cs">
+      <DependentUpon>AddHueEffectDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ContentDialogs\AddSceneDialog.xaml.cs">
       <DependentUpon>AddSceneDialog.xaml</DependentUpon>
     </Compile>
@@ -284,6 +287,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Controls\ContentDialogs\AddHueActionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ContentDialogs\AddHueEffectDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

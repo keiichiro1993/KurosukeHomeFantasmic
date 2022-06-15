@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace KurosukeHueClient.Models.HueObjects
 {
+    /// <summary>
+    /// HueAction represents the light state including the Color, Brightness and change duration.
+    /// </summary>
     public class HueAction
     {
         public string Id { get; set; }

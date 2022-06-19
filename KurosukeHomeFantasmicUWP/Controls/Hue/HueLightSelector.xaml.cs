@@ -80,11 +80,10 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
         private void SyncCheckboxStatus(CheckBox sender)
         {
             var selectedItem = (LightItemViewModel)sender.DataContext;
-            var isSelected = (bool)sender.IsChecked;
             var match = from item in SelectedLights
                         where item.HueLight.Id == selectedItem.Light.HueLight.Id
                         select item;
-            if (isSelected)
+            if (selectedItem.IsSelected)
             {
                 if (!match.Any())
                 {
@@ -102,7 +101,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
 
         private void lightListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var clickedItem = (LightItemViewModel)((ListViewItem)sender).DataContext;
+            var clickedItem = (LightItemViewModel)e.ClickedItem;
             clickedItem.IsSelected = !clickedItem.IsSelected;
         }
     }

@@ -17,14 +17,15 @@
                 <DataTemplate x:DataType="local:LightItemViewModel">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="40"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <CheckBox Grid.Column="0"
-                                  IsChecked="{x:Bind IsSelected, Mode=OneWay}"
+                                  IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                                   Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
                         <Grid Grid.Column="1">
-                            <TextBlock Text="{x:Bind Light.DeviceName}"/>
+                            <TextBlock VerticalAlignment="Center"
+                                       Text="{x:Bind Light.DeviceName}"/>
                         </Grid>
                     </Grid>
                 </DataTemplate>

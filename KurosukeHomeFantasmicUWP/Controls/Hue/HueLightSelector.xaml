@@ -23,6 +23,9 @@
                         <CheckBox Grid.Column="0"
                                   IsChecked="{x:Bind IsSelected, Mode=OneWay}"
                                   Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                        <Grid Grid.Column="1">
+                            <TextBlock Text="{x:Bind Light.DeviceName}"/>
+                        </Grid>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

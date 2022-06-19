@@ -5,6 +5,8 @@
     xmlns:local="using:KurosukeHomeFantasmicUWP.Controls.ContentDialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:huecontrol="using:KurosukeHomeFantasmicUWP.Controls.Hue" 
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     x:Uid="AddHueActionContentDialog"
     PrimaryButtonText="Add"
@@ -24,17 +26,44 @@
         </Style>
     </ContentDialog.SecondaryButtonStyle>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="AUTO"/>
-            <RowDefinition Height="AUTO"/>
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch">
-            <TextBlock x:Uid="AddHueActionContentDialog-NameTitle" />
-            <TextBox Text="{x:Bind ViewModel.Name, Mode=TwoWay}"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch">
-            <TextBlock x:Uid="AddHueActionContentDialog-DescriptionTitle"/>
-            <TextBox Text="{x:Bind ViewModel.Description, Mode=TwoWay}"/>
-        </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="AddHueActionContentDialog-NameTitle" />
+                <TextBox Text="{x:Bind ViewModel.Name, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="AddHueActionContentDialog-DescriptionTitle"/>
+                <TextBox Text="{x:Bind ViewModel.Description, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="AddHueActionContentDialog-SelectedLightsTitle"/>
+                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{x:Bind ViewModel.SelectedLights.Count, Mode=OneWay}"/>
+                        <TextBlock x:Uid="AddHueActionContentDialog-SelectedLightsSuffix"
+                               Margin="5,0,0,0"/>
+                    </StackPanel>
+                    <Button.Flyout>
+                        <Flyout>
+                            <huecontrol:HueLightSelector SelectedLights="{x:Bind ViewModel.SelectedLights}" AvailableLights="{x:Bind ViewModel.AvailableLights, Mode=OneWay}" />
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <controls:Loading x:Name="LoadingControl" IsEnabled="{x:Bind ViewModel.IsLoading, Mode=OneWay}">
+            <controls:Loading.Background>
+                <AcrylicBrush TintOpacity="0.6" TintColor="DarkGray" FallbackColor="DarkGray" />
+            </controls:Loading.Background>
+            <StackPanel Orientation="Horizontal">
+                <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"/>
+                <TextBlock Text="{x:Bind ViewModel.LoadingMessage, Mode=OneWay}"/>
+            </StackPanel>
+        </controls:Loading>
     </Grid>
 </ContentDialog>

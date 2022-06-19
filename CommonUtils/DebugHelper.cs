@@ -8,6 +8,12 @@ namespace CommonUtils
     public static class DebugHelper
     {
         private static string logHeader = "[KFantasmic] ";
+        /// <summary>
+        /// This method will write error log and show error dialog to the user.
+        /// </summary>
+        /// <param name="ex">Exception instance.</param>
+        /// <param name="message">Error message to show.</param>
+        /// <returns></returns>
         public static async Task ShowErrorDialog(Exception ex, string message)
         {
             WriteErrorLog(ex, message);

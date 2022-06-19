@@ -123,6 +123,12 @@
   <data name="AddHueActionContentDialog-NameTitle.Text" xml:space="preserve">
     <value>Name:</value>
   </data>
+  <data name="AddHueActionContentDialog-SelectedLightsSuffix.Text" xml:space="preserve">
+    <value>lights selected</value>
+  </data>
+  <data name="AddHueActionContentDialog-SelectedLightsTitle.Text" xml:space="preserve">
+    <value>Lights:</value>
+  </data>
   <data name="AddNewSceneContentDialog-DescriptionTitle.Text" xml:space="preserve">
     <value>Description:</value>
   </data>

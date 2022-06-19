@@ -51,7 +51,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
         private static void AvailableLightsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var instance = (HueLightSelector)d;
-            if (instance.IsLoaded)
+            if (instance.AvailableLights != null)
             {
                 foreach (var availableItem in instance.AvailableLights)
                 {

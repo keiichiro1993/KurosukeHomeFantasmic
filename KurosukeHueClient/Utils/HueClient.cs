@@ -59,16 +59,19 @@ namespace KurosukeHueClient.Utils
             var allHueGroups = await client.GetEntertainmentGroups();
             var allHueLights = await client.GetLightsAsync();
 
-            foreach (var light in allHueLights)
-            {
-                allLights.Add(new Models.HueObjects.Light(light, user));
-            }
-
             foreach (var hueGroup in allHueGroups)
             {
-                var lights = from light in allLights
-                             where hueGroup.Lights.Contains(light.HueLight.Id)
-                             select light;
+                var streamingGroup = new StreamingGroup(hueGroup.Locations);
+                var baseLayer = streamingGroup.GetNewLayer(isBaseLayer: true);
+
+                var lights = new List<Models.HueObjects.Light>();
+                foreach (var entLight in baseLayer)
+                {
+                    var light = (from hueLight in allHueLights
+                                 where hueLight.Id == entLight.Id.ToString()
+                                 select hueLight).First();
+                    lights.Add(new Models.HueObjects.Light(light, entLight));
+                }
                 hueDeviceGroups.Add(new Group(hueGroup, lights.ToList(), null));
             }
 
@@ -115,7 +118,7 @@ namespace KurosukeHueClient.Utils
             var allLights = new List<Models.HueObjects.Light>();
             foreach (var light in allHueLights)
             {
-                allLights.Add(new Models.HueObjects.Light(light, user));
+                allLights.Add(new Models.HueObjects.Light(light, null));
             }
 
             foreach (var hueGroup in allHueGroups)

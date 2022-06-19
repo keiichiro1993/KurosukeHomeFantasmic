@@ -10,14 +10,14 @@ namespace KurosukeHueClient.Models.HueObjects
 {
     public class Light : IDevice
     {
-        public Light(Q42.HueApi.Light light, HueUser user)
+        public Light(Q42.HueApi.Light light, Q42.HueApi.Streaming.Models.EntertainmentLight entertainmentLight)
         {
             HueLight = light;
-            HueUser = user;
+            HueEntertainmentLight = entertainmentLight;
         }
 
         public Q42.HueApi.Light HueLight { get; set; }
-        public HueUser HueUser { get; set; }
+        Q42.HueApi.Streaming.Models.EntertainmentLight HueEntertainmentLight { get; set; }
 
         public string DeviceName { get { return HueLight.Name; } }
 

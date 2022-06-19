@@ -137,6 +137,9 @@
     <Compile Include="Controls\ContentDialogs\SaveDialog.xaml.cs">
       <DependentUpon>SaveDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Hue\HueLightSelector.xaml.cs">
+      <DependentUpon>HueLightSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Preview\VideoTimelinePreviewChildControl.xaml.cs">
       <DependentUpon>VideoTimelinePreviewChildControl.xaml</DependentUpon>
     </Compile>
@@ -307,6 +310,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ContentDialogs\SaveDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Hue\HueLightSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

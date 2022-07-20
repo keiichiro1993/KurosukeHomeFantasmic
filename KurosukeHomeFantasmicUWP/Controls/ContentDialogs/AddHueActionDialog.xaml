@@ -31,6 +31,7 @@
                 <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch">
                 <TextBlock x:Uid="AddHueActionContentDialog-NameTitle" />
@@ -51,6 +52,19 @@
                     <Button.Flyout>
                         <Flyout>
                             <huecontrol:HueLightSelector SelectedLights="{x:Bind ViewModel.SelectedLights}" AvailableLights="{x:Bind ViewModel.AvailableLights, Mode=OneWay}" />
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="AddHueActionContentDialog-ActionTitle"/>
+                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Uid="AddHueActionContentDialog-ActionButtonTitle"/>
+                    </StackPanel>
+                    <Button.Flyout>
+                        <Flyout>
+                            <huecontrol:HueActionEditor Action="{x:Bind ViewModel.Action}" />
                         </Flyout>
                     </Button.Flyout>
                 </Button>

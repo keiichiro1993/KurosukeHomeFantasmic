@@ -12,20 +12,25 @@
     <Grid>
         <ListView x:Name="lightListView" SelectionMode="None" IsItemClickEnabled="True"
                   ItemsSource="{x:Bind ListItems, Mode=OneWay}"
-                  ItemClick="lightListView_ItemClick">
+                  ItemClick="lightListView_ItemClick"
+                  Padding="0" Margin="0">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:LightItemViewModel">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <CheckBox Grid.Column="0"
                                   IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
                                   Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
                         <Grid Grid.Column="1">
-                            <TextBlock VerticalAlignment="Center"
-                                       Text="{x:Bind Light.DeviceName}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="{x:Bind Light.DeviceName}"/>
+                                <TextBlock VerticalAlignment="Center" Text=":"/>
+                                <TextBlock VerticalAlignment="Center" Text="{x:Bind Light.DeviceType}"
+                                           Margin="5,0"/>
+                            </StackPanel>
                         </Grid>
                     </Grid>
                 </DataTemplate>

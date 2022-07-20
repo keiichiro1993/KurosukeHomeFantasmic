@@ -12,10 +12,5 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.AssetPages
     {
         public ObservableCollection<HueAction> Actions { get { return Utils.OnMemoryCache.HueActions; } }
         public HueAction SelectedAction { get; set; }
-
-        public async Task AddAction()
-        {
-            
-        }
     }
 }

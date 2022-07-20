@@ -37,6 +37,8 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            ViewModel.AddAction();
+            this.Hide();
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -69,6 +71,12 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
         }
 
         public string Description { get; set; }
+        public HueAction Action { get; set; } = new HueAction
+        {
+            Color = new Q42.HueApi.ColorConverters.RGBColor(255,255,255),
+            Brightness = 255,
+            Duration = new TimeSpan(0, 0, 5)
+        };
 
         public ObservableCollection<Light> SelectedLights = new ObservableCollection<Light>();
 
@@ -104,6 +112,11 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
                 await CommonUtils.DebugHelper.ShowErrorDialog(ex, "Failed to retrieve Hue Entertainment Groups.");
             }
             IsLoading = false;
+        }
+
+        public void AddAction()
+        {
+            Utils.OnMemoryCache.HueActions.Add(Action);
         }
 
         private async System.Threading.Tasks.Task GetHueLights()

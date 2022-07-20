@@ -1,0 +1,33 @@
+﻿<UserControl
+    x:Class="KurosukeHomeFantasmicUWP.Controls.Hue.HueActionEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KurosukeHomeFantasmicUWP.Controls.Hue"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Windows.UI.Xaml.Controls"
+    xmlns:parts="using:KurosukeHomeFantasmicUWP.Controls.Timeline.Parts"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="AUTO"/>
+        </Grid.RowDefinitions>
+        <muxc:ColorPicker Grid.Row="0" Color="{x:Bind ViewModel.Color, Mode=TwoWay}" IsAlphaEnabled="False" IsAlphaSliderVisible="False"/>
+        <muxc:Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{StaticResource ResourceKey=SkyBlueAcrylicBrush}"
+                     Margin="10,15"/>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="AUTO"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Duration:"
+                       Margin="0,0,5,0" VerticalAlignment="Center"/>
+            <parts:TimeSpanTextBox Grid.Column="1" TotalCanvasDuration="{x:Bind Action.Duration, Mode=TwoWay}"/>
+        </Grid>
+    </Grid>
+</UserControl>

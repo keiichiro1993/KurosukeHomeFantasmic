@@ -146,6 +146,9 @@
     <PackageReference Include="Q42.HueApi.Entertainment">
       <Version>3.18.1</Version>
     </PackageReference>
+    <PackageReference Include="System.Text.Json">
+      <Version>6.0.5</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AuthCommon\AuthCommon.csproj">

@@ -17,7 +17,7 @@ namespace KurosukeHueClient.Models.HueObjects
         }
 
         public Q42.HueApi.Light HueLight { get; set; }
-        Q42.HueApi.Streaming.Models.EntertainmentLight HueEntertainmentLight { get; set; }
+        public Q42.HueApi.Streaming.Models.EntertainmentLight HueEntertainmentLight { get; set; }
 
         public string DeviceName { get { return HueLight.Name; } }
 

@@ -116,6 +116,10 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
 
         public void AddAction()
         {
+            Action.Name = Name;
+            Action.Description = Description;
+            Action.TargetLights = (from light in SelectedLights
+                                  select light.HueEntertainmentLight).ToList();
             Utils.OnMemoryCache.HueActions.Add(Action);
         }
 

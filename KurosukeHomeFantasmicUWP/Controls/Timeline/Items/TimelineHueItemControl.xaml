@@ -71,7 +71,7 @@
             </Grid>
             <Grid Grid.Row="1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="{x:Bind HueItem.Type}"/>
+                    <TextBlock Text="{x:Bind HueItem.HueItemType}"/>
                     <TextBlock Text="-"/>
                     <TextBlock Text="{x:Bind HueItem.Name}"/>
                 </StackPanel>

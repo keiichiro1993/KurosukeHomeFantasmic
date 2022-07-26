@@ -1,5 +1,7 @@
-﻿using KurosukeHomeFantasmicUWP.Controls.Timeline.Items;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Controls.Timeline.Items;
 using KurosukeHomeFantasmicUWP.Models.Timeline;
+using KurosukeHueClient.Models.HueObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -85,7 +87,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
 
         private void SingleTimeline_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach(var item in TimelineData.TimelineItems) 
+            foreach (var item in TimelineData.TimelineItems)
             {
                 var control = new TimelineVideoItemControl();
                 control.VideoItem = (TimelineVideoItem)item;
@@ -134,19 +136,56 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
                 var item = outObject as Models.VideoAsset;
                 if (item != null)
                 {
-                    var videoItem = new TimelineVideoItem();
-                    await videoItem.Init(item);
-                    videoItem.CanvasWidth = singleTimelineBackground.ActualWidth;
-                    videoItem.TotalCanvasDuration = TotalCanvasDuration;
-                    TimelineData.TimelineItems.Add(videoItem);
+                    try
+                    {
+                        var videoItem = new TimelineVideoItem();
+                        await videoItem.Init(item);
+                        videoItem.CanvasWidth = singleTimelineBackground.ActualWidth;
+                        videoItem.TotalCanvasDuration = TotalCanvasDuration;
+                        TimelineData.TimelineItems.Add(videoItem);
+                    }
+                    catch (Exception ex)
+                    {
+                        await DebugHelper.ShowErrorDialog(ex, "Failed to add the Video to the timeline.");
+                    }
                 }
+            }
+            else if (e.DataView.Properties.TryGetValue("HueAction", out outObject))
+            {
+                var item = outObject as HueAction;
+                if (item != null)
+                {
+                    try
+                    {
+                        var hueItem = new TimelineHueItem(item);
+                        hueItem.CanvasWidth = singleTimelineBackground.ActualWidth;
+                        hueItem.TotalCanvasDuration = TotalCanvasDuration;
+                        TimelineData.TimelineItems.Add(hueItem);
+                    }
+                    catch (Exception ex)
+                    {
+                        await DebugHelper.ShowErrorDialog(ex, "Failed to add the Hue Action to the timeline.");
+                    }
+                }
+            }
+            else if (e.DataView.Properties.TryGetValue("HueEffect", out outObject))
+            {
             }
         }
 
         private void singleTimeline_DragOver(object sender, DragEventArgs e)
         {
-            e.AcceptedOperation = DataPackageOperation.Copy;
             e.DragUIOverride.IsContentVisible = true;
+            object outObject = null;
+            e.DataView.Properties.TryGetValue("TimelineType", out outObject);
+            if (outObject != null && (string)outObject == TimelineData.TimelineType.ToString())
+            {
+                e.AcceptedOperation = DataPackageOperation.Copy;
+            }
+            else
+            {
+                e.AcceptedOperation = DataPackageOperation.None;
+            }
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)

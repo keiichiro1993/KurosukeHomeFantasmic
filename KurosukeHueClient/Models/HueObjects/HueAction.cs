@@ -20,8 +20,6 @@ namespace KurosukeHueClient.Models.HueObjects
         public string Description { get; set; }
         public List<EntertainmentLight> TargetLights { get; set; }
         public RGBColor Color { get; set; }
-        [JsonIgnore]
-        public SolidColorBrush UIColor { get { return new SolidColorBrush(Windows.UI.Color.FromArgb(255, (byte)(Color.R*255), (byte)(Color.G*255), (byte)(Color.B*255))); } }
         public double Brightness { get; set; } 
         public TimeSpan Duration { get; set; }
     }

@@ -8,6 +8,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
     xmlns:models="using:KurosukeHueClient.Models.HueObjects"
+    xmlns:customcontrols="using:KurosukeHomeFantasmicUWP.Controls.Hue"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -36,38 +37,11 @@
                 </Button>
             </StackPanel>
             <ListView Grid.Row="1" SelectionMode="Single" 
-                      IsItemClickEnabled="True" CanDrag="True"
+                      IsItemClickEnabled="True"
                       ItemsSource="{x:Bind ViewModel.Actions, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedAction, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:HueAction">
-                        <Grid>
-                            <Grid.Resources>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="VerticalAlignment" Value="Center"/>
-                                </Style>
-                            </Grid.Resources>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="AUTO"/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center"
-                                        Margin="5,10">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Effect:"/>
-                                    <TextBlock Margin="5,0,0,0" Text="{x:Bind Path=Name}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Duration:"/>
-                                    <TextBlock Margin="5,0,0,0" Text="{x:Bind Path=Duration}"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Lights:"/>
-                                    <TextBlock Margin="5,0,0,0" Text="{x:Bind TargetLights.Count}"/>
-                                </StackPanel>
-                            </StackPanel>
-                            <Rectangle Grid.Column="1" Fill="{x:Bind UIColor}" 
-                                       Width="50" Height="50" VerticalAlignment="Center"/>
-                        </Grid>
+                        <customcontrols:HueActionListItem Action="{Binding}" CanDrag="True"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

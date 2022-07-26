@@ -41,7 +41,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
                         Id = Guid.NewGuid().ToString(),
                         Name = ViewModel.Name,
                         Description = ViewModel.Description,
-                        TimelineType = (Models.Timeline.Timeline.TimelineTypeEnum)Enum.Parse(typeof(Models.Timeline.Timeline.TimelineTypeEnum), ViewModel.SelectedType),
+                        TimelineType = (Models.Timeline.Timeline.TimelineTypes)Enum.Parse(typeof(Models.Timeline.Timeline.TimelineTypes), ViewModel.SelectedType),
                         TimelineItems = new ObservableCollection<ITimelineItem>(),
                         TargetDisplayId = Guid.NewGuid().ToString()
                     };
@@ -53,7 +53,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
                         Id = Guid.NewGuid().ToString(),
                         Name = ViewModel.Name,
                         Description = ViewModel.Description,
-                        TimelineType = (Models.Timeline.Timeline.TimelineTypeEnum)Enum.Parse(typeof(Models.Timeline.Timeline.TimelineTypeEnum), ViewModel.SelectedType),
+                        TimelineType = (Models.Timeline.Timeline.TimelineTypes)Enum.Parse(typeof(Models.Timeline.Timeline.TimelineTypes), ViewModel.SelectedType),
                         TimelineItems = new ObservableCollection<ITimelineItem>(),
                     };
                     ViewModel.Scene.Timelines.Add(newTimeline);

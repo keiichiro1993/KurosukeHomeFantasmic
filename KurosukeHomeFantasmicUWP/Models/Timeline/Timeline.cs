@@ -15,8 +15,8 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
 
         public List<ITimelineItemEntity> TimelineItemEntities { get; set; }
 
-        public enum TimelineTypeEnum { Video, Hue }
-        public TimelineTypeEnum TimelineType { get; set; }
+        public enum TimelineTypes { Video, Hue }
+        public TimelineTypes TimelineType { get; set; }
 
         public string TargetDisplayId { get; set; }
 
@@ -30,7 +30,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
             {
                 foreach (var entity in TimelineItemEntities)
                 {
-                    if (TimelineType == TimelineTypeEnum.Video)
+                    if (TimelineType == TimelineTypes.Video)
                     {
                         var item = new TimelineVideoItem();
                         await item.Init(entity);

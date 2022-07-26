@@ -47,6 +47,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.VideoAsset
         private void Grid_DragStarting(UIElement sender, DragStartingEventArgs args)
         {
             args.Data.Properties.Add("VideoAsset", VideoAsset);
+            args.Data.Properties.Add("TimelineType", "Video");
         }
     }
 

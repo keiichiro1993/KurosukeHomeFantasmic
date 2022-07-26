@@ -1,4 +1,5 @@
 ﻿using KurosukeHomeFantasmicUWP.Models.JSON;
+using KurosukeHueClient.Models.HueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,34 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
 {
     public class TimelineHueItem : ViewModels.ViewModelBase, ITimelineItem
     {
-        public enum TimelineHueItemType { State, Iteration }
-        public TimelineHueItemType Type { get; set; }
-        public Visibility IsRelizable { get { return Type == TimelineHueItemType.Iteration ? Visibility.Visible : Visibility.Collapsed; } }
+        private HueAction hueAction;
+        private HueEffect hueEffect;
+        public TimelineHueItem() { }
+        public TimelineHueItem(HueAction action)
+        {
+            hueAction = action;
+        }
+        public TimelineHueItem(HueEffect effect)
+        {
+            hueEffect = effect;
+        }
+
+        public enum TimelineHueItemTypes { Action, Actions, IteratorEffect }
+        public TimelineHueItemTypes HueItemType
+        {
+            get
+            {
+                if (hueAction != null)
+                {
+                    return TimelineHueItemTypes.Action;
+                }
+                else
+                {
+                    return hueEffect.EffectMode == HueEffect.EffectModes.Actions ? TimelineHueItemTypes.Actions : TimelineHueItemTypes.IteratorEffect;
+                }
+            }
+        }
+        public Visibility IsRelizable { get { return HueItemType == TimelineHueItemTypes.IteratorEffect ? Visibility.Visible : Visibility.Collapsed; } }
         public string Name { get; set; }
         public bool Locked { get; set; }
 

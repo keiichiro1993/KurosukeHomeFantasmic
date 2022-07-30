@@ -6,8 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:videoasset="using:KurosukeHomeFantasmicUWP.Controls.VideoAsset"
-    Canvas.Left="{x:Bind VideoItem.Left, Mode=OneWay}"
-    Width="{x:Bind VideoItem.Width, Mode=OneWay}"
+    Canvas.Left="{x:Bind TimelineVideoItem.Left, Mode=OneWay}"
+    Width="{x:Bind TimelineVideoItem.Width, Mode=OneWay}"
     mc:Ignorable="d"
     d:DesignHeight="100"
     d:DesignWidth="200">
@@ -56,34 +56,34 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="{x:Bind VideoItem.VideoAsset.ThumbnailUri, Mode=OneWay}"/>
+                    <Image Source="{x:Bind TimelineVideoItem.VideoAsset.ThumbnailUri, Mode=OneWay}"/>
                     <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                        <TextBlock Text="{x:Bind VideoItem.VideoAsset.VideoAssetEntity.Name, Mode=OneWay}" FontSize="17"/>
-                        <TextBlock Text="{x:Bind VideoItem.VideoAsset.VideoAssetEntity.FilePath, Mode=OneWay}" FontSize="10"/>
+                        <TextBlock Text="{x:Bind TimelineVideoItem.VideoAsset.VideoAssetEntity.Name, Mode=OneWay}" FontSize="17"/>
+                        <TextBlock Text="{x:Bind TimelineVideoItem.VideoAsset.VideoAssetEntity.FilePath, Mode=OneWay}" FontSize="10"/>
                     </StackPanel>
                 </StackPanel>
 
                 <ToggleButton HorizontalAlignment="Right" Width="30" Height="30" Padding="0"
-                              IsChecked="{x:Bind VideoItem.Locked, Mode=TwoWay}">
+                              IsChecked="{x:Bind TimelineVideoItem.Locked, Mode=TwoWay}">
                     <FontIcon Glyph="&#xE72E;" FontFamily="Segoe MDL2 Assets"/>
                 </ToggleButton>
             </Grid>
             <Grid Grid.Row="1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock Text="Trimmed:"/>
-                    <TextBlock Text="{x:Bind VideoItem.VideoStartPosition, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind TimelineVideoItem.VideoStartPosition, Mode=OneWay}"/>
                     <TextBlock Text="-"/>
-                    <TextBlock Text="{x:Bind VideoItem.VideoEndPosition, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind TimelineVideoItem.VideoEndPosition, Mode=OneWay}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Left">
                     <TextBlock Text="Start"/>
-                    <TextBlock Text="{x:Bind VideoItem.StartTime, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind TimelineVideoItem.StartTime, Mode=OneWay}"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                     <TextBlock HorizontalAlignment="Right" Text="End"/>
-                    <TextBlock Text="{x:Bind VideoItem.EndTime, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind TimelineVideoItem.EndTime, Mode=OneWay}"/>
                 </StackPanel>
             </Grid>
         </Grid>

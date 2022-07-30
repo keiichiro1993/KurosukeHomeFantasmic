@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace KurosukeHomeFantasmicUWP.Models.Timeline
 {
@@ -12,6 +13,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         TimeSpan TotalCanvasDuration { get; set; }
         double CanvasWidth { get; set; }
         bool Locked { get; set; }
+        Visibility IsResizable { get; }
 
         double Left { get; }
         double Width { get; }
@@ -19,6 +21,8 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         TimeSpan StartTime { get; set; }
         TimeSpan EndTime { get; }
         TimeSpan Duration { get; set; }
+
+        string ItemId { get; }
 
         TimelineVideoItemEntity ToEntity();
     }

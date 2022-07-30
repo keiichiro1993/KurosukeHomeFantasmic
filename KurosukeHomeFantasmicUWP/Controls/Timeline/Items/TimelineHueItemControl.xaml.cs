@@ -18,21 +18,21 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
 {
-    public sealed partial class TimelineHueItemControl : UserControl
+    public sealed partial class TimelineHueItemControl : UserControl, ITimelineItemControl
     {
         public TimelineHueItemControl()
         {
             this.InitializeComponent();
         }
 
-        public TimelineHueItem HueItem
+        public ITimelineItem TimelineItem
         {
             get => (TimelineHueItem)GetValue(HueItemProperty);
             set => SetValue(HueItemProperty, value);
         }
 
         public static readonly DependencyProperty HueItemProperty =
-          DependencyProperty.Register(nameof(HueItem), typeof(TimelineHueItem), typeof(TimelineHueItemControl),
+          DependencyProperty.Register(nameof(TimelineItem), typeof(TimelineHueItem), typeof(TimelineHueItemControl),
               new PropertyMetadata(null, HueItemChanged));
 
         private static void HueItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -41,13 +41,15 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
             //instance.HueItem = e.NewValue as TimelineHueItem;
         }
 
+        public TimelineHueItem TimelineHueItem { get { return (TimelineHueItem)TimelineItem; } }
+
         // Manipulations
         private void UserControl_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
         {
-            if (!HueItem.Locked)
+            if (!TimelineItem.Locked)
             {
                 var x = e.Delta.Translation.X;
-                HueItem.StartTime += HueItem.TotalCanvasDuration * (x / HueItem.CanvasWidth);
+                TimelineItem.StartTime += TimelineItem.TotalCanvasDuration * (x / TimelineItem.CanvasWidth);
             }
         }
 
@@ -63,7 +65,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
 
         private void ResizeButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (!HueItem.Locked)
+            if (!TimelineItem.Locked)
             {
                 Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.SizeWestEast, 10);
             }
@@ -71,7 +73,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
 
         private void ResizeButton_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (!HueItem.Locked)
+            if (!TimelineItem.Locked)
             {
                 Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 0);
             }
@@ -79,19 +81,19 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
 
         private void ResizeStartButton_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
         {
-            if (!HueItem.Locked)
+            if (!TimelineItem.Locked)
             {
                 var x = e.Delta.Translation.X;
-                HueItem.StartTime += HueItem.TotalCanvasDuration * (x / HueItem.CanvasWidth);
+                TimelineItem.StartTime += TimelineItem.TotalCanvasDuration * (x / TimelineItem.CanvasWidth);
             }
         }
 
         private void ResizeEndButton_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
         {
-            if (!HueItem.Locked)
+            if (!TimelineItem.Locked)
             {
                 var x = e.Delta.Translation.X;
-                HueItem.Duration += HueItem.TotalCanvasDuration * (x / HueItem.CanvasWidth);
+                TimelineItem.Duration += TimelineItem.TotalCanvasDuration * (x / TimelineItem.CanvasWidth);
             }
         }
     }

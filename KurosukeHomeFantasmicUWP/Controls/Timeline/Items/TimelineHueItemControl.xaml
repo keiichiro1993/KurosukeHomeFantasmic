@@ -5,8 +5,8 @@
     xmlns:local="using:KurosukeHomeFantasmicUWP.Controls.Timeline.Items"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Canvas.Left="{x:Bind HueItem.Left, Mode=OneWay}"
-    Width="{x:Bind HueItem.Width, Mode=OneWay}"
+    Canvas.Left="{x:Bind TimelineHueItem.Left, Mode=OneWay}"
+    Width="{x:Bind TimelineHueItem.Width, Mode=OneWay}"
     mc:Ignorable="d"
     d:DesignHeight="100"
     d:DesignWidth="200">
@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
 
         <Button Grid.Column="0" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="3,0,0,3" Width="15"
-                Visibility="{x:Bind HueItem.IsRelizable}"
+                Visibility="{x:Bind TimelineHueItem.IsResizable}"
                 PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
                 ManipulationMode="TranslateX"
                 ManipulationStarted="UserControl_ManipulationStarted" 
@@ -32,7 +32,7 @@
             </FontIcon>
         </Button>
         <Button Grid.Column="2" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="0,3,3,0" Width="15"
-                Visibility="{x:Bind HueItem.IsRelizable}"
+                Visibility="{x:Bind TimelineHueItem.IsResizable}"
                 PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
                 ManipulationMode="TranslateX"
                 ManipulationStarted="UserControl_ManipulationStarted" 
@@ -65,26 +65,26 @@
                 </StackPanel>-->
 
                 <ToggleButton HorizontalAlignment="Right" Width="30" Height="30" Padding="0"
-                              IsChecked="{x:Bind HueItem.Locked, Mode=TwoWay}">
+                              IsChecked="{x:Bind TimelineHueItem.Locked, Mode=TwoWay}">
                     <FontIcon Glyph="&#xE72E;" FontFamily="Segoe MDL2 Assets"/>
                 </ToggleButton>
             </Grid>
             <Grid Grid.Row="1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="{x:Bind HueItem.HueItemType}"/>
+                    <TextBlock Text="{x:Bind TimelineHueItem.HueItemType}"/>
                     <TextBlock Text="-"/>
-                    <TextBlock Text="{x:Bind HueItem.Name}"/>
+                    <TextBlock Text="{x:Bind TimelineHueItem.Name}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Left">
                     <TextBlock Text="Start"/>
-                    <TextBlock Text="{x:Bind HueItem.StartTime, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind TimelineHueItem.StartTime, Mode=OneWay}"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                            Visibility="{x:Bind HueItem.IsRelizable}">
+                            Visibility="{x:Bind TimelineHueItem.IsResizable}">
                     <TextBlock HorizontalAlignment="Right" Text="End"/>
-                    <TextBlock Text="{x:Bind HueItem.EndTime, Mode=OneWay}"/>
+                    <TextBlock Text="{x:Bind TimelineHueItem.EndTime, Mode=OneWay}"/>
                 </StackPanel>
             </Grid>
         </Grid>

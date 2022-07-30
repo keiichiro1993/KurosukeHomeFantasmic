@@ -90,7 +90,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
             foreach (var item in TimelineData.TimelineItems)
             {
                 var control = new TimelineVideoItemControl();
-                control.VideoItem = (TimelineVideoItem)item;
+                control.TimelineItem = (TimelineVideoItem)item;
                 singleTimeline.Children.Add(control);
             }
             TimelineData.TimelineItems.CollectionChanged += TimelineItems_CollectionChanged;
@@ -98,18 +98,22 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
 
         private void TimelineItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems != null)
+            if (e.NewItems != null && e.NewItems.Count > 0)
             {
-                var newItems = e.NewItems.Cast<TimelineVideoItem>();
-                foreach (var newItem in newItems)
+                foreach (var newItem in e.NewItems.Cast<ITimelineItem>())
                 {
-                    var item = from childItem in singleTimeline.Children
-                               where childItem.GetType() == typeof(TimelineVideoItemControl) && ((TimelineVideoItemControl)childItem).VideoItem == newItem
-                               select childItem;
-                    if (!item.Any())
+                    // Video Items
+                    if (e.NewItems.GetType() == typeof(TimelineVideoItem))
                     {
                         var control = new TimelineVideoItemControl();
-                        control.VideoItem = newItem;
+                        control.TimelineItem = newItem;
+                        singleTimeline.Children.Add(control);
+                    }
+                    // Hue Items
+                    else if (e.NewItems.GetType() == typeof(TimelineHueItem))
+                    {
+                        var control = new TimelineHueItemControl();
+                        control.TimelineItem = newItem;
                         singleTimeline.Children.Add(control);
                     }
                 }
@@ -117,13 +121,12 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
 
             if (e.OldItems != null)
             {
-                var oldItems = e.OldItems.Cast<TimelineVideoItem>();
-                var removeItems = from childItem in singleTimeline.Children
-                                  where childItem.GetType() == typeof(TimelineVideoItemControl) && oldItems.Contains(((TimelineVideoItemControl)childItem).VideoItem)
-                                  select childItem;
-                if (removeItems.Any())
+                foreach (var item in e.OldItems.Cast<ITimelineItem>())
                 {
-                    foreach (var element in removeItems) { singleTimeline.Children.Remove(element); }
+                    var removeElement = (from child in singleTimeline.Children
+                                         where ((ITimelineItemControl)child).TimelineItem == item
+                                         select child).FirstOrDefault();
+                    if (removeElement != null) { singleTimeline.Children.Remove(removeElement); }
                 }
             }
         }

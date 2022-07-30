@@ -192,6 +192,7 @@
     <Compile Include="Models\ShowScene.cs" />
     <Compile Include="Models\SQL\RecentProjectEntity.cs" />
     <Compile Include="Models\Timeline\ITimelineItem.cs" />
+    <Compile Include="Models\Timeline\ITimelineItemControl.cs" />
     <Compile Include="Models\Timeline\Timeline.cs" />
     <Compile Include="Models\JSON\ITimelineItemEntity.cs" />
     <Compile Include="Models\Timeline\TimelineHueItem.cs" />

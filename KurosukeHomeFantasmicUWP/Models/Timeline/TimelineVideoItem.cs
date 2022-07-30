@@ -31,7 +31,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
             get { return videoProperties.Duration > TimeSpan.FromSeconds(10); }
             set { throw new InvalidOperationException("Resizable property of Videoitem is read-only."); }
         }
-        public Visibility ResizeUIVisibility { get { return Resizable ? Visibility.Visible : Visibility.Collapsed; } }
+        public Visibility IsResizable { get { return Resizable ? Visibility.Visible : Visibility.Collapsed; } }
 
         // Timeline Position
         private TimeSpan _StartTime;
@@ -126,6 +126,8 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         public bool Locked { get; set; }
 
         public MediaSource VideoMediaSource { get; set; }
+
+        public string ItemId { get { return VideoAssetId; } }
 
         // newly added video
         public async Task Init(VideoAsset videoAsset)

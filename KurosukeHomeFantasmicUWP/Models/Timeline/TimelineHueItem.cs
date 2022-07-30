@@ -38,7 +38,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                 }
             }
         }
-        public Visibility IsRelizable { get { return HueItemType == TimelineHueItemTypes.IteratorEffect ? Visibility.Visible : Visibility.Collapsed; } }
+        public Visibility IsResizable { get { return HueItemType == TimelineHueItemTypes.IteratorEffect ? Visibility.Visible : Visibility.Collapsed; } }
         public string Name { get; set; }
         public bool Locked { get; set; }
 
@@ -96,6 +96,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
             }
         }
 
+
         private void RaisePositionPropertyChanged()
         {
             RaisePropertyChanged("StartTime");
@@ -103,6 +104,24 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
             RaisePropertyChanged("EndTime");
             RaisePropertyChanged("Width");
             RaisePropertyChanged("Left");
+        }
+
+        public string ItemId
+        {
+            get
+            {
+                switch (HueItemType)
+                {
+                    case TimelineHueItemTypes.Action:
+                        return hueAction.Id;
+                    case TimelineHueItemTypes.Actions:
+                        return hueEffect.Id;
+                    case TimelineHueItemTypes.IteratorEffect:
+                        return hueEffect.Id;
+                    default:
+                        return null;
+                }
+            }
         }
 
         public TimelineVideoItemEntity ToEntity()

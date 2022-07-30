@@ -24,18 +24,18 @@
                                         Margin="5,10">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Effect:"/>
-                    <TextBlock Margin="5,0,0,0" Text="{x:Bind Path=Action.Name}"/>
+                    <TextBlock Margin="5,0,0,0" Text="{x:Bind Path=Action.Name, Mode=OneWay}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Duration:"/>
-                    <TextBlock Margin="5,0,0,0" Text="{x:Bind Path=Action.Duration}"/>
+                    <TextBlock Margin="5,0,0,0" Text="{x:Bind Path=Action.Duration, Mode=OneWay}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Lights:"/>
-                    <TextBlock Margin="5,0,0,0" Text="{x:Bind Action.TargetLights.Count}"/>
+                    <TextBlock Margin="5,0,0,0" Text="{x:Bind Action.TargetLights.Count, Mode=OneWay}"/>
                 </StackPanel>
             </StackPanel>
-            <Rectangle Grid.Column="1" Fill="{x:Bind ViewModel.UIColor}" 
+            <Rectangle Grid.Column="1" Fill="{x:Bind ViewModel.UIColor, Mode=OneWay}" 
                                        Width="50" Height="50" VerticalAlignment="Center"/>
         </Grid>
     </Grid>

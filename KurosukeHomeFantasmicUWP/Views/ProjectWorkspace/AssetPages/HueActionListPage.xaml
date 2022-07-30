@@ -41,7 +41,7 @@
                       ItemsSource="{x:Bind ViewModel.Actions, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedAction, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:HueAction">
-                        <customcontrols:HueActionListItem Action="{Binding}" CanDrag="True"/>
+                        <customcontrols:HueActionListItem Action="{x:Bind local:HueActionListPage.HueAction((models:HueAction))}" CanDrag="True"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

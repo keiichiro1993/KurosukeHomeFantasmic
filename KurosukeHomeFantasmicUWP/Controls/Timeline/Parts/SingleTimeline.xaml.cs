@@ -103,14 +103,14 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
                 foreach (var newItem in e.NewItems.Cast<ITimelineItem>())
                 {
                     // Video Items
-                    if (e.NewItems.GetType() == typeof(TimelineVideoItem))
+                    if (newItem.GetType() == typeof(TimelineVideoItem))
                     {
                         var control = new TimelineVideoItemControl();
                         control.TimelineItem = newItem;
                         singleTimeline.Children.Add(control);
                     }
                     // Hue Items
-                    else if (e.NewItems.GetType() == typeof(TimelineHueItem))
+                    else if (newItem.GetType() == typeof(TimelineHueItem))
                     {
                         var control = new TimelineHueItemControl();
                         control.TimelineItem = newItem;

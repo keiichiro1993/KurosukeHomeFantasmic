@@ -17,10 +17,12 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         public TimelineHueItem(HueAction action)
         {
             hueAction = action;
+            Duration = action.Duration;
         }
         public TimelineHueItem(HueEffect effect)
         {
             hueEffect = effect;
+            Duration = effect.Duration;
         }
 
         public enum TimelineHueItemTypes { Action, Actions, IteratorEffect }

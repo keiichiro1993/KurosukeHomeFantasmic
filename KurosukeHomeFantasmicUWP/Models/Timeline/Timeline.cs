@@ -30,15 +30,23 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
             {
                 foreach (var entity in TimelineItemEntities)
                 {
-                    if (TimelineType == TimelineTypes.Video)
+                    ITimelineItem item = null;
+                    switch (TimelineType)
                     {
-                        var item = new TimelineVideoItem();
+                        case TimelineTypes.Video:
+                            item = new TimelineVideoItem();
+                            break;
+                        case TimelineTypes.Hue:
+                            item = new TimelineHueItem();
+                            break;
+                        default:
+                            throw new NotImplementedException("The entity type" + TimelineType + "is not implemented yet.");
+                    }
+
+                    if (item != null)
+                    {
                         await item.Init(entity);
                         TimelineItems.Add(item);
-                    }
-                    else
-                    {
-                        throw new NotImplementedException("The entity type except TimelineVideoItemEntity is not implemented yet.");
                     }
                 }
             }

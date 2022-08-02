@@ -89,9 +89,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
         {
             foreach (var item in TimelineData.TimelineItems)
             {
-                var control = new TimelineVideoItemControl();
-                control.TimelineItem = (TimelineVideoItem)item;
-                singleTimeline.Children.Add(control);
+                AddItemControl(item);
             }
             TimelineData.TimelineItems.CollectionChanged += TimelineItems_CollectionChanged;
         }
@@ -102,20 +100,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
             {
                 foreach (var newItem in e.NewItems.Cast<ITimelineItem>())
                 {
-                    // Video Items
-                    if (newItem.GetType() == typeof(TimelineVideoItem))
-                    {
-                        var control = new TimelineVideoItemControl();
-                        control.TimelineItem = newItem;
-                        singleTimeline.Children.Add(control);
-                    }
-                    // Hue Items
-                    else if (newItem.GetType() == typeof(TimelineHueItem))
-                    {
-                        var control = new TimelineHueItemControl();
-                        control.TimelineItem = newItem;
-                        singleTimeline.Children.Add(control);
-                    }
+                    AddItemControl(newItem);
                 }
             }
 
@@ -128,6 +113,28 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
                                          select child).FirstOrDefault();
                     if (removeElement != null) { singleTimeline.Children.Remove(removeElement); }
                 }
+            }
+        }
+
+        private void AddItemControl(ITimelineItem newItem)
+        {
+            ITimelineItemControl control = null;
+            switch (TimelineData.TimelineType)
+            {
+                // Video Items
+                case Models.Timeline.Timeline.TimelineTypes.Video:
+                    control = new TimelineVideoItemControl();
+                    break;
+                // Hue Items
+                case Models.Timeline.Timeline.TimelineTypes.Hue:
+                    control = new TimelineHueItemControl();
+                    break;
+            }
+
+            if (control != null)
+            {
+                control.TimelineItem = newItem;
+                singleTimeline.Children.Add((UIElement)control);
             }
         }
 

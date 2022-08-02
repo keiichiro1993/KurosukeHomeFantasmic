@@ -24,6 +24,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
 
         string ItemId { get; }
 
-        TimelineVideoItemEntity ToEntity();
+        ITimelineItemEntity ToEntity();
+        Task Init(ITimelineItemEntity entity);
     }
 }

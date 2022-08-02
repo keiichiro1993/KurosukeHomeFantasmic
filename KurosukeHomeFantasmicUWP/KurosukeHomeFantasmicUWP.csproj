@@ -186,6 +186,7 @@
       <DependentUpon>VideoAssetListItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\FantasmicProject.cs" />
+    <Compile Include="Models\JSON\TimelineHueItemEntity.cs" />
     <Compile Include="Models\JSON\TimelineVideoItemEntity.cs" />
     <Compile Include="Models\JSON\VideoAssetEntity.cs" />
     <Compile Include="Models\ProjectSettings.cs" />

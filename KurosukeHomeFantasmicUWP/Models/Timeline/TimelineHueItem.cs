@@ -126,9 +126,53 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
             }
         }
 
-        public TimelineVideoItemEntity ToEntity()
+        public async Task Init(ITimelineItemEntity entity)
         {
-            throw new NotImplementedException();
+            await Task.Run(() =>
+            {
+                var hueEntity = (TimelineHueItemEntity)entity;
+                if (hueEntity.HueItemType == TimelineHueItemTypes.Action)
+                {
+                    var actions = from action in Utils.OnMemoryCache.HueActions
+                                  where action.Id == hueEntity.HueItemId
+                                  select action;
+                    if (actions.Any())
+                    {
+                        hueAction = actions.First();
+                        StartTime = hueEntity.StartTime;
+                        Locked = hueEntity.Locked;
+                        Duration = hueAction.Duration;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Hue Action with ID " + hueEntity.HueItemId + " not found.");
+                    }
+                }
+                else
+                {
+                    var effects = from effect in Utils.OnMemoryCache.HueEffects
+                                  where effect.Id == hueEntity.HueItemId
+                                  select effect;
+                    if (effects.Any())
+                    {
+                        hueEffect = effects.First();
+                        StartTime = hueEntity.StartTime;
+                        Locked = hueEntity.Locked;
+                        Duration = hueEntity.Duration;
+                    }
+                }
+            });
+        }
+
+        public ITimelineItemEntity ToEntity()
+        {
+            var entity = new TimelineHueItemEntity();
+            entity.StartTime = StartTime;
+            entity.Locked = Locked;
+            entity.Duration = Duration;
+            entity.HueItemType = HueItemType;
+            entity.HueItemId = hueAction != null ? hueAction.Id : hueEffect.Id;
+            return entity;
         }
     }
 }

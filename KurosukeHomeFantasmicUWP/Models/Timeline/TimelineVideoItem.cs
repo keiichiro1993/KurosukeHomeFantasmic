@@ -149,8 +149,9 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         // from saved json
         public async Task Init(ITimelineItemEntity entity)
         {
+            var videoEntity = (TimelineVideoItemEntity)entity;
             var videoAssets = from item in Utils.OnMemoryCache.VideoAssetCache
-                              where item.VideoAssetEntity.Id == entity.VideoAssetId
+                              where item.VideoAssetEntity.Id == videoEntity.VideoAssetId
                               select item;
             if (videoAssets.Any())
             {
@@ -158,22 +159,20 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                 videoFile = await VideoAsset.GetVideoAssetFile();
                 VideoMediaSource = MediaSource.CreateFromStorageFile(videoFile);
                 videoProperties = await videoFile.Properties.GetVideoPropertiesAsync();
-                //CanvasWidth = canvasWidth;
-                //TotalCanvasDuration = totalCanvasDuration;
             }
             else
             {
-                throw new InvalidOperationException("Video Asset with ID " + entity.VideoAssetId + " not found in Asset List.");
+                throw new InvalidOperationException("Video Asset with ID " + videoEntity.VideoAssetId + " not found in Asset List.");
             }
 
-            VideoAssetId = entity.VideoAssetId;
-            _StartTime = entity.StartTime;
-            _VideoStartPosition = entity.VideoStartPosition;
-            _VideoEndPosition = entity.VideoEndPosition;
-            Locked = entity.Locked;
+            VideoAssetId = videoEntity.VideoAssetId;
+            _StartTime = videoEntity.StartTime;
+            _VideoStartPosition = videoEntity.VideoStartPosition;
+            _VideoEndPosition = videoEntity.VideoEndPosition;
+            Locked = videoEntity.Locked;
         }
 
-        public TimelineVideoItemEntity ToEntity()
+        public ITimelineItemEntity ToEntity()
         {
             var entity = new TimelineVideoItemEntity();
             entity.VideoAssetId = VideoAssetId;

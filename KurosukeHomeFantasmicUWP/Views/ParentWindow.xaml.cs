@@ -26,6 +26,12 @@ namespace KurosukeHomeFantasmicUWP.Views
         {
             this.InitializeComponent();
             mainFrame.Navigate(typeof(ProjectWorkspace.ProjectWorkspacePage));
+
+            Window.Current.Closed += Current_Closed;
+        }
+
+        private void Current_Closed(object sender, Windows.UI.Core.CoreWindowEventArgs e)
+        {
         }
     }
 }

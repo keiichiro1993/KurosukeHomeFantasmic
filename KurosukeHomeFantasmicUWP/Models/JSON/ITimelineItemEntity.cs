@@ -4,15 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using static KurosukeHomeFantasmicUWP.Models.Timeline.Timeline;
 
 namespace KurosukeHomeFantasmicUWP.Models.JSON
 {
-    public class ITimelineItemEntity
+    public interface ITimelineItemEntity
     {
-        public TimeSpan StartTime { get; set; }
-        public bool Locked { get; set; }
-        public string VideoAssetId { get; set; }
-        public TimeSpan VideoStartPosition { get; set; }
-        public TimeSpan VideoEndPosition { get; set; }
+        TimeSpan StartTime { get; set; }
+        bool Locked { get; set; }
     }
 }

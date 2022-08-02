@@ -92,6 +92,10 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
                     Utils.AppGlobalVariables.VideoAssetDB = new Utils.DBHelpers.VideoAssetsHelper();
                     Utils.OnMemoryCache.VideoAssetCache = new ObservableCollection<VideoAsset>();
 
+                    Utils.AppGlobalVariables.HueAssetDB = new Utils.DBHelpers.HueAssetHelper();
+                    Utils.OnMemoryCache.HueEffects = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueEffect>();
+                    Utils.OnMemoryCache.HueActions = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueAction>();
+
                     Utils.AppGlobalVariables.SceneAssetDB = new Utils.DBHelpers.SceneAssetHelper();
                     Utils.OnMemoryCache.Scenes = new ObservableCollection<ShowScene>();
 

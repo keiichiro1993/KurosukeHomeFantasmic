@@ -16,6 +16,7 @@ namespace KurosukeHomeFantasmicUWP.Utils
         public static StorageFile ProjectFile;
         public static StorageFolder AssetsFolder;
         public static VideoAssetsHelper VideoAssetDB;
+        public static HueAssetHelper HueAssetDB;
         public static SceneAssetHelper SceneAssetDB;
 
         public static ObservableCollection<IUser> DeviceUsers;
@@ -25,8 +26,8 @@ namespace KurosukeHomeFantasmicUWP.Utils
     {
         public static ObservableCollection<VideoAsset> VideoAssetCache; //cache on memory since this holds bitmap images
         public static ObservableCollection<ShowScene> Scenes;
-        public static ObservableCollection<HueAction> HueActions = new ObservableCollection<HueAction>();
-        public static ObservableCollection<HueEffect> HueEffects = new ObservableCollection<HueEffect>();
+        public static ObservableCollection<HueAction> HueActions;
+        public static ObservableCollection<HueEffect> HueEffects;
 
         public static ProjectWorkspaceViewModel GlobalViewModel; //Controls playback etc.
     }

@@ -32,6 +32,8 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
         {
             try
             {
+                //save hue assets
+                await Utils.AppGlobalVariables.HueAssetDB.SaveHueAssets(Utils.OnMemoryCache.HueActions.ToList(), Utils.OnMemoryCache.HueEffects.ToList());
                 //save scenes
                 foreach (var item in Utils.OnMemoryCache.Scenes)
                 {
@@ -39,12 +41,12 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
                     {
                         timeline.EncodeTimelineItemToEntity();
                     }
-                }           
+                }
                 await Utils.AppGlobalVariables.SceneAssetDB.SaveSceneAssets(Utils.OnMemoryCache.Scenes.ToList());
                 //save project settings
                 var projectJson = JsonSerializer.Serialize(Utils.AppGlobalVariables.CurrentProject);
                 await FileIO.WriteTextAsync(Utils.AppGlobalVariables.ProjectFile, projectJson);
-                
+
                 this.Hide();
             }
             catch (Exception ex)

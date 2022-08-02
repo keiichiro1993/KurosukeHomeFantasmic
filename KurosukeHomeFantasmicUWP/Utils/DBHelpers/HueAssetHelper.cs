@@ -1,4 +1,6 @@
 ﻿using KurosukeHomeFantasmicUWP.Models;
+using KurosukeHomeFantasmicUWP.Models.JSON;
+using KurosukeHueClient.Models.HueObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,10 +13,10 @@ using Windows.Storage;
 
 namespace KurosukeHomeFantasmicUWP.Utils.DBHelpers
 {
-    public class SceneAssetHelper : DBHelperBase
+    public class HueAssetHelper : DBHelperBase
     {
-        string fileName = "scenes.db";
-        List<ShowScene> sceneAssetsDBContent;
+        string fileName = "hue.db";
+        HueAssetEntity dbContent;
 
         private async Task Init()
         {
@@ -24,39 +26,32 @@ namespace KurosukeHomeFantasmicUWP.Utils.DBHelpers
                 if (!await assetDBFolder.FileExists(fileName))
                 {
                     assetDBFile = await assetDBFolder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
-                    sceneAssetsDBContent = new List<ShowScene>();
-                    await SaveObjectToJsonFile(sceneAssetsDBContent);
+                    dbContent = new HueAssetEntity(new List<HueAction>(), new List<HueEffect>());
+                    await SaveObjectToJsonFile(dbContent);
                 }
                 else
                 {
                     assetDBFile = await assetDBFolder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
                     using (var jsonStream = await assetDBFile.OpenReadAsync())
                     {
-                        sceneAssetsDBContent = await JsonSerializer.DeserializeAsync<List<ShowScene>>(jsonStream.AsStream(), serializerOptions);
-                    }
-                }
-
-                foreach (var scene in sceneAssetsDBContent)
-                {
-                    foreach (var timeline in scene.Timelines)
-                    {
-                        await timeline.DecodeTimelineItemEntities();
+                        dbContent = await JsonSerializer.DeserializeAsync<HueAssetEntity>(jsonStream.AsStream(), serializerOptions);
                     }
                 }
             }
         }
 
-        public async Task<List<ShowScene>> GetSceneAssets()
+        public async Task<HueAssetEntity> GetHueAssets()
         {
             await Init();
-            return sceneAssetsDBContent;
+            return dbContent;
         }
 
-        public async Task SaveSceneAssets(List<ShowScene> scenes)
+        public async Task SaveHueAssets(List<HueAction> actions, List<HueEffect> effects)
         {
             await Init();
-            await SaveObjectToJsonFile(scenes);
-            sceneAssetsDBContent = scenes;
+            dbContent.HueActions = actions;
+            dbContent.HueEffects = effects;
+            await SaveObjectToJsonFile(dbContent);
         }
     }
 }

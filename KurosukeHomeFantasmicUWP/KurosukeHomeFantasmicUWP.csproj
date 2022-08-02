@@ -186,6 +186,7 @@
       <DependentUpon>VideoAssetListItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\FantasmicProject.cs" />
+    <Compile Include="Models\JSON\HueAssetEntity.cs" />
     <Compile Include="Models\JSON\TimelineHueItemEntity.cs" />
     <Compile Include="Models\JSON\TimelineVideoItemEntity.cs" />
     <Compile Include="Models\JSON\VideoAssetEntity.cs" />
@@ -202,9 +203,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\AppGlobalVariables.cs" />
     <Compile Include="Utils\Auth\AccountManager.cs" />
+    <Compile Include="Utils\DBHelpers\DBHelperBase.cs" />
     <Compile Include="Utils\DBHelpers\SceneAssetHelper.cs" />
     <Compile Include="Utils\DBHelpers\StorageFolderExtention.cs" />
     <Compile Include="Utils\DBHelpers\TimeSpanJsonConverter.cs" />
+    <Compile Include="Utils\DBHelpers\HueAssetHelper.cs" />
     <Compile Include="Utils\DBHelpers\VideoAssetHelper.cs" />
     <Compile Include="Utils\UIHelpers\StorageThumbnailExtension.cs" />
     <Compile Include="Utils\UIHelpers\WindowLauncher.cs" />

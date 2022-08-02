@@ -13,7 +13,9 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public List<ITimelineItemEntity> TimelineItemEntities { get; set; }
+        // interface is not supported for Json Deserialization...
+        public List<TimelineVideoItemEntity> TimelineVideoItemEntities { get; set; }
+        public List<TimelineHueItemEntity> TimelineHueItemEntities { get; set; }
 
         public enum TimelineTypes { Video, Hue }
         public TimelineTypes TimelineType { get; set; }
@@ -26,36 +28,52 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
 
         public async Task DecodeTimelineItemEntities()
         {
-            if (TimelineItemEntities != null)
+            switch (TimelineType)
             {
-                foreach (var entity in TimelineItemEntities)
-                {
-                    ITimelineItem item = null;
-                    switch (TimelineType)
+                case TimelineTypes.Video:
+                    if (TimelineVideoItemEntities != null)
                     {
-                        case TimelineTypes.Video:
-                            item = new TimelineVideoItem();
-                            break;
-                        case TimelineTypes.Hue:
-                            item = new TimelineHueItem();
-                            break;
-                        default:
-                            throw new NotImplementedException("The entity type" + TimelineType + "is not implemented yet.");
+                        foreach (var item in TimelineVideoItemEntities)
+                        {
+                            var timelineItem = new TimelineVideoItem();
+                            await timelineItem.Init(item);
+                            TimelineItems.Add(timelineItem);
+                        }
                     }
-
-                    if (item != null)
+                    break;
+                case TimelineTypes.Hue:
+                    if (TimelineHueItemEntities != null)
                     {
-                        await item.Init(entity);
-                        TimelineItems.Add(item);
+                        foreach (var item in TimelineHueItemEntities)
+                        {
+                            var timelineItem = new TimelineHueItem();
+                            await timelineItem.Init(item);
+                            TimelineItems.Add(timelineItem);
+                        }
                     }
-                }
+                    break;
             }
         }
 
         public void EncodeTimelineItemToEntity()
         {
-            TimelineItemEntities = new List<ITimelineItemEntity>();
-            foreach (var entity in TimelineItems) { TimelineItemEntities.Add(entity.ToEntity()); }
+            switch (TimelineType)
+            {
+                case TimelineTypes.Video:
+                    TimelineVideoItemEntities = new List<TimelineVideoItemEntity>();
+                    foreach (var item in TimelineItems)
+                    {
+                        TimelineVideoItemEntities.Add((TimelineVideoItemEntity)item.ToEntity());
+                    }
+                    break;
+                case TimelineTypes.Hue:
+                    TimelineHueItemEntities = new List<TimelineHueItemEntity>();
+                    foreach (var item in TimelineItems)
+                    {
+                        TimelineHueItemEntities.Add((TimelineHueItemEntity)item.ToEntity());
+                    }
+                    break;
+            }
         }
     }
 }

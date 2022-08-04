@@ -209,6 +209,7 @@
     <Compile Include="Utils\DBHelpers\TimeSpanJsonConverter.cs" />
     <Compile Include="Utils\DBHelpers\HueAssetHelper.cs" />
     <Compile Include="Utils\DBHelpers\VideoAssetHelper.cs" />
+    <Compile Include="Utils\RequestHelpers\HueRequestHelper.cs" />
     <Compile Include="Utils\UIHelpers\StorageThumbnailExtension.cs" />
     <Compile Include="Utils\UIHelpers\WindowLauncher.cs" />
     <Compile Include="ViewModels\Auth\AuthDialogHuePageViewModel.cs" />

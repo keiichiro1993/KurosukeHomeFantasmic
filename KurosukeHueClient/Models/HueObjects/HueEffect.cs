@@ -19,6 +19,7 @@ namespace KurosukeHueClient.Models.HueObjects
         public EffectModes EffectMode { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan Duration { get; set; }
         public IEnumerable<HueAction> Actions { get; set; }

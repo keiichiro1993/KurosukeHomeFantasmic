@@ -15,7 +15,7 @@ namespace KurosukeHomeFantasmicUWP.Utils.DBHelpers
 {
     public class HueAssetHelper : DBHelperBase
     {
-        string fileName = "hue.db";
+        string fileName = "hueassets.db";
         HueAssetEntity dbContent;
 
         private async Task Init()
@@ -40,6 +40,7 @@ namespace KurosukeHomeFantasmicUWP.Utils.DBHelpers
             }
         }
 
+
         public async Task<HueAssetEntity> GetHueAssets()
         {
             await Init();
@@ -49,8 +50,10 @@ namespace KurosukeHomeFantasmicUWP.Utils.DBHelpers
         public async Task SaveHueAssets(List<HueAction> actions, List<HueEffect> effects)
         {
             await Init();
-            dbContent.HueActions = actions;
-            dbContent.HueEffects = effects;
+            dbContent.HueActions = (from action in actions
+                                   select new HueActionEntity(action)).ToList();
+            dbContent.HueEffects = (from effect in effects
+                                    select new HueEffectEntity(effect)).ToList();
             await SaveObjectToJsonFile(dbContent);
         }
     }

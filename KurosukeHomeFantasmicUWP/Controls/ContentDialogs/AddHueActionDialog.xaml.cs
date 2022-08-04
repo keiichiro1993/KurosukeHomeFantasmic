@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.ViewModels;
+﻿using KurosukeHomeFantasmicUWP.Utils.RequestHelpers;
+using KurosukeHomeFantasmicUWP.ViewModels;
 using KurosukeHueClient.Models;
 using KurosukeHueClient.Models.HueObjects;
 using System;
@@ -102,14 +103,14 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
         public async void Init()
         {
             IsLoading = true;
-            LoadingMessage = "Retrieving Hue Entertainment Groups...";
+            LoadingMessage = "Retrieving Hue Entertainment Lights...";
             try
             {
-                await GetHueLights();
+                AvailableLights = await HueRequestHelper.GetHueLights();
             }
             catch (Exception ex)
             {
-                await CommonUtils.DebugHelper.ShowErrorDialog(ex, "Failed to retrieve Hue Entertainment Groups.");
+                await CommonUtils.DebugHelper.ShowErrorDialog(ex, "Failed to retrieve Hue Entertainment Lights.");
             }
             IsLoading = false;
         }
@@ -121,54 +122,6 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             Action.TargetLights = (from light in SelectedLights
                                   select light.HueEntertainmentLight).ToList();
             Utils.OnMemoryCache.HueActions.Add(Action);
-        }
-
-        private async System.Threading.Tasks.Task GetHueLights()
-        {
-            var hueUsers = from user in Utils.AppGlobalVariables.DeviceUsers
-                           where user.UserType == AuthCommon.Models.UserType.Hue
-                           select user as HueUser;
-
-            if (hueUsers.Any())
-            {
-                if (!string.IsNullOrEmpty(Utils.AppGlobalVariables.CurrentProject.Settings.ActiveHueBridgeId))
-                {
-                    var matchedUsers = from user in hueUsers
-                                       where user.Id == Utils.AppGlobalVariables.CurrentProject.Settings.ActiveHueBridgeId
-                                       select user;
-
-                    var hueUser = matchedUsers.FirstOrDefault();
-                    if (hueUser != null)
-                    {
-                        Group hueGroup = null;
-                        using (var client = new KurosukeHueClient.Utils.HueClient(hueUser))
-                        {
-                            var groups = await client.GetEntertainmentGroupsAsync();
-                            if (!string.IsNullOrEmpty(Utils.AppGlobalVariables.CurrentProject.Settings.EntertainmentGroupId))
-                            {
-                                var matchedGroups = from hueGroupItem in groups
-                                                    where hueGroupItem.HueGroup.Id == Utils.AppGlobalVariables.CurrentProject.Settings.EntertainmentGroupId
-                                                    select hueGroupItem;
-                                hueGroup = matchedGroups.FirstOrDefault();
-                            }
-                        }
-
-                        if (hueGroup != null)
-                        {
-                            AvailableLights = new List<Light>(from device in hueGroup.Devices
-                                                              select device as Light);
-                        }
-                        else
-                        {
-                            throw new Exception("Selected Hue Entertainment Group not found.");
-                        }
-                    }
-                    else
-                    {
-                        throw new Exception("Selected bridge not found. Please re-check your configuration and network location.");
-                    }
-                }
-            }
         }
     }
 }

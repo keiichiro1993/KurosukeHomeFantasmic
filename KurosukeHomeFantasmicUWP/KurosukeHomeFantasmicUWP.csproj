@@ -196,6 +196,7 @@
     </Compile>
     <Compile Include="Models\FantasmicProject.cs" />
     <Compile Include="Models\JSON\HueAssetEntity.cs" />
+    <Compile Include="Models\JSON\HueBridgeCacheEntity.cs" />
     <Compile Include="Models\JSON\TimelineHueItemEntity.cs" />
     <Compile Include="Models\JSON\TimelineVideoItemEntity.cs" />
     <Compile Include="Models\JSON\VideoAssetEntity.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Utils\AppGlobalVariables.cs" />
     <Compile Include="Utils\Auth\AccountManager.cs" />
     <Compile Include="Utils\DBHelpers\DBHelperBase.cs" />
+    <Compile Include="Utils\DBHelpers\HueBridgeCacheHelper.cs" />
     <Compile Include="Utils\DBHelpers\SceneAssetHelper.cs" />
     <Compile Include="Utils\DBHelpers\StorageFolderExtention.cs" />
     <Compile Include="Utils\DBHelpers\TimeSpanJsonConverter.cs" />

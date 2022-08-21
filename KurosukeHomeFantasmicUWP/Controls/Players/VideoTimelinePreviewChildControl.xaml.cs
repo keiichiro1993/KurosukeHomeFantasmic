@@ -21,65 +21,18 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KurosukeHomeFantasmicUWP.Controls.Players
 {
-    internal sealed partial class VideoTimelinePreviewChildControl : UserControl
+    internal sealed partial class VideoTimelinePreviewChildControl : TimelinePlayerBase
     {
-        VideoTimelinePreviewChildControlViewModel ViewModel { get; set; } = new VideoTimelinePreviewChildControlViewModel();
         public VideoTimelinePreviewChildControl()
         {
             this.InitializeComponent();
-            this.Loaded += VideoTimelinePreviewControl_Loaded;
         }
 
-        private void VideoTimelinePreviewControl_Loaded(object sender, RoutedEventArgs e)
+        public override void UpdatePlaybackState()
         {
-            playerElement.MediaPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
-        }
-
-        private void PlaybackSession_PlaybackStateChanged(MediaPlaybackSession sender, object args)
-        {
-            // There must be a pattern that the playback state of other preview is still Playing but this preview doesn't have anything to play.
-            // have to think the way to sync
-            //PlaybackState = sender.PlaybackState;
-        }
-
-        public TimeSpan CurrentPosition
-        {
-            get => (TimeSpan)GetValue(CurrentPositionProperty);
-            set => SetValue(CurrentPositionProperty, value);
-        }
-
-        public static readonly DependencyProperty CurrentPositionProperty =
-          DependencyProperty.Register(nameof(CurrentPosition), typeof(TimeSpan), typeof(VideoTimelinePreviewChildControl),
-              new PropertyMetadata(null, CurrentPositionChanged));
-
-        private static void CurrentPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var previewControl = (VideoTimelinePreviewChildControl)d;
-            previewControl.UpdatePosition();
-            previewControl.UpdatePlaybackState();
-        }
-
-        public MediaPlaybackState? PlaybackState
-        {
-            get => (MediaPlaybackState?)GetValue(PlaybackStateProperty);
-            set => SetValue(PlaybackStateProperty, value);
-        }
-
-        public static readonly DependencyProperty PlaybackStateProperty =
-            DependencyProperty.Register(nameof(PlaybackState), typeof(MediaPlaybackState?), typeof(VideoTimelinePreviewChildControl),
-                new PropertyMetadata(null, PlaybackStateChanged));
-
-        private static void PlaybackStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var previewControl = (VideoTimelinePreviewChildControl)d;
-            previewControl.UpdatePlaybackState();
-        }
-
-        public void UpdatePlaybackState()
-        {
-            if (playerElement.MediaPlayer.PlaybackSession.PlaybackState != PlaybackState)
+            if (playerElement.MediaPlayer.PlaybackSession.PlaybackState != base.PlaybackState)
             {
-                switch (PlaybackState)
+                switch (base.PlaybackState)
                 {
                     case MediaPlaybackState.Playing:
                         playerElement.MediaPlayer.Play();
@@ -91,30 +44,13 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
             }
         }
 
-        public Models.Timeline.Timeline VideoTimeline
-        {
-            get => (Models.Timeline.Timeline)GetValue(VideoTimelineProperty);
-            set => SetValue(VideoTimelineProperty, value);
-        }
-
-        public static readonly DependencyProperty VideoTimelineProperty =
-            DependencyProperty.Register(nameof(VideoTimeline), typeof(Models.Timeline.Timeline), typeof(VideoTimelinePreviewChildControl),
-                new PropertyMetadata(null, VideoTimelineChanged));
-
-        private static void VideoTimelineChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var previewControl = (VideoTimelinePreviewChildControl)d;
-            previewControl.UpdatePosition();
-            previewControl.UpdatePlaybackState();
-        }
-
         private TimelineVideoItem videoItem;
-        public void UpdatePosition()
+        public override void UpdatePosition()
         {
-            if (VideoTimeline != null && CurrentPosition != null)
+            if (base.Timeline != null && base.CurrentPosition != null)
             {
-                var candidates = from item in VideoTimeline.TimelineItems
-                                 where ((TimelineVideoItem)item).StartTime <= CurrentPosition && ((TimelineVideoItem)item).EndTime >= CurrentPosition
+                var candidates = from item in base.Timeline.TimelineItems
+                                 where ((TimelineVideoItem)item).StartTime <= base.CurrentPosition && ((TimelineVideoItem)item).EndTime >= base.CurrentPosition
                                  select item;
                 if (candidates.Any())
                 {
@@ -132,7 +68,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
                         playerElement.MediaPlayer.Source = videoItem.VideoMediaSource;
                     }
 
-                    var videoPosition = CurrentPosition - targetItem.StartTime;
+                    var videoPosition = base.CurrentPosition - targetItem.StartTime;
 
                     if ((playerElement.MediaPlayer.PlaybackSession.Position - videoPosition).Duration() > TimeSpan.FromMilliseconds(150))
                     {
@@ -146,10 +82,5 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
                 }
             }
         }
-    }
-
-    public class VideoTimelinePreviewChildControlViewModel : ViewModels.ViewModelBase
-    {
-
     }
 }

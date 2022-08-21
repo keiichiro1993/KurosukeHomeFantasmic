@@ -13,6 +13,6 @@
         <local:HueTimelinePlayerChild
             CurrentPosition="{x:Bind ViewModel.GlobalViewModel.GlobalCurrentPosition, Mode=OneWay}"
             PlaybackState="{x:Bind ViewModel.GlobalViewModel.GlobalPlaybackState, Mode=OneWay}"
-            HueTimeline="{x:Bind ViewModel.Timeline, Mode=OneWay}"/>
+            Timeline="{x:Bind ViewModel.Timeline, Mode=OneWay}"/>
     </Grid>
 </UserControl>

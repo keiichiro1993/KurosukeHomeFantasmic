@@ -152,7 +152,9 @@
     <Compile Include="Controls\Players\HueTimelinePlayerChild.xaml.cs">
       <DependentUpon>HueTimelinePlayerChild.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Players\TimelineItemPlayerBase.cs" />
+    <Compile Include="Controls\Players\TimelinePlayerBase.xaml.cs">
+      <DependentUpon>TimelinePlayerBase.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Players\VideoTimelinePreviewChildControl.xaml.cs">
       <DependentUpon>VideoTimelinePreviewChildControl.xaml</DependentUpon>
     </Compile>
@@ -349,6 +351,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Players\HueTimelinePlayerChild.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Players\TimelinePlayerBase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

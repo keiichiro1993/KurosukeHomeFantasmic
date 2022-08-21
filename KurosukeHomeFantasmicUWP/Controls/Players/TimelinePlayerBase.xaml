@@ -1,5 +1,5 @@
-﻿<local:TimelinePlayerBase
-    x:Class="KurosukeHomeFantasmicUWP.Controls.Players.VideoTimelinePreviewChildControl"
+﻿<UserControl
+    x:Class="KurosukeHomeFantasmicUWP.Controls.Players.TimelinePlayerBase"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:KurosukeHomeFantasmicUWP.Controls.Players"
@@ -10,6 +10,6 @@
     d:DesignWidth="400">
 
     <Grid>
-        <MediaPlayerElement x:Name="playerElement" AutoPlay="False" />
+
     </Grid>
-</local:TimelinePlayerBase>
+</UserControl>

@@ -22,69 +22,19 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KurosukeHomeFantasmicUWP.Controls.Players
 {
-    internal sealed partial class HueTimelinePlayerChild : UserControl
+    internal sealed partial class HueTimelinePlayerChild : TimelinePlayerBase
     {
         public HueTimelinePlayerChild()
         {
             this.InitializeComponent();
         }
 
-        public TimeSpan CurrentPosition
-        {
-            get => (TimeSpan)GetValue(CurrentPositionProperty);
-            set => SetValue(CurrentPositionProperty, value);
-        }
-
-        public static readonly DependencyProperty CurrentPositionProperty =
-          DependencyProperty.Register(nameof(CurrentPosition), typeof(TimeSpan), typeof(HueTimelinePlayerChild),
-              new PropertyMetadata(null, CurrentPositionChanged));
-
-        private static void CurrentPositionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var playerControl = (HueTimelinePlayerChild)d;
-            playerControl.UpdatePosition();
-            playerControl.UpdatePlaybackState();
-        }
-
-        public MediaPlaybackState? PlaybackState
-        {
-            get => (MediaPlaybackState?)GetValue(PlaybackStateProperty);
-            set => SetValue(PlaybackStateProperty, value);
-        }
-
-        public static readonly DependencyProperty PlaybackStateProperty =
-            DependencyProperty.Register(nameof(PlaybackState), typeof(MediaPlaybackState?), typeof(HueTimelinePlayerChild),
-                new PropertyMetadata(null, PlaybackStateChanged));
-
-        private static void PlaybackStateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var playerControl = (HueTimelinePlayerChild)d;
-            playerControl.UpdatePlaybackState();
-        }
-
-        public Models.Timeline.Timeline HueTimeline
-        {
-            get => (Models.Timeline.Timeline)GetValue(HueTimelineProperty);
-            set => SetValue(HueTimelineProperty, value);
-        }
-
-        public static readonly DependencyProperty HueTimelineProperty =
-            DependencyProperty.Register(nameof(HueTimeline), typeof(Models.Timeline.Timeline), typeof(HueTimelinePlayerChild),
-                new PropertyMetadata(null, VideoTimelineChanged));
-
-        private static void VideoTimelineChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var playerControl = (HueTimelinePlayerChild)d;
-            playerControl.UpdatePosition();
-            playerControl.UpdatePlaybackState();
-        }
-
         private CancellationTokenSource cancellationTokenSource;
         private TimelineHueItem hueItem;
 
-        public void UpdatePlaybackState()
+        public override void UpdatePlaybackState()
         {
-            if (PlaybackState != null && PlaybackState == MediaPlaybackState.Paused)
+            if (base.PlaybackState != null && base.PlaybackState == MediaPlaybackState.Paused)
             {
                 if (cancellationTokenSource != null)
                 {
@@ -94,12 +44,12 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
                 }
             }
         }
-        public void UpdatePosition()
+        public override void UpdatePosition()
         {
-            if (HueTimeline != null && CurrentPosition != null)
+            if (base.Timeline != null && base.CurrentPosition != null)
             {
-                var candidates = from item in HueTimeline.TimelineItems
-                                 where ((TimelineVideoItem)item).StartTime <= CurrentPosition && ((TimelineVideoItem)item).EndTime >= CurrentPosition
+                var candidates = from item in base.Timeline.TimelineItems
+                                 where ((TimelineVideoItem)item).StartTime <= base.CurrentPosition && ((TimelineVideoItem)item).EndTime >= base.CurrentPosition
                                  select item;
                 if (candidates.Any())
                 {

@@ -4,7 +4,7 @@ using Windows.UI.Xaml;
 
 namespace KurosukeHomeFantasmicUWP.ViewModels
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
         public void RaisePropertyChanged([CallerMemberName] string propertyName = null)

@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.PreviewPages;
+﻿using KurosukeHomeFantasmicUWP.Models.Timeline;
+using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.PreviewPages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,6 +41,30 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.PreviewPages
             {
                 ViewModel.GlobalViewModel.GlobalPlaybackState = Windows.Media.Playback.MediaPlaybackState.Paused;
                 ViewModel.PlayButtonVisibility = Visibility.Visible;
+            }
+        }
+    }
+
+    internal class PreviewPlayerTemplateSelector : DataTemplateSelector
+    {
+        public DataTemplate VideoTemplate { get; set; }
+        public DataTemplate HueTemplate { get; set; }
+
+        protected override DataTemplate SelectTemplateCore(object item)
+        {
+            var timeline = item as Timeline;
+            if (timeline == null)
+            {
+                throw new ArgumentNullException("Passed timeline item is null.");
+            }
+            switch (timeline.TimelineType)
+            {
+                case Timeline.TimelineTypes.Video:
+                    return VideoTemplate;
+                case Timeline.TimelineTypes.Hue:
+                    return HueTemplate;
+                default:
+                    throw new InvalidOperationException($"Timeline type is not defined in template selector: {timeline.TimelineType}");
             }
         }
     }

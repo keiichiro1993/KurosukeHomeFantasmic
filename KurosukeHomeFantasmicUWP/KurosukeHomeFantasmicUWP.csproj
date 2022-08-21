@@ -146,10 +146,17 @@
     <Compile Include="Controls\Hue\HueLightSelector.xaml.cs">
       <DependentUpon>HueLightSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Preview\VideoTimelinePreviewChildControl.xaml.cs">
+    <Compile Include="Controls\Players\HueTimelinePlayer.xaml.cs">
+      <DependentUpon>HueTimelinePlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Players\HueTimelinePlayerChild.xaml.cs">
+      <DependentUpon>HueTimelinePlayerChild.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Players\TimelineItemPlayerBase.cs" />
+    <Compile Include="Controls\Players\VideoTimelinePreviewChildControl.xaml.cs">
       <DependentUpon>VideoTimelinePreviewChildControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Preview\VideoTimelinePreviewControl.xaml.cs">
+    <Compile Include="Controls\Players\VideoTimelinePreviewControl.xaml.cs">
       <DependentUpon>VideoTimelinePreviewControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ProjectMenuTitleBar.xaml.cs">
@@ -337,11 +344,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Preview\VideoTimelinePreviewChildControl.xaml">
+    <Page Include="Controls\Players\HueTimelinePlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Preview\VideoTimelinePreviewControl.xaml">
+    <Page Include="Controls\Players\HueTimelinePlayerChild.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Players\VideoTimelinePreviewChildControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Players\VideoTimelinePreviewControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

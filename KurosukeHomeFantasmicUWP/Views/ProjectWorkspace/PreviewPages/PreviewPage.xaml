@@ -5,31 +5,40 @@
     xmlns:local="using:KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.PreviewPages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:preview="using:KurosukeHomeFantasmicUWP.Controls.Preview" xmlns:timeline="using:KurosukeHomeFantasmicUWP.Models.Timeline"
+    xmlns:preview="using:KurosukeHomeFantasmicUWP.Controls.Preview" 
+    xmlns:player="using:KurosukeHomeFantasmicUWP.Controls.Players" 
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <DataTemplate x:Key="VideoPlayerTemplate">
+            <Grid Width="270" Height="200" Padding="10">
+                <preview:VideoTimelinePreviewControl VideoTimeline="{Binding}" VerticalAlignment="Top" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="HuePlayerTemplate">
+            <Grid Width="270" Height="200" Padding="10">
+                <player:HueTimelinePlayer HueTimeline="{Binding}" VerticalAlignment="Top" />
+            </Grid>
+        </DataTemplate>
+        <local:PreviewPlayerTemplateSelector x:Key="PreviewPlayerTemplateSelector"
+            VideoTemplate="{StaticResource ResourceKey=VideoPlayerTemplate}"
+            HueTemplate="{StaticResource ResourceKey=HuePlayerTemplate}"/>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="AUTO"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <ListView ItemsSource="{x:Bind ViewModel.GlobalViewModel.CurrentScene.Timelines, Mode=OneWay}">
+            <ListView ItemsSource="{x:Bind ViewModel.GlobalViewModel.CurrentScene.Timelines, Mode=OneWay}"
+                      ItemTemplateSelector="{StaticResource ResourceKey=PreviewPlayerTemplateSelector}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <controls:WrapPanel Padding="0,0,0,45" Margin="0" />
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Width="270" Height="200" Padding="10">
-                            <preview:VideoTimelinePreviewControl  VideoTimeline="{Binding}" VerticalAlignment="Top" />
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
             </ListView>
         </Grid>
         <controls:WrapPanel />

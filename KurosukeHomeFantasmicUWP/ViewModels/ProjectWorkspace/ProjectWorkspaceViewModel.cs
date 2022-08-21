@@ -33,10 +33,10 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace
             {
                 if (_GlobalCurrentPosition != value)
                 {
-                    if (basePosition != null)
+                    /*if (basePosition != null)
                     {
                         basePosition = value;
-                    }
+                    }*/
                     _GlobalCurrentPosition = value;
                     RaisePropertyChanged();
                 }
@@ -55,7 +55,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace
         }
 
 
-        private TimeSpan period = TimeSpan.FromMilliseconds(80);
+        private TimeSpan period = TimeSpan.FromMilliseconds(50);
         private DateTime? playStartTime = null;
         private TimeSpan? basePosition = null;
         private ThreadPoolTimer currentPositionTimer;

@@ -21,7 +21,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KurosukeHomeFantasmicUWP.Controls.Preview
 {
-    public sealed partial class VideoTimelinePreviewChildControl : UserControl
+    internal sealed partial class VideoTimelinePreviewChildControl : UserControl
     {
         VideoTimelinePreviewChildControlViewModel ViewModel { get; set; } = new VideoTimelinePreviewChildControlViewModel();
         public VideoTimelinePreviewChildControl()

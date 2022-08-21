@@ -34,7 +34,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
 
         public override void UpdatePlaybackState()
         {
-            if (base.PlaybackState != null && base.PlaybackState == MediaPlaybackState.Paused)
+            if (PlaybackState != null && PlaybackState == MediaPlaybackState.Paused)
             {
                 if (cancellationTokenSource != null)
                 {
@@ -46,23 +46,24 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
         }
         public override void UpdatePosition()
         {
-            if (base.Timeline != null && base.CurrentPosition != null)
+            if (Timeline != null && CurrentPosition != null)
             {
-                var candidates = from item in base.Timeline.TimelineItems
-                                 where ((TimelineVideoItem)item).StartTime <= base.CurrentPosition && ((TimelineVideoItem)item).EndTime >= base.CurrentPosition
+                var candidates = from item in Timeline.TimelineItems
+                                 where ((TimelineHueItem)item).StartTime <= CurrentPosition && ((TimelineHueItem)item).EndTime >= CurrentPosition
                                  select item;
                 if (candidates.Any())
                 {
                     // choose the item with latest StartTime
                     var targetItem = (from item in candidates
-                                      orderby ((TimelineVideoItem)item).StartTime descending
+                                      orderby ((TimelineHueItem)item).StartTime descending
                                       select item).First() as TimelineHueItem;
                     if (hueItem == null || hueItem.HueItemType != targetItem.HueItemType || hueItem.ItemId != targetItem.ItemId)
                     {
                         hueItem = targetItem;
 
                         // trigger hue API
-                        DebugHelper.WriteDebugLog($"Trigger Hue API: {hueItem.HueItemType.ToString()} - {hueItem.Name}({hueItem.ItemId})");
+                        DebugHelper.WriteDebugLog($"Trigger Hue API: {hueItem.HueItemType} - {hueItem.Name}({hueItem.ItemId})");
+                        if (PlaybackState == MediaPlaybackState.Playing) { }
                     }
                 }
                 else

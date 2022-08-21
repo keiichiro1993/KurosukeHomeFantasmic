@@ -30,9 +30,9 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
 
         public override void UpdatePlaybackState()
         {
-            if (playerElement.MediaPlayer.PlaybackSession.PlaybackState != base.PlaybackState)
+            if (playerElement.MediaPlayer.PlaybackSession.PlaybackState != PlaybackState)
             {
-                switch (base.PlaybackState)
+                switch (PlaybackState)
                 {
                     case MediaPlaybackState.Playing:
                         playerElement.MediaPlayer.Play();
@@ -47,10 +47,10 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
         private TimelineVideoItem videoItem;
         public override void UpdatePosition()
         {
-            if (base.Timeline != null && base.CurrentPosition != null)
+            if (Timeline != null && CurrentPosition != null)
             {
                 var candidates = from item in base.Timeline.TimelineItems
-                                 where ((TimelineVideoItem)item).StartTime <= base.CurrentPosition && ((TimelineVideoItem)item).EndTime >= base.CurrentPosition
+                                 where ((TimelineVideoItem)item).StartTime <= CurrentPosition && ((TimelineVideoItem)item).EndTime >= CurrentPosition
                                  select item;
                 if (candidates.Any())
                 {
@@ -68,7 +68,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
                         playerElement.MediaPlayer.Source = videoItem.VideoMediaSource;
                     }
 
-                    var videoPosition = base.CurrentPosition - targetItem.StartTime;
+                    var videoPosition = CurrentPosition - targetItem.StartTime;
 
                     if ((playerElement.MediaPlayer.PlaybackSession.Position - videoPosition).Duration() > TimeSpan.FromMilliseconds(150))
                     {

@@ -31,14 +31,9 @@
             <RowDefinition Height="AUTO"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <ListView ItemsSource="{x:Bind ViewModel.GlobalViewModel.CurrentScene.Timelines, Mode=OneWay}"
+            <GridView ItemsSource="{x:Bind ViewModel.GlobalViewModel.CurrentScene.Timelines, Mode=OneWay}"
                       ItemTemplateSelector="{StaticResource ResourceKey=PreviewPlayerTemplateSelector}">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <controls:WrapPanel Padding="0,0,0,45" Margin="0" />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-            </ListView>
+            </GridView>
         </Grid>
         <controls:WrapPanel />
         <Grid Grid.Row="1" Background="{StaticResource SkyBlueAcrylicBrush}" CornerRadius="3" Margin="3">

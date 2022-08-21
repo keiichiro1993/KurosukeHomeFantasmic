@@ -1,5 +1,5 @@
 ﻿using CommonUtils;
-using KurosukeHomeFantasmicUWP.Controls.Preview;
+using KurosukeHomeFantasmicUWP.Controls.Players;
 using KurosukeHomeFantasmicUWP.Models.Timeline;
 using System;
 using System.Collections.Generic;

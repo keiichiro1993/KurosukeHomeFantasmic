@@ -1,4 +1,4 @@
-﻿using KurosukeHomeFantasmicUWP.Controls.Preview;
+﻿using KurosukeHomeFantasmicUWP.Controls.Players;
 using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,6 @@
 ﻿using AuthCommon.Models;
 using CommonUtils;
+using KurosukeHomeFantasmicUWP.Utils.DBHelpers;
 using KurosukeHueClient.Models;
 using KurosukeHueClient.Utils;
 using System;
@@ -75,7 +76,15 @@ namespace KurosukeHomeFantasmicUWP.Utils.Auth
                     token.UserType = type;
                     token.Id = cred.UserName;
                     token.AccessToken = cred.Password;
-                    var user = await HueAuthClient.FindHueBridge(token);
+                    //check if there's cached IP address for the bridge
+                    var bridgeCacheHelper = new HueBridgeCacheHelper();
+                    var previousIp = await bridgeCacheHelper.GetHueBridgeCachedIp(token.Id);
+                    var user = await HueAuthClient.FindHueBridge(token, previousIp);
+                    //save if ip address renewed
+                    if (string.IsNullOrEmpty(previousIp) || previousIp != user.Bridge.Config.IpAddress)
+                    {
+                        await bridgeCacheHelper.SaveHueBridgeCache(token.Id, user.Bridge.Config.IpAddress);
+                    }
                     userList.Add(user);
                     break;
             }

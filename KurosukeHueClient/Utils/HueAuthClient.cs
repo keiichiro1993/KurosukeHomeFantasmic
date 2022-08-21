@@ -22,8 +22,21 @@ namespace KurosukeHueClient.Utils
             return await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
         }
 
-        public static async Task<HueUser> FindHueBridge(IToken token)
+        public static async Task<HueUser> FindHueBridge(IToken token, string previousIp = null)
         {
+            if (!string.IsNullOrEmpty(previousIp))
+            {
+                try
+                {
+                    return await getBridgeById(token, previousIp);
+                }
+                catch (Exception ex)
+                {
+                    // Ignore and fail back to normal discovery
+                    DebugHelper.WriteErrorLog(ex,"Hue Bridge discovery with cached IP address failed.");
+                }
+            }
+
             IBridgeLocator locator = new HttpBridgeLocator();
             var bridges = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
 
@@ -33,21 +46,23 @@ namespace KurosukeHueClient.Utils
 
             if (bridge != null)
             {
-                var client = new LocalHueClient(bridge.IpAddress);
-                client.Initialize(token.AccessToken);
-
-                var bridgeInfo = await client.GetBridgeAsync();
-                var bridgeId = bridgeInfo.Config.BridgeId;
-
-                var user = new HueUser(bridgeInfo);
-                user.Token = token;
-
-                return user;
+                return await getBridgeById(token, bridge.IpAddress);
             }
             else
             {
                 throw new InvalidOperationException("The Hue bridge with ID " + token.Id + " not found in current network.");
             }
+        }
+
+        private static async Task<HueUser> getBridgeById(IToken token, string ipAddress)
+        {
+            var client = new LocalHueClient(ipAddress);
+            client.Initialize(token.AccessToken);
+            var bridgeInfo = await client.GetBridgeAsync();
+
+            var user = new HueUser(bridgeInfo);
+            user.Token = token;
+            return user;
         }
 
         public static async Task<HueUser> RegisterHueBridge()

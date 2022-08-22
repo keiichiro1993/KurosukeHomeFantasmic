@@ -139,9 +139,9 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                     if (actions.Any())
                     {
                         hueAction = actions.First();
-                        StartTime = hueEntity.StartTime;
+                        _StartTime = hueEntity.StartTime;
                         Locked = hueEntity.Locked;
-                        Duration = hueAction.Duration;
+                        _Duration = hueAction.Duration;
                     }
                     else
                     {
@@ -156,9 +156,9 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                     if (effects.Any())
                     {
                         hueEffect = effects.First();
-                        StartTime = hueEntity.StartTime;
+                        _StartTime = hueEntity.StartTime;
                         Locked = hueEntity.Locked;
-                        Duration = hueEntity.Duration;
+                        _Duration = hueEntity.Duration;
                     }
                 }
             });

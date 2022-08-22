@@ -44,11 +44,11 @@ namespace KurosukeHueClient.Utils
                 cancellationTokenSource.Cancel();
                 cancellationTokenSource.Dispose();
             }
-            if (autoUpdateTask != null) { autoUpdateTask.Dispose(); }
 
             //dispose all
             client = null;
             streamingClient.Dispose();
+            streamingClient = null;
         }
 
         #region Entertainment APIs
@@ -78,6 +78,7 @@ namespace KurosukeHueClient.Utils
             return hueDeviceGroups;
         }
 
+        public bool IsConnected { get; set; } = false;
         public async Task ConnectEntertainmentGroup(Models.HueObjects.Group entertainmentGroup)
         {
             await streamingClient.Connect(entertainmentGroup.HueGroup.Id);
@@ -89,6 +90,7 @@ namespace KurosukeHueClient.Utils
             effectLayer = fantasmicStream.GetNewLayer();
             baseLayer.AutoCalculateEffectUpdate(cancellationTokenSource.Token);
             effectLayer.AutoCalculateEffectUpdate(cancellationTokenSource.Token);
+            IsConnected = true;
         }
 
         public void SendEntertainmentAction(HueAction action)

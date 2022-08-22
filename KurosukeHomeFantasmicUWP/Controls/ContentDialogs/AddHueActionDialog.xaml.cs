@@ -74,7 +74,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
         public string Description { get; set; }
         public HueAction Action { get; set; } = new HueAction
         {
-            Color = new Q42.HueApi.ColorConverters.RGBColor(255,255,255),
+            Color = new Q42.HueApi.ColorConverters.RGBColor(255, 255, 255),
             Brightness = 255,
             Duration = new TimeSpan(0, 0, 5)
         };
@@ -117,11 +117,21 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
 
         public void AddAction()
         {
+            Action.Id = getNewGuid();
             Action.Name = Name;
             Action.Description = Description;
             Action.TargetLights = (from light in SelectedLights
-                                  select light.HueEntertainmentLight).ToList();
+                                   select light.HueEntertainmentLight).ToList();
             Utils.OnMemoryCache.HueActions.Add(Action);
+        }
+
+        private string getNewGuid()
+        {
+            var guid = Guid.NewGuid().ToString();
+            var match = from item in Utils.OnMemoryCache.HueActions
+                        where item.Id == guid
+                        select item;
+            return match.Any() ? getNewGuid() : guid;
         }
     }
 }

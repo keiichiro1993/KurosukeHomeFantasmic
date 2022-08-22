@@ -24,9 +24,10 @@ namespace KurosukeHomeFantasmicUWP.Utils.Auth
             {
                 IReadOnlyList<PasswordCredential> credentialList = null;
                 var vault = new PasswordVault();
+                var resourceName = resourceNamePrefix + type.ToString();
                 try
                 {
-                    credentialList = vault.FindAllByResource(resourceNamePrefix + type.ToString());
+                    credentialList = vault.FindAllByResource(resourceName);
                 }
                 catch (Exception ex)
                 {
@@ -38,8 +39,17 @@ namespace KurosukeHomeFantasmicUWP.Utils.Auth
                     //Debugger.WriteDebugLog(credentialList.Count + "users found from credential vault.");
                     foreach (var cred in credentialList)
                     {
-                        cred.RetrievePassword();
-                        taskList.Add(acquireAndAddUser(userList, type, cred));
+                        // Additional creds for each device type
+                        PasswordCredential additionalCred = null;
+                        switch (type)
+                        {
+                            case UserType.Hue:
+                                resourceName += "EntertainmentKey";
+                                additionalCred = vault.Retrieve(resourceName, cred.UserName);
+                                break;
+                        }
+
+                        taskList.Add(acquireAndAddUser(userList, type, cred, additionalCred));
                     }
                 }
             }
@@ -67,15 +77,18 @@ namespace KurosukeHomeFantasmicUWP.Utils.Auth
             }
         }
 
-        private static async Task acquireAndAddUser(List<IUser> userList, UserType type, PasswordCredential cred)
+        private static async Task acquireAndAddUser(List<IUser> userList, UserType type, PasswordCredential cred, PasswordCredential additionalCred = null)
         {
             switch (type)
             {
                 case UserType.Hue:
                     var token = new HueToken();
+                    cred.RetrievePassword();
+                    additionalCred.RetrievePassword();
                     token.UserType = type;
                     token.Id = cred.UserName;
                     token.AccessToken = cred.Password;
+                    token.EntertainmentKey = additionalCred.Password;
                     //check if there's cached IP address for the bridge
                     var bridgeCacheHelper = new HueBridgeCacheHelper();
                     var previousIp = await bridgeCacheHelper.GetHueBridgeCachedIp(token.Id);

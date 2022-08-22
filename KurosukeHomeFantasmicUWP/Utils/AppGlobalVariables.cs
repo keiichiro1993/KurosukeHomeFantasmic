@@ -19,6 +19,9 @@ namespace KurosukeHomeFantasmicUWP.Utils
         public static HueAssetHelper HueAssetDB;
         public static SceneAssetHelper SceneAssetDB;
 
+        public static KurosukeHueClient.Utils.HueClient GlobalHueClient;
+        public static readonly object HueClientLock = new object();
+
         public static ObservableCollection<IUser> DeviceUsers;
     }
 

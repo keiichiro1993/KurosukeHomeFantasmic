@@ -11,17 +11,17 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
 {
     public class TimelineHueItem : ViewModels.ViewModelBase, ITimelineItem
     {
-        private HueAction hueAction;
-        private HueEffect hueEffect;
+        public HueAction HueAction { get; set; }
+        public HueEffect HueEffect { get; set; }
         public TimelineHueItem() { }
         public TimelineHueItem(HueAction action)
         {
-            hueAction = action;
+            HueAction = action;
             Duration = action.Duration;
         }
         public TimelineHueItem(HueEffect effect)
         {
-            hueEffect = effect;
+            HueEffect = effect;
             Duration = effect.Duration;
         }
 
@@ -30,18 +30,18 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         {
             get
             {
-                if (hueAction != null)
+                if (HueAction != null)
                 {
                     return TimelineHueItemTypes.Action;
                 }
                 else
                 {
-                    return hueEffect.EffectMode == HueEffect.EffectModes.Actions ? TimelineHueItemTypes.Actions : TimelineHueItemTypes.IteratorEffect;
+                    return HueEffect.EffectMode == HueEffect.EffectModes.Actions ? TimelineHueItemTypes.Actions : TimelineHueItemTypes.IteratorEffect;
                 }
             }
         }
         public Visibility IsResizable { get { return HueItemType == TimelineHueItemTypes.IteratorEffect ? Visibility.Visible : Visibility.Collapsed; } }
-        public string Name { get; set; }
+        public string Name { get { return HueAction != null ? HueAction.Name : HueEffect.Name; } }
         public bool Locked { get; set; }
 
         public double Left { get { return CanvasWidth * (StartTime / TotalCanvasDuration); } }
@@ -110,20 +110,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
 
         public string ItemId
         {
-            get
-            {
-                switch (HueItemType)
-                {
-                    case TimelineHueItemTypes.Action:
-                        return hueAction.Id;
-                    case TimelineHueItemTypes.Actions:
-                        return hueEffect.Id;
-                    case TimelineHueItemTypes.IteratorEffect:
-                        return hueEffect.Id;
-                    default:
-                        return null;
-                }
-            }
+            get { return HueAction != null ? HueAction.Id : HueEffect.Id; }
         }
 
         public async Task Init(ITimelineItemEntity entity)
@@ -138,10 +125,10 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                                   select action;
                     if (actions.Any())
                     {
-                        hueAction = actions.First();
+                        HueAction = actions.First();
                         _StartTime = hueEntity.StartTime;
                         Locked = hueEntity.Locked;
-                        _Duration = hueAction.Duration;
+                        _Duration = HueAction.Duration;
                     }
                     else
                     {
@@ -155,7 +142,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                                   select effect;
                     if (effects.Any())
                     {
-                        hueEffect = effects.First();
+                        HueEffect = effects.First();
                         _StartTime = hueEntity.StartTime;
                         Locked = hueEntity.Locked;
                         _Duration = hueEntity.Duration;
@@ -171,7 +158,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
             entity.Locked = Locked;
             entity.Duration = Duration;
             entity.HueItemType = HueItemType;
-            entity.HueItemId = hueAction != null ? hueAction.Id : hueEffect.Id;
+            entity.HueItemId = HueAction != null ? HueAction.Id : HueEffect.Id;
             return entity;
         }
     }

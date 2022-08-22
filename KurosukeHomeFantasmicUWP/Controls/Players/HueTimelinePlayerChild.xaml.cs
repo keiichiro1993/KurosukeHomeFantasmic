@@ -17,6 +17,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using KurosukeHueClient.Utils;
+using KurosukeHomeFantasmicUWP.Utils;
+using System.Threading.Tasks;
 
 // ユーザー コントロールの項目テンプレートについては、https://go.microsoft.com/fwlink/?LinkId=234236 を参照してください
 
@@ -29,18 +32,51 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
             this.InitializeComponent();
         }
 
-        private CancellationTokenSource cancellationTokenSource;
         private TimelineHueItem hueItem;
 
-        public override void UpdatePlaybackState()
+        public override async void UpdatePlaybackState()
         {
-            if (PlaybackState != null && PlaybackState == MediaPlaybackState.Paused)
+            if (PlaybackState != null)
             {
-                if (cancellationTokenSource != null)
+                switch (PlaybackState)
                 {
-                    cancellationTokenSource.Cancel();
-                    cancellationTokenSource.Dispose();
-                    cancellationTokenSource = null;
+                    case MediaPlaybackState.Paused:
+                        lock (AppGlobalVariables.HueClientLock)
+                        {
+                            if (AppGlobalVariables.GlobalHueClient != null)
+                            {
+                                //HueClient.Dispose() will cancel all operations
+                                AppGlobalVariables.GlobalHueClient.Dispose();
+                                AppGlobalVariables.GlobalHueClient = null;
+                            }
+                        }
+
+                        if (hueItem != null)
+                        {
+                            hueItem = null;
+                        }
+                        break;
+                    case MediaPlaybackState.Playing:
+                        var needInit = false;
+
+                        lock (AppGlobalVariables.HueClientLock)
+                        {
+                            if (AppGlobalVariables.GlobalHueClient == null)
+                            {
+                                var user = Utils.RequestHelpers.HueRequestHelper.GetHueUser();
+                                AppGlobalVariables.GlobalHueClient = new HueClient(user);
+                                needInit = true;
+                            }
+                        }
+
+                        if (needInit)
+                        {
+                            var groups = await AppGlobalVariables.GlobalHueClient.GetEntertainmentGroupsAsync();
+                            var group = Utils.RequestHelpers.HueRequestHelper.GetHueGroup(groups);
+                            await AppGlobalVariables.GlobalHueClient.ConnectEntertainmentGroup(group);
+                        }
+
+                        break;
                 }
             }
         }
@@ -59,11 +95,20 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
                                       select item).First() as TimelineHueItem;
                     if (hueItem == null || hueItem.HueItemType != targetItem.HueItemType || hueItem.ItemId != targetItem.ItemId)
                     {
-                        hueItem = targetItem;
-
-                        // trigger hue API
-                        DebugHelper.WriteDebugLog($"Trigger Hue API: {hueItem.HueItemType} - {hueItem.Name}({hueItem.ItemId})");
-                        if (PlaybackState == MediaPlaybackState.Playing) { }
+                        if (PlaybackState == MediaPlaybackState.Playing)
+                        {
+                            // wait for HueClient to be initialized in case of resume
+                            if (AppGlobalVariables.GlobalHueClient != null && AppGlobalVariables.GlobalHueClient.IsConnected)
+                            {
+                                hueItem = targetItem;
+                                if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.Action)
+                                {
+                                    // trigger hue API
+                                    DebugHelper.WriteDebugLog($"Trigger Hue API: {targetItem.HueItemType} - {targetItem.Name}({targetItem.ItemId})");
+                                    AppGlobalVariables.GlobalHueClient.SendEntertainmentAction(hueItem.HueAction);
+                                }
+                            }
+                        }
                     }
                 }
                 else

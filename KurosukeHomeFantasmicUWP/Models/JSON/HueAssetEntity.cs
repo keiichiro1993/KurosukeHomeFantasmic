@@ -35,7 +35,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             Description = action.Description;
             TargetLightIds = (from light in action.TargetLights
                               select light.Id).ToList();
-            Color = action.Color;
+            HexColor = action.Color.ToHex();
             Brightness = action.Brightness;
             Duration = action.Duration;
         }
@@ -43,7 +43,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
         public string Name { get; set; }
         public string Description { get; set; }
         public List<byte> TargetLightIds { get; set; }
-        public RGBColor Color { get; set; }
+        public string HexColor { get; set; }
         public double Brightness { get; set; }
         public TimeSpan Duration { get; set; }
 
@@ -56,7 +56,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             action.TargetLights = (from light in lights
                                   where TargetLightIds.Contains(light.Id)
                                   select light).ToList();
-            action.Color = Color;
+            action.Color = new RGBColor(HexColor);
             action.Brightness = Brightness;
             action.Duration = Duration;
 

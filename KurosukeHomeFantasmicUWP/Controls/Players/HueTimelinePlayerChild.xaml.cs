@@ -36,85 +36,102 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
 
         public override async void UpdatePlaybackState()
         {
-            if (PlaybackState != null)
+            // Skip if null
+            if (PlaybackState == null)
             {
-                switch (PlaybackState)
-                {
-                    case MediaPlaybackState.Paused:
-                        lock (AppGlobalVariables.HueClientLock)
-                        {
-                            if (AppGlobalVariables.GlobalHueClient != null)
-                            {
-                                //HueClient.Dispose() will cancel all operations
-                                AppGlobalVariables.GlobalHueClient.Dispose();
-                                AppGlobalVariables.GlobalHueClient = null;
-                            }
-                        }
-
-                        if (hueItem != null)
-                        {
-                            hueItem = null;
-                        }
-                        break;
-                    case MediaPlaybackState.Playing:
-                        var needInit = false;
-
-                        lock (AppGlobalVariables.HueClientLock)
-                        {
-                            if (AppGlobalVariables.GlobalHueClient == null)
-                            {
-                                var user = Utils.RequestHelpers.HueRequestHelper.GetHueUser();
-                                AppGlobalVariables.GlobalHueClient = new HueClient(user);
-                                needInit = true;
-                            }
-                        }
-
-                        if (needInit)
-                        {
-                            var groups = await AppGlobalVariables.GlobalHueClient.GetEntertainmentGroupsAsync();
-                            var group = Utils.RequestHelpers.HueRequestHelper.GetHueGroup(groups);
-                            await AppGlobalVariables.GlobalHueClient.ConnectEntertainmentGroup(group);
-                        }
-
-                        break;
-                }
+                return;
             }
-        }
-        public override void UpdatePosition()
-        {
-            if (Timeline != null && CurrentPosition != null)
+
+            if (PlaybackState == MediaPlaybackState.Paused)
             {
-                var candidates = from item in Timeline.TimelineItems
-                                 where ((TimelineHueItem)item).StartTime <= CurrentPosition && ((TimelineHueItem)item).EndTime >= CurrentPosition
-                                 select item;
-                if (candidates.Any())
+                lock (AppGlobalVariables.HueClientLock)
                 {
-                    // choose the item with latest StartTime
-                    var targetItem = (from item in candidates
-                                      orderby ((TimelineHueItem)item).StartTime descending
-                                      select item).First() as TimelineHueItem;
-                    if (hueItem == null || hueItem.HueItemType != targetItem.HueItemType || hueItem.ItemId != targetItem.ItemId)
+                    if (AppGlobalVariables.GlobalHueClient != null)
                     {
-                        if (PlaybackState == MediaPlaybackState.Playing)
-                        {
-                            // wait for HueClient to be initialized in case of resume
-                            if (AppGlobalVariables.GlobalHueClient != null && AppGlobalVariables.GlobalHueClient.IsConnected)
-                            {
-                                hueItem = targetItem;
-                                if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.Action)
-                                {
-                                    // trigger hue API
-                                    DebugHelper.WriteDebugLog($"Trigger Hue API: {targetItem.HueItemType} - {targetItem.Name}({targetItem.ItemId})");
-                                    AppGlobalVariables.GlobalHueClient.SendEntertainmentAction(hueItem.HueAction);
-                                }
-                            }
-                        }
+                        //HueClient.Dispose() will cancel all operations
+                        AppGlobalVariables.GlobalHueClient.Dispose();
+                        AppGlobalVariables.GlobalHueClient = null;
                     }
                 }
-                else
+
+                if (hueItem != null)
                 {
                     hueItem = null;
                 }
+            }
+            else if (PlaybackState == MediaPlaybackState.Playing)
+            {
+                var needInit = false;
+
+                lock (AppGlobalVariables.HueClientLock)
+                {
+                    if (AppGlobalVariables.GlobalHueClient == null)
+                    {
+                        var user = Utils.RequestHelpers.HueRequestHelper.GetHueUser();
+                        AppGlobalVariables.GlobalHueClient = new HueClient(user);
+                        needInit = true;
+                    }
+                }
+
+                if (needInit)
+                {
+                    var groups = await AppGlobalVariables.GlobalHueClient.GetEntertainmentGroupsAsync();
+                    var group = Utils.RequestHelpers.HueRequestHelper.GetHueGroup(groups);
+                    await AppGlobalVariables.GlobalHueClient.ConnectEntertainmentGroup(group);
+                }
+            }
+        }
+
+        public override void UpdatePosition()
+        {
+            // Skip if null
+            if (Timeline == null || CurrentPosition == null)
+            {
+                return;
+            }
+
+            var candidates = from TimelineHueItem item in Timeline.TimelineItems
+                             where item.StartTime <= CurrentPosition && item.EndTime >= CurrentPosition
+                             orderby item.StartTime descending // choose the item with latest StartTime
+                             select item;
+            if (candidates.Any())
+            {
+                var targetItem = candidates.First();
+
+                // item has been triggered in the last loop
+                if (hueItem != null && hueItem.HueItemType == targetItem.HueItemType && hueItem.ItemId == targetItem.ItemId)
+                {
+                    return;
+                }
+
+                if (PlaybackState == MediaPlaybackState.Playing)
+                {
+                    // wait for HueClient to be connected
+                    if (AppGlobalVariables.GlobalHueClient == null || !AppGlobalVariables.GlobalHueClient.IsConnected)
+                    {
+                        return;
+                    }
+
+                    hueItem = targetItem;
+                    if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.Action)
+                    {
+                        // trigger hue API
+                        DebugHelper.WriteDebugLog($"Trigger Hue API: {targetItem.HueItemType} - {targetItem.Name}({targetItem.ItemId})");
+                        AppGlobalVariables.GlobalHueClient.SendEntertainmentAction(hueItem.HueAction);
+                    }
+                    else if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.Actions)
+                    {
+
+                    }
+                    else if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.IteratorEffect)
+                    {
+
+                    }
+                }
+            }
+            else
+            {
+                hueItem = null;
             }
         }
     }

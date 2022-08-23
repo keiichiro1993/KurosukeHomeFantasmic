@@ -84,8 +84,7 @@ namespace KurosukeHueClient.Utils
             await streamingClient.Connect(entertainmentGroup.HueGroup.Id);
             var fantasmicStream = new StreamingGroup(entertainmentGroup.HueGroup.Locations);
             cancellationTokenSource = new CancellationTokenSource();
-            //_ = streamingClient.AutoUpdate(fantasmicStream, cancellationTokenSource.Token, 50, onlySendDirtyStates: false);
-            autoUpdateTask = streamingClient.AutoUpdate(fantasmicStream, cancellationTokenSource.Token, 50, onlySendDirtyStates: false);
+            _ = streamingClient.AutoUpdate(fantasmicStream, cancellationTokenSource.Token, 50, onlySendDirtyStates: false);
             baseLayer = fantasmicStream.GetNewLayer(isBaseLayer: true);
             effectLayer = fantasmicStream.GetNewLayer();
             baseLayer.AutoCalculateEffectUpdate(cancellationTokenSource.Token);

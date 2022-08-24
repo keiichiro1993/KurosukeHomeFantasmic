@@ -37,7 +37,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
                               select light.Id).ToList();
             HexColor = action.Color.ToHex();
             Brightness = action.Brightness;
-            Duration = action.Duration;
+            Duration = action.TransitionDuration;
         }
         public string Id { get; set; }
         public string Name { get; set; }
@@ -58,7 +58,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
                                   select light).ToList();
             action.Color = new RGBColor(HexColor);
             action.Brightness = Brightness;
-            action.Duration = Duration;
+            action.TransitionDuration = Duration;
 
             return action;
         }
@@ -80,7 +80,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             TargetLightIds = (from light in effect.TargetLights
                               select light.Id).ToList();
             IteratorEffectMode = effect.IteratorEffectMode;
-            EffectMargin = effect.EffectMargin;
+            EffectMargin = effect.Margin;
         }
         public HueEffect.EffectModes EffectMode { get; set; }
         public string Id { get; set; }
@@ -108,7 +108,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
                                    where TargetLightIds.Contains(light.Id)
                                    select light).ToList();
             effect.IteratorEffectMode = IteratorEffectMode;
-            effect.EffectMargin = EffectMargin;
+            effect.Margin = EffectMargin;
 
             return effect;
         }

@@ -105,8 +105,46 @@ namespace KurosukeHueClient.Utils
                          where ids.Contains(light.Id)
                          select light;
             //set light state
-            lights.SetState(cancellationTokenSource.Token, action.Color, action.Brightness, action.Duration);
+            lights.SetState(cancellationTokenSource.Token, action.Color, action.Brightness, action.TransitionDuration);
         }
+
+        public void SendIteratorEffect(HueEffect effect)
+        {
+            if (baseLayer == null)
+            {
+                throw new InvalidOperationException("Hue Client is not connected to Entertainment API.");
+            }
+            if (effect.EffectMode != HueEffect.EffectModes.IteratorEffect)
+            {
+                throw new InvalidOperationException($"The specified HueEffect {effect.EffectMode} - {effect.Name}({effect.Id}) is not Iterator effect.");
+            }
+            //pick lights selected in EntertainmentAction
+            var ids = from target in effect.TargetLights
+                      select target.Id;
+            var lights = from light in baseLayer
+                         where ids.Contains(light.Id)
+                         select light;
+            //call effect
+            lights.IteratorEffect(
+                cancellationToken: cancellationTokenSource.Token,
+                effectFunction: async (currentLight, cancel, timespan) =>
+                {
+                    foreach (var action in effect.Actions) 
+                    {
+                        if (cancel.IsCancellationRequested) 
+                        {
+                            throw new OperationCanceledException(cancel);
+                        }
+                        currentLight.SetState(cancel, action.Color, action.Brightness, action.TransitionDuration);
+                        await Task.Delay(action.Margin);
+                    }
+                },
+                mode: effect.IteratorEffectMode,
+                waitTime: () => { return effect.Margin; },
+                duration: effect.Duration
+            );
+        }
+
         #endregion
 
         #region Non-Entertainment APIs

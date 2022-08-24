@@ -76,7 +76,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
         {
             Color = new Q42.HueApi.ColorConverters.RGBColor(255, 255, 255),
             Brightness = 255,
-            Duration = new TimeSpan(0, 0, 5)
+            TransitionDuration = new TimeSpan(0, 0, 5)
         };
 
         public ObservableCollection<Light> SelectedLights = new ObservableCollection<Light>();

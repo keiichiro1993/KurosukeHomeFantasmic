@@ -17,7 +17,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         public TimelineHueItem(HueAction action)
         {
             HueAction = action;
-            Duration = action.Duration;
+            Duration = action.TransitionDuration;
         }
         public TimelineHueItem(HueEffect effect)
         {
@@ -25,7 +25,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
             Duration = effect.Duration;
         }
 
-        public enum TimelineHueItemTypes { Action, Actions, IteratorEffect }
+        public enum TimelineHueItemTypes { Action, Actions, IteratorEffect, LightSourceEffect }
         public TimelineHueItemTypes HueItemType
         {
             get
@@ -34,10 +34,21 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                 {
                     return TimelineHueItemTypes.Action;
                 }
-                else
+
+                if (HueEffect.EffectMode == HueEffect.EffectModes.Actions)
                 {
-                    return HueEffect.EffectMode == HueEffect.EffectModes.Actions ? TimelineHueItemTypes.Actions : TimelineHueItemTypes.IteratorEffect;
+                    return TimelineHueItemTypes.Actions;
                 }
+                else if (HueEffect.EffectMode == HueEffect.EffectModes.IteratorEffect)
+                {
+                    return TimelineHueItemTypes.IteratorEffect;
+                }
+                else if (HueEffect.EffectMode == HueEffect.EffectModes.LightSourceEffect)
+                {
+                    return TimelineHueItemTypes.LightSourceEffect;
+                }
+
+                throw new ArgumentOutOfRangeException($"{HueEffect.EffectMode} is not defined as TimelineHueItemTypes.");
             }
         }
         public Visibility IsResizable { get { return HueItemType == TimelineHueItemTypes.IteratorEffect ? Visibility.Visible : Visibility.Collapsed; } }
@@ -128,7 +139,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                         HueAction = actions.First();
                         _StartTime = hueEntity.StartTime;
                         Locked = hueEntity.Locked;
-                        _Duration = HueAction.Duration;
+                        _Duration = HueAction.TransitionDuration;
                     }
                     else
                     {

@@ -112,11 +112,11 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
                         return;
                     }
 
+                    // trigger hue API
+                    DebugHelper.WriteDebugLog($"Trigger Hue API: {targetItem.HueItemType} - {targetItem.Name}({targetItem.ItemId})");
                     hueItem = targetItem;
                     if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.Action)
                     {
-                        // trigger hue API
-                        DebugHelper.WriteDebugLog($"Trigger Hue API: {targetItem.HueItemType} - {targetItem.Name}({targetItem.ItemId})");
                         AppGlobalVariables.GlobalHueClient.SendEntertainmentAction(hueItem.HueAction);
                     }
                     else if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.Actions)
@@ -124,6 +124,10 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
 
                     }
                     else if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.IteratorEffect)
+                    {
+                        AppGlobalVariables.GlobalHueClient.SendIteratorEffect(hueItem.HueEffect);
+                    }
+                    else if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.LightSourceEffect)
                     {
 
                     }

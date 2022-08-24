@@ -21,6 +21,13 @@ namespace KurosukeHueClient.Models.HueObjects
         public List<EntertainmentLight> TargetLights { get; set; }
         public RGBColor Color { get; set; }
         public double Brightness { get; set; } 
-        public TimeSpan Duration { get; set; }
+        /// <summary>
+        /// Total duration of this action. It takes this duration to fully change the color.
+        /// </summary>
+        public TimeSpan TransitionDuration { get; set; }
+        /// <summary>
+        /// For HueEffect. Set the timespan between the start of this action and the start of the next action.
+        /// </summary>
+        public TimeSpan Margin { get; set; }
     }
 }

@@ -38,7 +38,7 @@ namespace KurosukeHueClient.Models.HueObjects
         public IEnumerable<HueAction> Actions { get; set; }
         public int ActionsCount { get { return Actions.Count(); } }
         /// <summary>
-        /// Target Lights for the iterator effect.
+        /// Target Lights for the Iterator Effect/Light Source Effect.
         /// This will be ignored with Actions mode.
         /// </summary>
         public IEnumerable<EntertainmentLight> TargetLights { get; set; }

@@ -44,10 +44,10 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.AssetPages
                 case "Video":
                     pageType = typeof(VideoAssetListPage);
                     break;
-                case "Hue Actions":
+                case "Hue Action":
                     pageType = typeof(HueActionListPage);
                     break;
-                case "Hue Effects":
+                case "Hue Effect":
                     pageType = typeof(HueEffectListPage);
                     break;
             }

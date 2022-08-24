@@ -135,6 +135,15 @@
   <data name="AddHueActionContentDialog-SelectedLightsTitle.Text" xml:space="preserve">
     <value>Lights:</value>
   </data>
+  <data name="AddHueEffectContentDialog-ActionButtonTitle.Text" xml:space="preserve">
+    <value>Click to add an action</value>
+  </data>
+  <data name="AddHueEffectContentDialog-ActionsTitle.Text" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="AddHueEffectContentDialog-IterationModeTitle.Text" xml:space="preserve">
+    <value>Iterator Effect Mode</value>
+  </data>
   <data name="AddNewSceneContentDialog-DescriptionTitle.Text" xml:space="preserve">
     <value>Description:</value>
   </data>

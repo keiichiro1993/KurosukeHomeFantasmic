@@ -16,6 +16,7 @@
             <RowDefinition Height="AUTO"/>
             <RowDefinition Height="AUTO"/>
             <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="AUTO"/>
         </Grid.RowDefinitions>
         <muxc:ColorPicker Grid.Row="0" Color="{x:Bind ViewModel.Color, Mode=TwoWay}" IsAlphaEnabled="False" IsAlphaSliderVisible="False"/>
         <muxc:Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{StaticResource ResourceKey=SkyBlueAcrylicBrush}"
@@ -27,7 +28,16 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="Duration:"
                        Margin="0,0,5,0" VerticalAlignment="Center"/>
-            <parts:TimeSpanTextBox Grid.Column="1" TotalCanvasDuration="{x:Bind Action.Duration, Mode=TwoWay}"/>
+            <parts:TimeSpanTextBox Grid.Column="1" TotalCanvasDuration="{x:Bind Action.TransitionDuration, Mode=TwoWay}"/>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="AUTO"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Margin:"
+                       Margin="0,0,5,0" VerticalAlignment="Center"/>
+            <parts:TimeSpanTextBox Grid.Column="1" TotalCanvasDuration="{x:Bind Action.Margin, Mode=TwoWay}"/>
         </Grid>
     </Grid>
 </UserControl>

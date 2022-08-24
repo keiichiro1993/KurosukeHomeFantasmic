@@ -25,7 +25,6 @@ namespace KurosukeHueClient.Utils
         private Bridge bridge;
         private HueUser user;
         private CancellationTokenSource cancellationTokenSource;
-        private Task autoUpdateTask; //probably OK to waste this with _
         private EntertainmentLayer baseLayer;
         private EntertainmentLayer effectLayer;
         public HueClient(HueUser user)

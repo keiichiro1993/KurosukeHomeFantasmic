@@ -46,6 +46,22 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
             }
         }
 
+        public bool MarginTextboxEnabled
+        {
+            get => (bool)GetValue(MarginTextboxEnabledProperty);
+            set => SetValue(MarginTextboxEnabledProperty, value);
+        }
+
+        public static readonly DependencyProperty MarginTextboxEnabledProperty =
+          DependencyProperty.Register(nameof(MarginTextboxEnabled), typeof(bool), typeof(HueActionListItem),
+              new PropertyMetadata(false, MarginTextboxEnabledPropertyChanged));
+
+        private static void MarginTextboxEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var instance = (HueActionListItem)d;
+            instance.ViewModel.SetMarginTextboxEnabled((bool)e.NewValue);
+        }
+
         public new bool CanDrag
         {
             get => (bool)GetValue(CanDragProperty);
@@ -78,6 +94,23 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
                 var color = action == null ? Colors.Black : Windows.UI.Color.FromArgb(255, (byte)(action.Color.R * 255), (byte)(action.Color.G * 255), (byte)(action.Color.B * 255));
                 return new SolidColorBrush(color);
             }
+        }
+
+        public void SetMarginTextboxEnabled(bool marginTextboxEnabled)
+        {
+            isMarginTextboxEnabled = marginTextboxEnabled;
+            RaisePropertyChanged("MarginVisibility");
+            RaisePropertyChanged("NameVisibility");
+        }
+
+        private bool isMarginTextboxEnabled;
+        public Visibility MarginVisibility
+        {
+            get { return isMarginTextboxEnabled ? Visibility.Visible : Visibility.Collapsed; }
+        }
+        public Visibility NameVisibility
+        {
+            get { return isMarginTextboxEnabled ? Visibility.Collapsed : Visibility.Visible; }
         }
     }
 }

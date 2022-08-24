@@ -44,23 +44,51 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
             var instance = (HueActionEditor)d;
             if (e.NewValue != null)
             {
-                instance.ViewModel.SetNewAction((HueAction)e.NewValue);
+                instance.ViewModel.SetAction((HueAction)e.NewValue);
             }
+        }
+
+        public bool MarginTextboxEnabled
+        {
+            get => (bool)GetValue(MarginTextboxEnabledProperty);
+            set => SetValue(MarginTextboxEnabledProperty, value);
+        }
+
+        public static readonly DependencyProperty MarginTextboxEnabledProperty =
+          DependencyProperty.Register(nameof(MarginTextboxEnabled), typeof(bool), typeof(HueActionEditor),
+              new PropertyMetadata(false, MarginTextboxEnabledPropertyChanged));
+
+        private static void MarginTextboxEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var instance = (HueActionEditor)d;
+            instance.ViewModel.SetMarginTextboxEnabled((bool)e.NewValue);
         }
     }
 
     public class HueActionEditorViewModel : ViewModels.ViewModelBase
     {
         private HueAction action;
-        public void SetNewAction(HueAction newAction)
+        public void SetAction(HueAction newAction)
         {
             action = newAction;
             RaisePropertyChanged("Color");
         }
 
-        public Color Color 
+        public void SetMarginTextboxEnabled(bool marginTextboxEnabled)
         {
-            get 
+            isMarginTextboxEnabled = marginTextboxEnabled;
+            RaisePropertyChanged("MarginTextboxVisibility");
+        }
+
+        private bool isMarginTextboxEnabled;
+        public Visibility MarginTextboxVisibility
+        {
+            get { return isMarginTextboxEnabled ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public Color Color
+        {
+            get
             {
                 if (action != null)
                 {
@@ -68,7 +96,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
                 }
                 else
                 {
-                    return Color.FromArgb(255,0,0,0);
+                    return Color.FromArgb(255, 255, 255, 255);
                 }
             }
             set

@@ -1,22 +1,12 @@
 ﻿using KurosukeHomeFantasmicUWP.Utils.RequestHelpers;
 using KurosukeHomeFantasmicUWP.ViewModels;
-using KurosukeHueClient.Models;
 using KurosukeHueClient.Models.HueObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // コンテンツ ダイアログの項目テンプレートについては、https://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
 
@@ -117,7 +107,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
 
         public void AddAction()
         {
-            Action.Id = getNewGuid();
+            Action.Id = GetNewGuid();
             Action.Name = Name;
             Action.Description = Description;
             Action.TargetLights = (from light in SelectedLights
@@ -125,13 +115,13 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             Utils.OnMemoryCache.HueActions.Add(Action);
         }
 
-        private string getNewGuid()
+        public static string GetNewGuid()
         {
             var guid = Guid.NewGuid().ToString();
             var match = from item in Utils.OnMemoryCache.HueActions
                         where item.Id == guid
                         select item;
-            return match.Any() ? getNewGuid() : guid;
+            return match.Any() ? GetNewGuid() : guid;
         }
     }
 }

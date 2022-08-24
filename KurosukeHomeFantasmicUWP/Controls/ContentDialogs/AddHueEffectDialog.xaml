@@ -4,14 +4,104 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:KurosukeHomeFantasmicUWP.Controls.ContentDialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:huecontrol="using:KurosukeHomeFantasmicUWP.Controls.Hue" 
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
+    xmlns:models="using:KurosukeHueClient.Models.HueObjects"
     mc:Ignorable="d"
-    Title="TITLE"
-    PrimaryButtonText="Button1"
-    SecondaryButtonText="Button2"
+    x:Uid="AddHueEffectContentDialog"
+    PrimaryButtonText="Add"
+    SecondaryButtonText="Cancel"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
-
+    <ContentDialog.PrimaryButtonStyle>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource SystemControlBackgroundAccentBrush}"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+    </ContentDialog.PrimaryButtonStyle>
+    <ContentDialog.SecondaryButtonStyle>
+        <Style TargetType="Button">
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+    </ContentDialog.SecondaryButtonStyle>
     <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="AddHueActionContentDialog-NameTitle" />
+                <TextBox Text="{x:Bind ViewModel.Name, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="AddHueActionContentDialog-DescriptionTitle"/>
+                <TextBox Text="{x:Bind ViewModel.Description, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="AddHueEffectContentDialog-IterationModeTitle"/>
+                <ComboBox MinWidth="200"
+                    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+                    xmlns:enums="using:Q42.HueApi.Streaming.Extensions"
+                    ItemsSource="{ui:EnumValues Type=enums:IteratorEffectMode}" SelectedValue="{x:Bind ViewModel.IteratorEffectMode, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="AddHueActionContentDialog-SelectedLightsTitle"/>
+                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{x:Bind ViewModel.SelectedLights.Count, Mode=OneWay}"/>
+                        <TextBlock x:Uid="AddHueActionContentDialog-SelectedLightsSuffix"
+                               Margin="5,0,0,0"/>
+                    </StackPanel>
+                    <Button.Flyout>
+                        <Flyout>
+                            <huecontrol:HueLightSelector SelectedLights="{x:Bind ViewModel.SelectedLights}" AvailableLights="{x:Bind ViewModel.AvailableLights, Mode=OneWay}" />
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="4" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="AddHueEffectContentDialog-ActionTitle"/>
+                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Uid="AddHueEffectContentDialog-ActionButtonTitle"/>
+                    </StackPanel>
+                    <Button.Flyout>
+                        <Flyout>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="AUTO"/>
+                                    <RowDefinition Height="AUTO"/>
+                                </Grid.RowDefinitions>
+                                <huecontrol:HueActionEditor Action="{x:Bind ViewModel.NewHueAction, Mode=OneWay}" MarginTextboxEnabled="True" />
+                                <Button Grid.Row="1" Margin="0,20,0,0"
+                                        Content="Add" Click="AddActionButton_Click"/>
+                            </Grid>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </StackPanel>
+            <ListView Grid.Row="5" ItemsSource="{x:Bind ViewModel.HueActions, Mode=OneWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:HueAction">
+                        <huecontrol:HueActionListItem Action="{x:Bind local:AddHueEffectDialogViewModel.HueAction((models:HueAction))}" MarginTextboxEnabled="True" CanDrag="False"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <controls:Loading x:Name="LoadingControl" IsEnabled="{x:Bind ViewModel.IsLoading, Mode=OneWay}">
+            <controls:Loading.Background>
+                <AcrylicBrush TintOpacity="0.6" TintColor="DarkGray" FallbackColor="DarkGray" />
+            </controls:Loading.Background>
+            <StackPanel Orientation="Horizontal">
+                <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"/>
+                <TextBlock Text="{x:Bind ViewModel.LoadingMessage, Mode=OneWay}"/>
+            </StackPanel>
+        </controls:Loading>
     </Grid>
 </ContentDialog>

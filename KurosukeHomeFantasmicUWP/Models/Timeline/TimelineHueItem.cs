@@ -51,9 +51,33 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                 throw new ArgumentOutOfRangeException($"{HueEffect.EffectMode} is not defined as TimelineHueItemTypes.");
             }
         }
-        public Visibility IsResizable { get { return HueItemType == TimelineHueItemTypes.IteratorEffect ? Visibility.Visible : Visibility.Collapsed; } }
+
+        public bool IsResizable
+        {
+            get
+            {
+                if (HueItemType == TimelineHueItemTypes.Action)
+                {
+                    return false;
+                }
+                return Loop;
+            }
+        }
         public string Name { get { return HueAction != null ? HueAction.Name : HueEffect.Name; } }
         public bool Locked { get; set; }
+        private bool _Loop;
+        public bool Loop
+        {
+            get { return _Loop; }
+            set
+            {
+                _Loop = value;
+                RaisePropertyChanged("IsResizable");
+                RaisePropertyChanged("IsResizableBool");
+            }
+        }
+
+        public Visibility LoopButtonVisibility { get { return HueItemType == TimelineHueItemTypes.Action ? Visibility.Collapsed : Visibility.Visible; } }
 
         public double Left { get { return CanvasWidth * (StartTime / TotalCanvasDuration); } }
 
@@ -156,6 +180,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                         HueEffect = effects.First();
                         _StartTime = hueEntity.StartTime;
                         Locked = hueEntity.Locked;
+                        _Loop = hueEntity.Loop;
                         _Duration = hueEntity.Duration;
                     }
                 }

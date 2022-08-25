@@ -13,7 +13,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         TimeSpan TotalCanvasDuration { get; set; }
         double CanvasWidth { get; set; }
         bool Locked { get; set; }
-        Visibility IsResizable { get; }
+        bool IsResizable { get; }
 
         double Left { get; }
         double Width { get; }

@@ -26,12 +26,10 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         private VideoProperties videoProperties;
 
         public string VideoAssetId { get; set; }
-        public bool Resizable
+        public bool IsResizable
         {
             get { return videoProperties.Duration > TimeSpan.FromSeconds(10); }
-            set { throw new InvalidOperationException("Resizable property of Videoitem is read-only."); }
         }
-        public Visibility IsResizable { get { return Resizable ? Visibility.Visible : Visibility.Collapsed; } }
 
         // Timeline Position
         private TimeSpan _StartTime;

@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
 
         <Button Grid.Column="0" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="3,0,0,3" Width="15"
-                Visibility="{x:Bind TimelineHueItem.IsResizable}"
+                IsEnabled="{x:Bind TimelineHueItem.IsResizable}"
                 PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
                 ManipulationMode="TranslateX"
                 ManipulationStarted="UserControl_ManipulationStarted" 
@@ -32,7 +32,7 @@
             </FontIcon>
         </Button>
         <Button Grid.Column="2" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="0,3,3,0" Width="15"
-                Visibility="{x:Bind TimelineHueItem.IsResizable}"
+                IsEnabled="{x:Bind TimelineHueItem.IsResizable}"
                 PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
                 ManipulationMode="TranslateX"
                 ManipulationStarted="UserControl_ManipulationStarted" 
@@ -56,24 +56,32 @@
                 <RowDefinition Height="35"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <!--<StackPanel Orientation="Horizontal">
-                    <Image Source="{x:Bind VideoItem.VideoAsset.ThumbnailUri, Mode=OneWay}"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="AUTO"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                        <TextBlock Text="{x:Bind VideoItem.VideoAsset.VideoAssetEntity.Name, Mode=OneWay}" FontSize="17"/>
-                        <TextBlock Text="{x:Bind VideoItem.VideoAsset.VideoAssetEntity.FilePath, Mode=OneWay}" FontSize="10"/>
+                        <TextBlock Text="{x:Bind TimelineHueItem.Name, Mode=OneWay}" FontSize="17"/>
+                        <TextBlock Text="{x:Bind TimelineHueItem.HueItemType, Mode=OneWay}" FontSize="10"/>
                     </StackPanel>
-                </StackPanel>-->
-
-                <ToggleButton HorizontalAlignment="Right" Width="30" Height="30" Padding="0"
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <ToggleButton HorizontalAlignment="Right" Width="35" Height="35" Padding="5.5" Visibility="{x:Bind TimelineHueItem.LoopButtonVisibility}"
+                              IsChecked="{x:Bind TimelineHueItem.Loop, Mode=TwoWay}">
+                        <BitmapIcon UriSource="ms-appx:///Assets/Icons/loop-button-icon.png"/>
+                    </ToggleButton>
+                    <ToggleButton HorizontalAlignment="Right" Width="35" Height="35" Margin="2,0" Padding="0"
                               IsChecked="{x:Bind TimelineHueItem.Locked, Mode=TwoWay}">
-                    <FontIcon Glyph="&#xE72E;" FontFamily="Segoe Fluent Icons"/>
-                </ToggleButton>
+                        <FontIcon Glyph="&#xE72E;" FontFamily="Segoe Fluent Icons"/>
+                    </ToggleButton>
+                </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="{x:Bind TimelineHueItem.HueItemType}"/>
-                    <TextBlock Text="-"/>
-                    <TextBlock Text="{x:Bind TimelineHueItem.Name}"/>
+                    <TextBlock Text="Duration"/>
+                    <TextBlock Text=":"/>
+                    <TextBlock Text="{x:Bind TimelineHueItem.Duration, Mode=OneWay}"/>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="2">
@@ -81,8 +89,7 @@
                     <TextBlock Text="Start"/>
                     <TextBlock Text="{x:Bind TimelineHueItem.StartTime, Mode=OneWay}"/>
                 </StackPanel>
-                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                            Visibility="{x:Bind TimelineHueItem.IsResizable}">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                     <TextBlock HorizontalAlignment="Right" Text="End"/>
                     <TextBlock Text="{x:Bind TimelineHueItem.EndTime, Mode=OneWay}"/>
                 </StackPanel>

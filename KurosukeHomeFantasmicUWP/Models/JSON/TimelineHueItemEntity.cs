@@ -7,6 +7,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
     {
         public TimeSpan StartTime { get; set; }
         public bool Locked { get; set; }
+        public bool Loop { get; set; }
 
         public TimelineHueItemTypes HueItemType { get; set; }
         public string HueItemId { get; set; }

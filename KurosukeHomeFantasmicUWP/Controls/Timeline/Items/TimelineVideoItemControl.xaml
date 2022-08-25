@@ -20,6 +20,7 @@
         </Grid.ColumnDefinitions>
 
         <Button Grid.Column="0" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="3,0,0,3"
+                IsEnabled="{x:Bind TimelineVideoItem.IsResizable}"
                 PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
                 ManipulationMode="TranslateX"
                 ManipulationStarted="UserControl_ManipulationStarted" 
@@ -32,6 +33,7 @@
             </FontIcon>
         </Button>
         <Button Grid.Column="2" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="0,3,3,0"
+                IsEnabled="{x:Bind TimelineVideoItem.IsResizable}"
                 PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
                 ManipulationMode="TranslateX"
                 ManipulationStarted="UserControl_ManipulationStarted" 
@@ -63,7 +65,7 @@
                     </StackPanel>
                 </StackPanel>
 
-                <ToggleButton HorizontalAlignment="Right" Width="30" Height="30" Padding="0"
+                <ToggleButton HorizontalAlignment="Right" Width="35" Height="35" Padding="0"
                               IsChecked="{x:Bind TimelineVideoItem.Locked, Mode=TwoWay}">
                     <FontIcon Glyph="&#xE72E;" FontFamily="Segoe Fluent Icons"/>
                 </ToggleButton>

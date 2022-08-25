@@ -24,7 +24,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Click="BackButton_Click" Margin="5,0,0,0" VerticalContentAlignment="Bottom" VerticalAlignment="Center">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE830;" FontSize="30"/>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE830;" FontSize="30"/>
                 </Button>
                 <TextBlock Grid.Column="1" Margin="10,0,0,5" x:Name="createProjectTitle" x:Uid="WelcomePage-NewProjectButtonTitle" FontSize="35" VerticalAlignment="Center" />
             </Grid>

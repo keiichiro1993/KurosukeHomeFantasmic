@@ -26,7 +26,7 @@
                 </Style>
                 <Style TargetType="FontIcon">
                     <Setter Property="FontSize" Value="25"/>
-                    <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                    <Setter Property="FontFamily" Value="Segoe Fluent Icons"/>
                 </Style>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
@@ -35,10 +35,10 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
                 <Button Click="BackButton_Click">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE830;"/>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE830;"/>
                 </Button>
                 <Button Click="AddTimelineButton_Click" HorizontalAlignment="Right" Margin="5,0,0,0">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;"/>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE710;"/>
                 </Button>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Stretch">

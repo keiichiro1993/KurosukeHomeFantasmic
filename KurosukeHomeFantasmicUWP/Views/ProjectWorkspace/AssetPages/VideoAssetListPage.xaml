@@ -29,11 +29,11 @@
                     </Style>
                     <Style TargetType="FontIcon">
                         <Setter Property="FontSize" Value="25"/>
-                        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                        <Setter Property="FontFamily" Value="Segoe Fluent Icons"/>
                     </Style>
                 </StackPanel.Resources>
                 <Button Click="AddVideoButton_Click">
-                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;"/>
+                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE710;"/>
                 </Button>
             </StackPanel>
             <ListView Grid.Row="1" SelectionMode="Single" 

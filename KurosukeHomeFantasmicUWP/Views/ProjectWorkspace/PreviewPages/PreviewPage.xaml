@@ -48,13 +48,13 @@
                     </Style>
                     <Style TargetType="FontIcon">
                         <Setter Property="FontSize" Value="25"/>
-                        <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                        <Setter Property="FontFamily" Value="Segoe Fluent Icons"/>
                     </Style>
                 </StackPanel.Resources>
                 <Button Click="PlayButton_Click">
                     <Grid>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE768;" Visibility="{x:Bind ViewModel.PlayButtonVisibility, Mode=OneWay}"/>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE769;" Visibility="{x:Bind ViewModel.PauseButtonVisibility, Mode=OneWay}"/>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE768;" Visibility="{x:Bind ViewModel.PlayButtonVisibility, Mode=OneWay}"/>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE769;" Visibility="{x:Bind ViewModel.PauseButtonVisibility, Mode=OneWay}"/>
                     </Grid>
                 </Button>
             </StackPanel>

@@ -45,7 +45,7 @@
                                     <ColumnDefinition Width="50"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <FontIcon Grid.Column="0" FontFamily="Segoe MDL2 Assets" Glyph="&#xE82E;" FontSize="45"/>
+                                <FontIcon Grid.Column="0" FontFamily="Segoe Fluent Icons" Glyph="&#xE82E;" FontSize="45"/>
                                 <StackPanel Grid.Column="1" Orientation="Vertical">
                                     <TextBlock Margin="10,0" x:Uid="WelcomePage-NewProjectButtonTitle"/>
                                     <TextBlock Margin="10,0" x:Uid="WelcomePage-NewProjectButtonDescription" FontSize="15"/>
@@ -59,7 +59,7 @@
                                     <ColumnDefinition Width="50"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <FontIcon Grid.Column="0" FontFamily="Segoe MDL2 Assets" Glyph="&#xEC50;" FontSize="45"/>
+                                <FontIcon Grid.Column="0" FontFamily="Segoe Fluent Icons" Glyph="&#xEC50;" FontSize="45"/>
                                 <StackPanel Grid.Column="1" Orientation="Vertical">
                                     <TextBlock Margin="10,0" x:Uid="WelcomePage-LoadProjectButtonTitle"/>
                                     <TextBlock Margin="10,0" x:Uid="WelcomePage-LoadProjectButtonDescription" FontSize="15"/>

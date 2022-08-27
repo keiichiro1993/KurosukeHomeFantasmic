@@ -140,6 +140,9 @@
     <Compile Include="Controls\Hue\HueActionEditor.xaml.cs">
       <DependentUpon>HueActionEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Hue\HueEffectListItem.xaml.cs">
+      <DependentUpon>HueEffectListItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Hue\HueActionListItem.xaml.cs">
       <DependentUpon>HueActionListItem.xaml</DependentUpon>
     </Compile>
@@ -340,6 +343,10 @@
     <Page Include="Controls\Hue\HueActionEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Hue\HueEffectListItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Hue\HueActionListItem.xaml">
       <SubType>Designer</SubType>

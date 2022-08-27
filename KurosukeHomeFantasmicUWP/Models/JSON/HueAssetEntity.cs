@@ -37,7 +37,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
                               select light.Id).ToList();
             HexColor = action.Color.ToHex();
             Brightness = action.Brightness;
-            Duration = action.TransitionDuration;
+            TransitionDuration = action.TransitionDuration;
         }
         public string Id { get; set; }
         public string Name { get; set; }
@@ -45,7 +45,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
         public List<byte> TargetLightIds { get; set; }
         public string HexColor { get; set; }
         public double Brightness { get; set; }
-        public TimeSpan Duration { get; set; }
+        public TimeSpan TransitionDuration { get; set; }
 
         public HueAction ToHueAction(List<EntertainmentLight> lights)
         {
@@ -58,7 +58,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
                                   select light).ToList();
             action.Color = new RGBColor(HexColor);
             action.Brightness = Brightness;
-            action.TransitionDuration = Duration;
+            action.TransitionDuration = TransitionDuration;
 
             return action;
         }
@@ -74,7 +74,6 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             Name = effect.Name;
             Description = effect.Description;
             StartTime = effect.StartTime;
-            Duration = effect.Duration;
             ActionIds = (from action in effect.Actions
                          select action.Id).ToList();
             TargetLightIds = (from light in effect.TargetLights
@@ -87,7 +86,6 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
         public string Name { get; set; }
         public string Description { get; set; }
         public TimeSpan StartTime { get; set; }
-        public TimeSpan Duration { get; set; }
         public List<string> ActionIds { get; set; }
         public List<byte> TargetLightIds { get; set; }
         public IteratorEffectMode IteratorEffectMode { get; set; }
@@ -100,7 +98,6 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             effect.Name = Name;
             effect.Description = Description;
             effect.StartTime = StartTime;
-            effect.Duration = Duration;
             effect.Actions = (from action in actions
                              where ActionIds.Contains(action.Id)
                              select action).ToList();

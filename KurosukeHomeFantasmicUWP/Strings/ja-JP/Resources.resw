@@ -144,6 +144,9 @@
   <data name="AddHueEffectContentDialog-IterationModeTitle.Text" xml:space="preserve">
     <value>Iterator Effect モード</value>
   </data>
+  <data name="AddHueEffectContentDialog-MarginTitle.Text" xml:space="preserve">
+    <value>Margin:</value>
+  </data>
   <data name="AddNewSceneContentDialog-DescriptionTitle.Text" xml:space="preserve">
     <value>説明:</value>
   </data>

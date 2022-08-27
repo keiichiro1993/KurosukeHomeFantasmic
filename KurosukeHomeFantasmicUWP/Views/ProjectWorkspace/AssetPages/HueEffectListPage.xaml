@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
-    xmlns:models="using:KurosukeHueClient.Models.HueObjects"
+    xmlns:models="using:KurosukeHueClient.Models.HueObjects" xmlns:hue="using:KurosukeHomeFantasmicUWP.Controls.Hue"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -41,16 +41,7 @@
                 <!--SelectionChanged="ListView_SelectionChanged" ItemClick="ListView_ItemClick"-->
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:HueEffect">
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Effect:"/>
-                                <TextBlock Margin="5,0,0,0" Text="{x:Bind Path=Name}"/>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{x:Bind Path=ActionsCount}"/>
-                                <TextBlock Margin="5,0,0,0" Text="actions"/>
-                            </StackPanel>
-                        </StackPanel>
+                        <hue:HueEffectListItem Effect="{x:Bind local:HueEffectListPage.HueEffect((models:HueEffect))}" CanDrag="True"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

@@ -29,7 +29,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            ViewModel.AddAction();
+            ViewModel.AddEffect();
             this.Hide();
         }
 
@@ -70,6 +70,8 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
         }
 
         public string Description { get; set; }
+
+        public TimeSpan Margin { get; set; } = new TimeSpan(0, 0, 5);
 
         public IteratorEffectMode IteratorEffectMode { get; set; } = IteratorEffectMode.Bounce;
 
@@ -147,9 +149,11 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             Effect.Id = getNewGuid();
             Effect.Name = Name;
             Effect.Description = Description;
+            Effect.Margin = Margin;
             Effect.TargetLights = (from light in SelectedLights
                                    select light.HueEntertainmentLight).ToList();
             Effect.IteratorEffectMode = IteratorEffectMode;
+            Effect.EffectMode = HueEffect.EffectModes.IteratorEffect;
             Utils.OnMemoryCache.HueEffects.Add(Effect);
         }
 

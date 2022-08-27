@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:huecontrol="using:KurosukeHomeFantasmicUWP.Controls.Hue" 
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
-    xmlns:models="using:KurosukeHueClient.Models.HueObjects"
+    xmlns:models="using:KurosukeHueClient.Models.HueObjects" xmlns:parts="using:KurosukeHomeFantasmicUWP.Controls.Timeline.Parts"
     mc:Ignorable="d"
     x:Uid="AddHueEffectContentDialog"
     PrimaryButtonText="Add"
@@ -28,6 +28,7 @@
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="AUTO"/>
@@ -66,6 +67,10 @@
                 </Button>
             </StackPanel>
             <StackPanel Grid.Row="4" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="AddHueEffectContentDialog-MarginTitle"/>
+                <parts:TimeSpanTextBox TotalCanvasDuration="{x:Bind ViewModel.Margin, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="5" Orientation="Vertical" HorizontalAlignment="Stretch">
                 <TextBlock x:Uid="AddHueEffectContentDialog-ActionTitle"/>
                 <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <StackPanel Orientation="Horizontal">
@@ -86,7 +91,7 @@
                     </Button.Flyout>
                 </Button>
             </StackPanel>
-            <ListView Grid.Row="5" ItemsSource="{x:Bind ViewModel.HueActions, Mode=OneWay}">
+            <ListView Grid.Row="6" ItemsSource="{x:Bind ViewModel.HueActions, Mode=OneWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:HueAction">
                         <huecontrol:HueActionListItem Action="{x:Bind local:AddHueEffectDialogViewModel.HueAction((models:HueAction))}" MarginTextboxEnabled="True" CanDrag="False"/>

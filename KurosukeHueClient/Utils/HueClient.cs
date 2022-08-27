@@ -107,7 +107,14 @@ namespace KurosukeHueClient.Utils
             lights.SetState(cancellationTokenSource.Token, action.Color, action.Brightness, action.TransitionDuration);
         }
 
-        public void SendIteratorEffect(HueEffect effect)
+        /// <summary>
+        /// Call Iterator Effect
+        /// </summary>
+        /// <param name="effect">The effect to play</param>
+        /// <param name="duration">Duration of the effect. The Effect stopps after this timespan.</param>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="OperationCanceledException"></exception>
+        public void SendIteratorEffect(HueEffect effect, TimeSpan duration)
         {
             if (baseLayer == null)
             {
@@ -140,7 +147,7 @@ namespace KurosukeHueClient.Utils
                 },
                 mode: effect.IteratorEffectMode,
                 waitTime: () => { return effect.Margin; },
-                duration: effect.Duration
+                duration: duration
             );
         }
 

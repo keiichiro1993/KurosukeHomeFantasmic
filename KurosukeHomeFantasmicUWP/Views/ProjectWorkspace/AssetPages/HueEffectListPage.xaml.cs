@@ -1,4 +1,5 @@
 ﻿using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.AssetPages;
+using KurosukeHueClient.Models.HueObjects;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,5 +37,7 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.AssetPages
             await dialog.ShowAsync();
             ((Button)sender).IsEnabled = true;
         }
+
+        public static HueEffect HueEffect(HueEffect effect) { return effect; }
     }
 }

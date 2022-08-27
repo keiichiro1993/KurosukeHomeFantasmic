@@ -180,6 +180,21 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
             }
             else if (e.DataView.Properties.TryGetValue("HueEffect", out outObject))
             {
+                var item = outObject as HueEffect;
+                if (item != null)
+                {
+                    try
+                    {
+                        var hueItem = new TimelineHueItem(item);
+                        hueItem.CanvasWidth = singleTimelineBackground.ActualWidth;
+                        hueItem.TotalCanvasDuration = TotalCanvasDuration;
+                        TimelineData.TimelineItems.Add(hueItem);
+                    }
+                    catch (Exception ex)
+                    {
+                        await DebugHelper.ShowErrorDialog(ex, "Failed to add the Hue Effect to the timeline.");
+                    }
+                }
             }
         }
 

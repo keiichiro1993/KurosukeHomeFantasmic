@@ -211,6 +211,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
             entity.Duration = Duration;
             entity.HueItemType = HueItemType;
             entity.HueItemId = HueAction != null ? HueAction.Id : HueEffect.Id;
+            entity.Loop = Loop;
             return entity;
         }
     }

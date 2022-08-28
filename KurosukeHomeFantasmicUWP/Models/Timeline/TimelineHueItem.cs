@@ -64,7 +64,20 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
             }
         }
         public string Name { get { return HueAction != null ? HueAction.Name : HueEffect.Name; } }
-        public bool Locked { get; set; }
+
+        private bool _Locked;
+        public bool Locked
+        {
+            get { return _Locked; }
+            set
+            {
+                _Locked = value;
+                RaisePropertyChanged("IsLoopButtonEnabled");
+            }
+        }
+
+        public bool IsLoopButtonEnabled { get { return !Locked; } }
+
         private bool _Loop;
         public bool Loop
         {
@@ -73,7 +86,10 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
             {
                 _Loop = value;
                 RaisePropertyChanged("IsResizable");
-                RaisePropertyChanged("IsResizableBool");
+                if (!_Loop)
+                {
+                    Duration = HueEffect.Duration;
+                }
             }
         }
 

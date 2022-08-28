@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
 
         <Button Grid.Column="0" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="3,0,0,3" Width="15"
-                IsEnabled="{x:Bind TimelineHueItem.IsResizable}"
+                IsEnabled="{x:Bind TimelineHueItem.IsResizable, Mode=OneWay}"
                 PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
                 ManipulationMode="TranslateX"
                 ManipulationStarted="UserControl_ManipulationStarted" 
@@ -32,7 +32,7 @@
             </FontIcon>
         </Button>
         <Button Grid.Column="2" Margin="0" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="0,3,3,0" Width="15"
-                IsEnabled="{x:Bind TimelineHueItem.IsResizable}"
+                IsEnabled="{x:Bind TimelineHueItem.IsResizable, Mode=OneWay}"
                 PointerEntered="ResizeButton_PointerEntered" PointerExited="ResizeButton_PointerExited"
                 ManipulationMode="TranslateX"
                 ManipulationStarted="UserControl_ManipulationStarted" 
@@ -68,6 +68,7 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
                     <ToggleButton HorizontalAlignment="Right" Width="35" Height="35" Padding="5.5" Visibility="{x:Bind TimelineHueItem.LoopButtonVisibility}"
+                              IsEnabled="{x:Bind TimelineHueItem.IsLoopButtonEnabled, Mode=OneWay}"
                               IsChecked="{x:Bind TimelineHueItem.Loop, Mode=TwoWay}">
                         <BitmapIcon UriSource="ms-appx:///Assets/Icons/loop-button-icon.png"/>
                     </ToggleButton>

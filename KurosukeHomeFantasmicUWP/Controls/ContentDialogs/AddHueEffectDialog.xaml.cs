@@ -152,6 +152,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             Effect.Margin = Margin;
             Effect.TargetLights = (from light in SelectedLights
                                    select light.HueEntertainmentLight).ToList();
+            Effect.Actions = HueActions.ToList();
             Effect.IteratorEffectMode = IteratorEffectMode;
             Effect.EffectMode = HueEffect.EffectModes.IteratorEffect;
             Utils.OnMemoryCache.HueEffects.Add(Effect);

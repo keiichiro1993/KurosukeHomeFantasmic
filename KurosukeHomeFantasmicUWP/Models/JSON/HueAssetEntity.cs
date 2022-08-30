@@ -69,7 +69,6 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
         public HueEffectEntity() { }
         public HueEffectEntity(HueEffect effect)
         {
-            EffectMode = effect.EffectMode;
             Id = effect.Id;
             Name = effect.Name;
             Description = effect.Description;
@@ -78,6 +77,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
                          select action.Id).ToList();
             TargetLightIds = (from light in effect.TargetLights
                               select light.Id).ToList();
+            EffectMode = effect.EffectMode;
             IteratorEffectMode = effect.IteratorEffectMode;
             EffectMargin = effect.Margin;
         }
@@ -104,6 +104,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             effect.TargetLights = (from light in lights
                                    where TargetLightIds.Contains(light.Id)
                                    select light).ToList();
+            effect.EffectMode = EffectMode;
             effect.IteratorEffectMode = IteratorEffectMode;
             effect.Margin = EffectMargin;
 

@@ -114,6 +114,12 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
         public void AddAction()
         {
             NewHueAction.Id = AddHueActionDialogViewModel.GetNewGuid();
+            if (EffectMode == EffectModes.Actions)
+            {
+                NewHueAction.TargetLights = (from light in SelectedLights
+                                             select light.HueEntertainmentLight).ToList();
+                SelectedLights = new ObservableCollection<Light>();
+            }
             HueActions.Add(NewHueAction);
 
             NewHueAction = new HueAction

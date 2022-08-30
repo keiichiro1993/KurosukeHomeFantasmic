@@ -11,6 +11,7 @@ using Q42.HueApi.Streaming.Extensions;
 using Q42.HueApi.Streaming.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -91,6 +92,10 @@ namespace KurosukeHueClient.Utils
             IsConnected = true;
         }
 
+        /// <summary>
+        /// Call Hue Action
+        /// </summary>
+        /// <param name="action">The acction to play</param>
         public void SendEntertainmentAction(HueAction action)
         {
             if (baseLayer == null)
@@ -108,22 +113,50 @@ namespace KurosukeHueClient.Utils
         }
 
         /// <summary>
-        /// Call Iterator Effect
+        /// Call Hue Effect
         /// </summary>
         /// <param name="effect">The effect to play</param>
         /// <param name="duration">Duration of the effect. The Effect stopps after this timespan.</param>
-        /// <exception cref="InvalidOperationException"></exception>
-        /// <exception cref="OperationCanceledException"></exception>
-        public void SendIteratorEffect(HueEffect effect, TimeSpan duration)
+        public void SendEntertainmentEffect(HueEffect effect, TimeSpan duration)
         {
             if (baseLayer == null)
             {
                 throw new InvalidOperationException("Hue Client is not connected to Entertainment API.");
             }
-            if (effect.EffectMode != EffectModes.IteratorEffect)
+
+            if (effect.EffectMode == EffectModes.IteratorEffect)
             {
-                throw new InvalidOperationException($"The specified HueEffect {effect.EffectMode} - {effect.Name}({effect.Id}) is not Iterator effect.");
+                sendIteratorEffect(effect, duration, cancellationTokenSource.Token);
             }
+            else if (effect.EffectMode == EffectModes.Actions)
+            {
+                sendActionsEffect(effect, duration, cancellationTokenSource.Token);
+            }
+        }
+
+        private async void sendActionsEffect(HueEffect effect, TimeSpan duration, CancellationToken cancellationToken)
+        {
+            var timer = new Stopwatch();
+            timer.Start();
+            while (timer.ElapsedTicks < duration.Ticks)
+            {
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    throw new OperationCanceledException(cancellationToken);
+                }
+
+                foreach (var action in effect.Actions)
+                {
+                    SendEntertainmentAction(action);
+                    await Task.Delay(action.Margin);
+                }
+                await Task.Delay(effect.Margin);
+            }
+        }
+
+        private void sendIteratorEffect(HueEffect effect, TimeSpan duration, CancellationToken cancellationToken)
+        {
+
             //pick lights selected in EntertainmentAction
             var ids = from target in effect.TargetLights
                       select target.Id;
@@ -132,12 +165,12 @@ namespace KurosukeHueClient.Utils
                          select light;
             //call effect
             lights.IteratorEffect(
-                cancellationToken: cancellationTokenSource.Token,
+                cancellationToken: cancellationToken,
                 effectFunction: async (currentLight, cancel, timespan) =>
                 {
-                    foreach (var action in effect.Actions) 
+                    foreach (var action in effect.Actions)
                     {
-                        if (cancel.IsCancellationRequested) 
+                        if (cancel.IsCancellationRequested)
                         {
                             throw new OperationCanceledException(cancel);
                         }

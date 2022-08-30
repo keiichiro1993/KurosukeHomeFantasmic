@@ -119,17 +119,9 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
                     {
                         AppGlobalVariables.GlobalHueClient.SendEntertainmentAction(hueItem.HueAction);
                     }
-                    else if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.Actions)
+                    else
                     {
-
-                    }
-                    else if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.IteratorEffect)
-                    {
-                        AppGlobalVariables.GlobalHueClient.SendIteratorEffect(hueItem.HueEffect, hueItem.Duration);
-                    }
-                    else if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.LightSourceEffect)
-                    {
-
+                        AppGlobalVariables.GlobalHueClient.SendEntertainmentEffect(hueItem.HueEffect, hueItem.Duration);
                     }
                 }
             }

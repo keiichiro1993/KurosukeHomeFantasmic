@@ -18,26 +18,19 @@
             <RowDefinition Height="AUTO"/>
             <RowDefinition Height="AUTO"/>
         </Grid.RowDefinitions>
-        <muxc:ColorPicker Grid.Row="0" Color="{x:Bind ViewModel.Color, Mode=TwoWay}" IsAlphaEnabled="False" IsAlphaSliderVisible="False"/>
-        <muxc:Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="{StaticResource ResourceKey=SkyBlueAcrylicBrush}"
-                     Margin="10,15"/>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="AUTO"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Duration:"
-                       Margin="0,0,5,0" VerticalAlignment="Center"/>
-            <parts:TimeSpanTextBox Grid.Column="1" TotalCanvasDuration="{x:Bind Action.TransitionDuration, Mode=TwoWay}"/>
-        </Grid>
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="AUTO"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="Margin:"
-                       Margin="0,0,5,0" VerticalAlignment="Center"/>
-            <parts:TimeSpanTextBox Grid.Column="1" TotalCanvasDuration="{x:Bind Action.Margin, Mode=TwoWay}"/>
-        </Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="AUTO"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <muxc:ColorPicker Grid.Row="0" Grid.ColumnSpan="2"
+                          Color="{x:Bind ViewModel.Color, Mode=TwoWay}" IsAlphaEnabled="False" IsAlphaSliderVisible="False"/>
+        <muxc:Border Grid.Row="1" Grid.ColumnSpan="2" 
+                     BorderThickness="0,1,0,0" BorderBrush="{StaticResource ResourceKey=SkyBlueAcrylicBrush}" Margin="10,15"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Duration:"
+                       Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <parts:TimeSpanTextBox Grid.Row="2" Grid.Column="1" TotalCanvasDuration="{x:Bind Action.TransitionDuration, Mode=TwoWay}"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Margin:"
+                       Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <parts:TimeSpanTextBox Grid.Row="3" Grid.Column="1" TotalCanvasDuration="{x:Bind Action.Margin, Mode=TwoWay}"/>
     </Grid>
 </UserControl>

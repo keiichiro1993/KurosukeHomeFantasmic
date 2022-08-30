@@ -120,7 +120,7 @@ namespace KurosukeHueClient.Utils
             {
                 throw new InvalidOperationException("Hue Client is not connected to Entertainment API.");
             }
-            if (effect.EffectMode != HueEffect.EffectModes.IteratorEffect)
+            if (effect.EffectMode != EffectModes.IteratorEffect)
             {
                 throw new InvalidOperationException($"The specified HueEffect {effect.EffectMode} - {effect.Name}({effect.Id}) is not Iterator effect.");
             }

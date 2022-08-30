@@ -81,7 +81,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             IteratorEffectMode = effect.IteratorEffectMode;
             EffectMargin = effect.Margin;
         }
-        public HueEffect.EffectModes EffectMode { get; set; }
+        public EffectModes EffectMode { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

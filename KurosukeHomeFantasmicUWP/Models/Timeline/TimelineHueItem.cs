@@ -35,15 +35,15 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                     return TimelineHueItemTypes.Action;
                 }
 
-                if (HueEffect.EffectMode == HueEffect.EffectModes.Actions)
+                if (HueEffect.EffectMode == EffectModes.Actions)
                 {
                     return TimelineHueItemTypes.Actions;
                 }
-                else if (HueEffect.EffectMode == HueEffect.EffectModes.IteratorEffect)
+                else if (HueEffect.EffectMode == EffectModes.IteratorEffect)
                 {
                     return TimelineHueItemTypes.IteratorEffect;
                 }
-                else if (HueEffect.EffectMode == HueEffect.EffectModes.LightSourceEffect)
+                else if (HueEffect.EffectMode == EffectModes.LightSourceEffect)
                 {
                     return TimelineHueItemTypes.LightSourceEffect;
                 }

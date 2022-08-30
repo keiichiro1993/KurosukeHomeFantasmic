@@ -34,6 +34,7 @@
                 <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch">
@@ -45,13 +46,20 @@
                 <TextBox Text="{x:Bind ViewModel.Description, Mode=TwoWay}"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="AddHueEffectContentDialog-EffectModeTitle"/>
+                <ComboBox MinWidth="200"
+                    xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+                    xmlns:enums="using:KurosukeHueClient.Models.HueObjects"
+                    ItemsSource="{ui:EnumValues Type=enums:EffectModes}" SelectedValue="{x:Bind ViewModel.EffectMode, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Orientation="Vertical" HorizontalAlignment="Stretch"  Visibility="{x:Bind ViewModel.BulkLightSelectorVisibility, Mode=OneWay}">
                 <TextBlock x:Uid="AddHueEffectContentDialog-IterationModeTitle"/>
                 <ComboBox MinWidth="200"
                     xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
                     xmlns:enums="using:Q42.HueApi.Streaming.Extensions"
                     ItemsSource="{ui:EnumValues Type=enums:IteratorEffectMode}" SelectedValue="{x:Bind ViewModel.IteratorEffectMode, Mode=TwoWay}"/>
             </StackPanel>
-            <StackPanel Grid.Row="3" Orientation="Vertical" HorizontalAlignment="Stretch">
+            <StackPanel Grid.Row="4" Orientation="Vertical" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.BulkLightSelectorVisibility, Mode=OneWay}">
                 <TextBlock x:Uid="AddHueActionContentDialog-SelectedLightsTitle"/>
                 <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <StackPanel Orientation="Horizontal">
@@ -66,11 +74,11 @@
                     </Button.Flyout>
                 </Button>
             </StackPanel>
-            <StackPanel Grid.Row="4" Orientation="Vertical" HorizontalAlignment="Stretch">
+            <StackPanel Grid.Row="5" Orientation="Vertical" HorizontalAlignment="Stretch">
                 <TextBlock x:Uid="AddHueEffectContentDialog-MarginTitle"/>
                 <parts:TimeSpanTextBox TotalCanvasDuration="{x:Bind ViewModel.Margin, Mode=TwoWay}"/>
             </StackPanel>
-            <StackPanel Grid.Row="5" Orientation="Vertical" HorizontalAlignment="Stretch">
+            <StackPanel Grid.Row="6" Orientation="Vertical" HorizontalAlignment="Stretch">
                 <TextBlock x:Uid="AddHueEffectContentDialog-ActionTitle"/>
                 <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <StackPanel Orientation="Horizontal">
@@ -82,16 +90,33 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="AUTO"/>
                                     <RowDefinition Height="AUTO"/>
+                                    <RowDefinition Height="AUTO"/>
                                 </Grid.RowDefinitions>
                                 <huecontrol:HueActionEditor Action="{x:Bind ViewModel.NewHueAction, Mode=OneWay}" MarginTextboxEnabled="True" />
-                                <Button Grid.Row="1" Margin="0,20,0,0"
+                                <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.PerActionLightSelectorVisibility, Mode=OneWay}"
+                                            Margin="0,5,0,0">
+                                    <TextBlock x:Uid="AddHueActionContentDialog-SelectedLightsTitle"/>
+                                    <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{x:Bind ViewModel.SelectedLights.Count, Mode=OneWay}"/>
+                                            <TextBlock x:Uid="AddHueActionContentDialog-SelectedLightsSuffix" 
+                                                       Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                        <Button.Flyout>
+                                            <Flyout>
+                                                <huecontrol:HueLightSelector SelectedLights="{x:Bind ViewModel.SelectedLights}" AvailableLights="{x:Bind ViewModel.AvailableLights, Mode=OneWay}" />
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                </StackPanel>
+                                <Button Grid.Row="2" Margin="0,20,0,0"
                                         Content="Add" Click="AddActionButton_Click"/>
                             </Grid>
                         </Flyout>
                     </Button.Flyout>
                 </Button>
             </StackPanel>
-            <ListView Grid.Row="6" ItemsSource="{x:Bind ViewModel.HueActions, Mode=OneWay}">
+            <ListView Grid.Row="7" ItemsSource="{x:Bind ViewModel.HueActions, Mode=OneWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:HueAction">
                         <huecontrol:HueActionListItem Action="{x:Bind local:AddHueEffectDialogViewModel.HueAction((models:HueAction))}" MarginTextboxEnabled="True" CanDrag="False"/>

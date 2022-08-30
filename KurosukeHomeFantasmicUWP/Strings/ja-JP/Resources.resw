@@ -141,8 +141,11 @@
   <data name="AddHueEffectContentDialog-ActionsTitle.Text" xml:space="preserve">
     <value>Actions:</value>
   </data>
+  <data name="AddHueEffectContentDialog-EffectModeTitle.Text" xml:space="preserve">
+    <value>Effect モード:</value>
+  </data>
   <data name="AddHueEffectContentDialog-IterationModeTitle.Text" xml:space="preserve">
-    <value>Iterator Effect モード</value>
+    <value>Iterator Effect モード:</value>
   </data>
   <data name="AddHueEffectContentDialog-MarginTitle.Text" xml:space="preserve">
     <value>Margin:</value>

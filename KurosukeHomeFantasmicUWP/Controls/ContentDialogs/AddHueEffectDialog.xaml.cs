@@ -75,9 +75,25 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
 
         public IteratorEffectMode IteratorEffectMode { get; set; } = IteratorEffectMode.Bounce;
 
+        private EffectModes _EffectMode = EffectModes.IteratorEffect;
+        public EffectModes EffectMode
+        {
+            get { return _EffectMode; }
+            set
+            {
+                _EffectMode = value;
+                RaisePropertyChanged("BulkLightSelectorVisibility");
+                RaisePropertyChanged("PerActionLightSelectorVisibility");
+            }
+        }
+
+        public Visibility BulkLightSelectorVisibility { get { return EffectMode != EffectModes.Actions ? Visibility.Visible : Visibility.Collapsed; } }
+        public Visibility PerActionLightSelectorVisibility { get { return EffectMode == EffectModes.Actions ? Visibility.Visible : Visibility.Collapsed; } }
+
+
         public ObservableCollection<Light> SelectedLights = new ObservableCollection<Light>();
         public ObservableCollection<HueAction> HueActions = new ObservableCollection<HueAction>();
-        
+
         private HueAction _NewHueAction = new HueAction
         {
             Color = new Q42.HueApi.ColorConverters.RGBColor(255, 255, 255),
@@ -153,8 +169,8 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             Effect.TargetLights = (from light in SelectedLights
                                    select light.HueEntertainmentLight).ToList();
             Effect.Actions = HueActions.ToList();
+            Effect.EffectMode = EffectMode;
             Effect.IteratorEffectMode = IteratorEffectMode;
-            Effect.EffectMode = HueEffect.EffectModes.IteratorEffect;
             Utils.OnMemoryCache.HueEffects.Add(Effect);
         }
 

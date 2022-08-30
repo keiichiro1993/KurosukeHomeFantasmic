@@ -14,9 +14,9 @@ namespace KurosukeHueClient.Models.HueObjects
     /// This object will work as a set of the HueActions.
     /// </summary>
 
+    public enum EffectModes { Actions, IteratorEffect, LightSourceEffect }
     public class HueEffect
     {
-        public enum EffectModes { Actions, IteratorEffect, LightSourceEffect }
         public EffectModes EffectMode { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }

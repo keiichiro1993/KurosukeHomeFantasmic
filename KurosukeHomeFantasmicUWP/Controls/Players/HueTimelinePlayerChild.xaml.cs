@@ -82,7 +82,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
             }
         }
 
-        public override void UpdatePosition()
+        public override async void UpdatePosition()
         {
             // Skip if null
             if (Timeline == null || CurrentPosition == null)
@@ -115,13 +115,25 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
                     // trigger hue API
                     DebugHelper.WriteDebugLog($"Trigger Hue API: {targetItem.HueItemType} - {targetItem.Name}({targetItem.ItemId})");
                     hueItem = targetItem;
-                    if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.Action)
+                    try
                     {
-                        AppGlobalVariables.GlobalHueClient.SendEntertainmentAction(hueItem.HueAction);
+                        if (hueItem.HueItemType == TimelineHueItem.TimelineHueItemTypes.Action)
+                        {
+                            AppGlobalVariables.GlobalHueClient.SendEntertainmentAction(hueItem.HueAction);
+                        }
+                        else
+                        {
+                            AppGlobalVariables.GlobalHueClient.SendEntertainmentEffect(hueItem.HueEffect, hueItem.Duration);
+                        }
                     }
-                    else
+                    catch (TimeoutException)
                     {
-                        AppGlobalVariables.GlobalHueClient.SendEntertainmentEffect(hueItem.HueEffect, hueItem.Duration);
+                        //Ignore
+                    }
+                    catch (Exception ex) 
+                    {
+                        OnMemoryCache.GlobalViewModel.GlobalPlaybackState = MediaPlaybackState.Paused;
+                        await DebugHelper.ShowErrorDialog(ex, "Error in Hue Player");
                     }
                 }
             }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.Storage.Search;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -91,7 +92,16 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
         public Visibility PerActionLightSelectorVisibility { get { return EffectMode == EffectModes.Actions ? Visibility.Visible : Visibility.Collapsed; } }
 
 
-        public ObservableCollection<Light> SelectedLights = new ObservableCollection<Light>();
+        private ObservableCollection<Light> _SelectedLights = new ObservableCollection<Light>();
+        public ObservableCollection<Light> SelectedLights
+        {
+            get { return _SelectedLights; }
+            set
+            {
+                _SelectedLights = value;
+                RaisePropertyChanged();
+            }
+        }
         public ObservableCollection<HueAction> HueActions = new ObservableCollection<HueAction>();
 
         private HueAction _NewHueAction = new HueAction

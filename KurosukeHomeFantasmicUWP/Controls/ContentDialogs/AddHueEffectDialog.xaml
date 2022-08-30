@@ -69,7 +69,7 @@
                     </StackPanel>
                     <Button.Flyout>
                         <Flyout>
-                            <huecontrol:HueLightSelector SelectedLights="{x:Bind ViewModel.SelectedLights}" AvailableLights="{x:Bind ViewModel.AvailableLights, Mode=OneWay}" />
+                            <huecontrol:HueLightSelector SelectedLights="{x:Bind ViewModel.SelectedLights, Mode=OneWay}" AvailableLights="{x:Bind ViewModel.AvailableLights, Mode=OneWay}" />
                         </Flyout>
                     </Button.Flyout>
                 </Button>
@@ -104,7 +104,7 @@
                                         </StackPanel>
                                         <Button.Flyout>
                                             <Flyout>
-                                                <huecontrol:HueLightSelector SelectedLights="{x:Bind ViewModel.SelectedLights}" AvailableLights="{x:Bind ViewModel.AvailableLights, Mode=OneWay}" />
+                                                <huecontrol:HueLightSelector SelectedLights="{x:Bind ViewModel.SelectedLights, Mode=OneWay}" AvailableLights="{x:Bind ViewModel.AvailableLights, Mode=OneWay}" />
                                             </Flyout>
                                         </Button.Flyout>
                                     </Button>

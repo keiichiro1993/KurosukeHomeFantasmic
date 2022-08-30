@@ -22,7 +22,7 @@ namespace KurosukeHomeFantasmicUWP.Utils.DBHelpers
         {
             if (assetDBFile == null)
             {
-                var assetDBFolder = await AppGlobalVariables.AssetsFolder.CreateFolderAsync(".assetdb", CreationCollisionOption.OpenIfExists);
+                assetDBFolder = await AppGlobalVariables.AssetsFolder.CreateFolderAsync(".assetdb", CreationCollisionOption.OpenIfExists);
                 if (!await assetDBFolder.FileExists(fileName))
                 {
                     assetDBFile = await assetDBFolder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);

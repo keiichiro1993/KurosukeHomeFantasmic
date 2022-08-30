@@ -126,7 +126,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
                             AppGlobalVariables.GlobalHueClient.SendEntertainmentEffect(hueItem.HueEffect, hueItem.Duration);
                         }
                     }
-                    catch (TimeoutException)
+                    catch (OperationCanceledException)
                     {
                         //Ignore
                     }

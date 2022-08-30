@@ -42,13 +42,16 @@ namespace KurosukeHueClient.Utils
             if (cancellationTokenSource != null)
             {
                 cancellationTokenSource.Cancel();
-                cancellationTokenSource.Dispose();
             }
 
             //dispose all
             client = null;
             streamingClient.Dispose();
             streamingClient = null;
+            if (cancellationTokenSource != null)
+            {
+                cancellationTokenSource.Dispose();
+            }
         }
 
         #region Entertainment APIs
@@ -142,7 +145,7 @@ namespace KurosukeHueClient.Utils
             {
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    throw new OperationCanceledException(cancellationToken);
+                    cancellationToken.ThrowIfCancellationRequested();
                 }
 
                 foreach (var action in effect.Actions)
@@ -172,7 +175,7 @@ namespace KurosukeHueClient.Utils
                     {
                         if (cancel.IsCancellationRequested)
                         {
-                            throw new OperationCanceledException(cancel);
+                            cancel.ThrowIfCancellationRequested();
                         }
                         currentLight.SetState(cancel, action.Color, action.Brightness, action.TransitionDuration);
                         await Task.Delay(action.Margin);

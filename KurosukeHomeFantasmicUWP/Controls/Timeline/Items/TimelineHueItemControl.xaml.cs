@@ -43,7 +43,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
         }
 
         public delegate void DeleteButtonClickedEventHandler(object sender, ItemDeleteButtonClickedEventArgs<ITimelineItem> args);
-        public event DeleteButtonClickedEventHandler DeleteButtonCliecked;
+        public event DeleteButtonClickedEventHandler DeleteButtonClicked;
 
         public TimelineHueItem TimelineHueItem { get { return (TimelineHueItem)TimelineItem; } }
 

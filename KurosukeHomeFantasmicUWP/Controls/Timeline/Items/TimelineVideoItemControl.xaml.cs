@@ -33,7 +33,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
         }
 
         public delegate void DeleteButtonClickedEventHandler(object sender, ItemDeleteButtonClickedEventArgs<ITimelineItem> args);
-        public event DeleteButtonClickedEventHandler DeleteButtonCliecked;
+        public event DeleteButtonClickedEventHandler DeleteButtonClicked;
 
         public TimelineVideoItem TimelineVideoItem { get { return (TimelineVideoItem)TimelineItem; } }
 
@@ -93,9 +93,9 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
 
         private void ContextMenuDeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.DeleteButtonCliecked != null)
+            if (this.DeleteButtonClicked != null)
             {
-                this.DeleteButtonCliecked(this, new ItemDeleteButtonClickedEventArgs<ITimelineItem>(this.TimelineItem));
+                this.DeleteButtonClicked(this, new ItemDeleteButtonClickedEventArgs<ITimelineItem>(this.TimelineItem));
             }
         }
     }

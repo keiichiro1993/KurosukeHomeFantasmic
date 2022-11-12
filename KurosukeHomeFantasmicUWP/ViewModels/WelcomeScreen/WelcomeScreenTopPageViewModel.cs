@@ -97,7 +97,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
                             );
                         Utils.OnMemoryCache.HueEffects = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueEffect>(
                             from effect in hueData.HueEffects
-                            select effect.ToHueEffect(availableLights, Utils.OnMemoryCache.HueActions.ToList())
+                            select effect.ToHueEffect(availableLights)
                             );
                     }
                     catch (InvalidOperationException)

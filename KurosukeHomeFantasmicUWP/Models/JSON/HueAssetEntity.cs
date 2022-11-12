@@ -16,9 +16,9 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
         public HueAssetEntity(List<HueAction> hueActions, List<HueEffect> hueEffects)
         {
             HueActions = (from action in hueActions
-                         select new HueActionEntity(action)).ToList();
+                          select new HueActionEntity(action)).ToList();
             HueEffects = (from effect in hueEffects
-                         select new HueEffectEntity(effect)).ToList();
+                          select new HueEffectEntity(effect)).ToList();
         }
 
         public List<HueActionEntity> HueActions { get; set; }
@@ -54,8 +54,8 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             action.Name = Name;
             action.Description = Description;
             action.TargetLights = (from light in lights
-                                  where TargetLightIds.Contains(light.Id)
-                                  select light).ToList();
+                                   where TargetLightIds.Contains(light.Id)
+                                   select light).ToList();
             action.Color = new RGBColor(HexColor);
             action.Brightness = Brightness;
             action.TransitionDuration = TransitionDuration;
@@ -73,40 +73,53 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             Name = effect.Name;
             Description = effect.Description;
             StartTime = effect.StartTime;
-            ActionIds = (from action in effect.Actions
-                         select action.Id).ToList();
             TargetLightIds = (from light in effect.TargetLights
                               select light.Id).ToList();
             EffectMode = effect.EffectMode;
             IteratorEffectMode = effect.IteratorEffectMode;
             EffectMargin = effect.Margin;
+
+            // Convert to HueActionEntity
+            Actions = new List<HueActionEntity>();
+            foreach (var action in effect.Actions)
+            {
+                Actions.Add(new HueActionEntity(action));
+            }
         }
         public EffectModes EffectMode { get; set; }
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public TimeSpan StartTime { get; set; }
-        public List<string> ActionIds { get; set; }
         public List<byte> TargetLightIds { get; set; }
         public IteratorEffectMode IteratorEffectMode { get; set; }
         public TimeSpan EffectMargin { get; set; }
 
-        public HueEffect ToHueEffect(List<EntertainmentLight> lights, List<HueAction> actions)
+        public List<HueActionEntity> Actions { get; set; }
+
+        public HueEffect ToHueEffect(List<EntertainmentLight> lights)
         {
             var effect = new HueEffect();
             effect.Id = Id;
             effect.Name = Name;
             effect.Description = Description;
             effect.StartTime = StartTime;
-            effect.Actions = (from action in actions
-                             where ActionIds.Contains(action.Id)
-                             select action).ToList();
             effect.TargetLights = (from light in lights
                                    where TargetLightIds.Contains(light.Id)
                                    select light).ToList();
             effect.EffectMode = EffectMode;
             effect.IteratorEffectMode = IteratorEffectMode;
             effect.Margin = EffectMargin;
+
+            // Convert back to HueAction
+            effect.Actions = new List<HueAction>();
+            if (Actions != null)
+            {
+                foreach (var actionEntity in Actions)
+                {
+                    effect.Actions.Add(actionEntity.ToHueAction(lights));
+                }
+            }
 
             return effect;
         }

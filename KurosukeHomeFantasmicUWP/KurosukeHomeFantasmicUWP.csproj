@@ -225,6 +225,7 @@
     <Compile Include="Utils\DBHelpers\VideoAssetHelper.cs" />
     <Compile Include="Utils\RequestHelpers\HueRequestHelper.cs" />
     <Compile Include="Utils\UIHelpers\StorageThumbnailExtension.cs" />
+    <Compile Include="Utils\UIHelpers\TimelineItemEventArgs.cs" />
     <Compile Include="Utils\UIHelpers\WindowLauncher.cs" />
     <Compile Include="ViewModels\Auth\AuthDialogHuePageViewModel.cs" />
     <Compile Include="ViewModels\Auth\AuthDialogMainPageViewModel.cs" />

@@ -1,4 +1,5 @@
 ﻿using KurosukeHomeFantasmicUWP.Models.Timeline;
+using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,6 +41,9 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
             //var instance = (TimelineHueItemControl)d;
             //instance.HueItem = e.NewValue as TimelineHueItem;
         }
+
+        public delegate void DeleteButtonClickedEventHandler(object sender, ItemDeleteButtonClickedEventArgs<ITimelineItem> args);
+        public event DeleteButtonClickedEventHandler DeleteButtonCliecked;
 
         public TimelineHueItem TimelineHueItem { get { return (TimelineHueItem)TimelineItem; } }
 
@@ -94,6 +98,14 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
             {
                 var x = e.Delta.Translation.X;
                 TimelineItem.Duration += TimelineItem.TotalCanvasDuration * (x / TimelineItem.CanvasWidth);
+            }
+        }
+
+        private void ContextMenuDeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DeleteButtonCliecked != null)
+            {
+                this.DeleteButtonCliecked(sender, new ItemDeleteButtonClickedEventArgs<ITimelineItem>(this.TimelineItem));
             }
         }
     }

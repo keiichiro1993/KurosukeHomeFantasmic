@@ -51,6 +51,11 @@
               ManipulationDelta="UserControl_ManipulationDelta"
               ManipulationStarted="UserControl_ManipulationStarted"
               ManipulationCompleted="UserControl_ManipulationCompleted">
+            <Grid.ContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem x:Uid="TimelineItemContextMenu-Delete" Click="ContextMenuDeleteButton_Click"/>
+                </MenuFlyout>
+            </Grid.ContextFlyout>
             <Grid.RowDefinitions>
                 <RowDefinition Height="45"/>
                 <RowDefinition Height="20"/>

@@ -1,4 +1,5 @@
 ﻿using KurosukeHomeFantasmicUWP.Models.Timeline;
+using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

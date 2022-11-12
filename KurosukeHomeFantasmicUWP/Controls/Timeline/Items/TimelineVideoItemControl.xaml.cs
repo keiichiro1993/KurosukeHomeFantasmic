@@ -1,4 +1,5 @@
 ﻿using KurosukeHomeFantasmicUWP.Models.Timeline;
+using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
 using System;
 using System.Diagnostics;
 using Windows.UI.Xaml;
@@ -30,6 +31,9 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
             //var instance = (TimelineVideoItemControl)d;
             //instance.VideoItem = e.NewValue as TimelineVideoItem;
         }
+
+        public delegate void DeleteButtonClickedEventHandler(object sender, ItemDeleteButtonClickedEventArgs<ITimelineItem> args);
+        public event DeleteButtonClickedEventHandler DeleteButtonCliecked;
 
         public TimelineVideoItem TimelineVideoItem { get { return (TimelineVideoItem)TimelineItem; } }
 
@@ -84,6 +88,14 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
             {
                 var x = e.Delta.Translation.X;
                 ((TimelineVideoItem)TimelineItem).VideoEndPosition += TimelineItem.TotalCanvasDuration * (x / TimelineItem.CanvasWidth);
+            }
+        }
+
+        private void ContextMenuDeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DeleteButtonCliecked != null)
+            {
+                this.DeleteButtonCliecked(sender, new ItemDeleteButtonClickedEventArgs<ITimelineItem>(this.TimelineItem));
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -91,27 +92,6 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
         {
             ViewModel.CanvasWidth = scalerCanvas.ActualWidth;
             triggerPositionChangedEvent();
-        }
-    }
-
-    public class PositionChangedEventArgs : System.EventArgs
-    {
-        private double currentPosition;
-        private double scale;
-
-        public PositionChangedEventArgs(double currentPosition, double scale)
-        {
-            this.currentPosition = currentPosition;
-            this.scale = scale;
-        }
-
-        public double CurrentPosition
-        {
-            get { return currentPosition; }
-        }
-        public double Scale
-        {
-            get { return scale; }
         }
     }
 

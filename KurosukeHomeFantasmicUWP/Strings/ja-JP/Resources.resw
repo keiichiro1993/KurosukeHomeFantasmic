@@ -183,6 +183,9 @@
   <data name="NewProjectPage-ProjectNameTitle.Text" xml:space="preserve">
     <value>プロジェクト名:</value>
   </data>
+  <data name="TimelineItemContextMenu-Delete.Text" xml:space="preserve">
+    <value>削除</value>
+  </data>
   <data name="VideoPlaybackPage-Title.Text" xml:space="preserve">
     <value>プレビュー:</value>
   </data>

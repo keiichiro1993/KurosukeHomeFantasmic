@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KurosukeHomeFantasmicUWP.Models.Timeline;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,4 +42,5 @@ namespace KurosukeHomeFantasmicUWP.Utils.UIHelpers
             get { return item; }
         }
     }
+    public delegate void DeleteButtonClickedEventHandler(object sender, ItemDeleteButtonClickedEventArgs<ITimelineItem> args);
 }

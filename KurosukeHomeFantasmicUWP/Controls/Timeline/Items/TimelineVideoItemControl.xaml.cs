@@ -32,7 +32,6 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
             //instance.VideoItem = e.NewValue as TimelineVideoItem;
         }
 
-        public delegate void DeleteButtonClickedEventHandler(object sender, ItemDeleteButtonClickedEventArgs<ITimelineItem> args);
         public event DeleteButtonClickedEventHandler DeleteButtonClicked;
 
         public TimelineVideoItem TimelineVideoItem { get { return (TimelineVideoItem)TimelineItem; } }
@@ -95,7 +94,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
         {
             if (this.DeleteButtonClicked != null)
             {
-                this.DeleteButtonClicked(this, new ItemDeleteButtonClickedEventArgs<ITimelineItem>(this.TimelineItem));
+                this.DeleteButtonClicked(this, new ItemDeleteButtonClickedEventArgs<ITimelineItem>(TimelineItem));
             }
         }
     }

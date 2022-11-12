@@ -109,7 +109,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
                 foreach (var item in e.OldItems.Cast<ITimelineItem>())
                 {
                     var removeElement = (from child in singleTimeline.Children
-                                         where ((ITimelineItemControl)child).TimelineItem == item
+                                         where child.GetType().Name == "ITimelineItemControl" && ((ITimelineItemControl)child).TimelineItem == item
                                          select child).FirstOrDefault();
                     if (removeElement != null) { singleTimeline.Children.Remove(removeElement); }
                 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

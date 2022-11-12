@@ -134,8 +134,15 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
             if (control != null)
             {
                 control.TimelineItem = newItem;
+                control.DeleteButtonCliecked += TimelineItem_DeleteButtonCliecked;
                 singleTimeline.Children.Add((UIElement)control);
             }
+        }
+
+        private void TimelineItem_DeleteButtonCliecked(object sender, Utils.UIHelpers.ItemDeleteButtonClickedEventArgs<ITimelineItem> args)
+        {
+            singleTimeline.Children.Remove((UIElement)sender);
+            TimelineData.TimelineItems.Remove(args.DeleteItem);
         }
 
         private async void singleTimeline_Drop(object sender, DragEventArgs e)

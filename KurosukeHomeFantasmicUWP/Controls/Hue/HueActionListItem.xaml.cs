@@ -1,4 +1,6 @@
-﻿using KurosukeHueClient.Models.HueObjects;
+﻿using KurosukeHomeFantasmicUWP.Models.Timeline;
+using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
+using KurosukeHueClient.Models.HueObjects;
 using Q42.HueApi.ColorConverters;
 using System;
 using System.Collections.Generic;
@@ -46,6 +48,9 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
             }
         }
 
+        public delegate void ActionDeleteButtonClickedEventHandler(object sender, ItemDeleteButtonClickedEventArgs<HueAction> args);
+        public event ActionDeleteButtonClickedEventHandler DeleteButtonClicked;
+
         public bool MarginTextboxEnabled
         {
             get => (bool)GetValue(MarginTextboxEnabledProperty);
@@ -75,6 +80,14 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
         {
             args.Data.Properties.Add("HueAction", Action);
             args.Data.Properties.Add("TimelineType", "Hue");
+        }
+
+        private void ContextMenuDeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DeleteButtonClicked != null)
+            {
+                this.DeleteButtonClicked(this, new ItemDeleteButtonClickedEventArgs<HueAction>(Action));
+            }
         }
     }
 

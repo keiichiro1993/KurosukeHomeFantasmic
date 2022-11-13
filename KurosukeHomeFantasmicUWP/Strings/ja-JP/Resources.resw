@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActionItemContextMenu-Delete.Text" xml:space="preserve">
+    <value>Action を削除</value>
+  </data>
   <data name="AddHueActionContentDialog-ActionButtonTitle.Text" xml:space="preserve">
     <value>クリックして Color/Duration を編集</value>
   </data>
@@ -173,6 +176,9 @@
   </data>
   <data name="AuthContentDialog.Title" xml:space="preserve">
     <value>デバイスの追加</value>
+  </data>
+  <data name="EffectItemContextMenu-Delete.Text" xml:space="preserve">
+    <value>Effect を削除</value>
   </data>
   <data name="NewProjectPage-CreateButtonTitle.Content" xml:space="preserve">
     <value>作成</value>

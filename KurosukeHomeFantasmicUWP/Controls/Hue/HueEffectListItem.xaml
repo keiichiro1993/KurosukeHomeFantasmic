@@ -16,6 +16,11 @@
                     <Setter Property="VerticalAlignment" Value="Center"/>
                 </Style>
             </Grid.Resources>
+            <Grid.ContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem x:Uid="EffectItemContextMenu-Delete" Click="ContextMenuDeleteButton_Click"/>
+                </MenuFlyout>
+            </Grid.ContextFlyout>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="AUTO"/>

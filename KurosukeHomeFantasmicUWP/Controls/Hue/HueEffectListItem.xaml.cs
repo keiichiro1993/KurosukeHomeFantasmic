@@ -1,4 +1,5 @@
-﻿using KurosukeHueClient.Models.HueObjects;
+﻿using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
+using KurosukeHueClient.Models.HueObjects;
 using Q42.HueApi.ColorConverters;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,8 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
             }
         }
 
+        public delegate void EffectDeleteButtonClickedEventHandler(object sender, ItemDeleteButtonClickedEventArgs<HueEffect> args);
+        public event EffectDeleteButtonClickedEventHandler DeleteButtonClicked;
 
         public new bool CanDrag
         {
@@ -60,6 +63,14 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
         {
             args.Data.Properties.Add("HueEffect", Effect);
             args.Data.Properties.Add("TimelineType", "Hue");
+        }
+
+        private void ContextMenuDeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DeleteButtonClicked != null)
+            {
+                this.DeleteButtonClicked(this, new ItemDeleteButtonClickedEventArgs<HueEffect>(Effect));
+            }
         }
     }
 

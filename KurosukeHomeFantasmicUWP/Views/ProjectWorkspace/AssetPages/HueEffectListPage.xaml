@@ -41,7 +41,8 @@
                 <!--SelectionChanged="ListView_SelectionChanged" ItemClick="ListView_ItemClick"-->
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:HueEffect">
-                        <hue:HueEffectListItem Effect="{x:Bind local:HueEffectListPage.HueEffect((models:HueEffect))}" CanDrag="True"/>
+                        <hue:HueEffectListItem Effect="{x:Bind local:HueEffectListPage.HueEffect((models:HueEffect))}" CanDrag="True"
+                                               DeleteButtonClicked="HueEffectListItem_DeleteButtonClicked"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

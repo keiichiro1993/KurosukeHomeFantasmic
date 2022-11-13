@@ -1,4 +1,6 @@
-﻿using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.AssetPages;
+﻿using KurosukeHomeFantasmicUWP.Models.Timeline;
+using KurosukeHomeFantasmicUWP.Utils;
+using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.AssetPages;
 using KurosukeHueClient.Models.HueObjects;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -40,5 +43,34 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.AssetPages
         }
 
         public static HueAction HueAction(HueAction action) { return action; }
+
+        private async void HueActionListItem_DeleteButtonClicked(object sender, Utils.UIHelpers.ItemDeleteButtonClickedEventArgs<HueAction> args)
+        {
+            var dialog = new MessageDialog(String.Format("Are you sure to delete action {0} (ID: {1})?", args.DeleteItem.Name, args.DeleteItem.Id), "Delete action");
+            dialog.Commands.Add(new UICommand("Delete"));
+            dialog.Commands.Add(new UICommand("Cancel"));
+            dialog.DefaultCommandIndex = 0;
+            dialog.CancelCommandIndex = 1;
+
+            var result = await dialog.ShowAsync();
+
+            if (result.Label == "Delete")
+            {
+                foreach (var scene in OnMemoryCache.Scenes)
+                {
+                    var hueTimelines = from timeline in scene.Timelines
+                                       where timeline.TimelineType == Timeline.TimelineTypes.Hue
+                                       select timeline;
+                    foreach (var timeline in hueTimelines)
+                    {
+                        var items = (from TimelineHueItem item in timeline.TimelineItems
+                                    where item.HueItemType == TimelineHueItem.TimelineHueItemTypes.Action && item.ItemId == args.DeleteItem.Id
+                                    select item).ToList();
+                        foreach (var item in items) { timeline.TimelineItems.Remove(item); }
+                    }
+                }
+                OnMemoryCache.HueActions.Remove(args.DeleteItem);
+            }
+        }
     }
 }

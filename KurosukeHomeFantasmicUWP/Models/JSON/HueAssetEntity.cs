@@ -38,6 +38,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             HexColor = action.Color.ToHex();
             Brightness = action.Brightness;
             TransitionDuration = action.TransitionDuration;
+            Margin = action.Margin;
         }
         public string Id { get; set; }
         public string Name { get; set; }
@@ -46,6 +47,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
         public string HexColor { get; set; }
         public double Brightness { get; set; }
         public TimeSpan TransitionDuration { get; set; }
+        public TimeSpan Margin { get; set; }
 
         public HueAction ToHueAction(List<EntertainmentLight> lights)
         {
@@ -59,6 +61,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             action.Color = new RGBColor(HexColor);
             action.Brightness = Brightness;
             action.TransitionDuration = TransitionDuration;
+            action.Margin = Margin;
 
             return action;
         }

@@ -123,7 +123,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
                         }
                         else
                         {
-                            AppGlobalVariables.GlobalHueClient.SendEntertainmentEffect(hueItem.HueEffect, hueItem.Duration);
+                            _ = AppGlobalVariables.GlobalHueClient.SendEntertainmentEffect(hueItem.HueEffect, hueItem.Duration);
                         }
                     }
                     catch (OperationCanceledException)

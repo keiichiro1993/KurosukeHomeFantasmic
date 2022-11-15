@@ -33,12 +33,16 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             Id = action.Id;
             Name = action.Name;
             Description = action.Description;
-            TargetLightIds = (from light in action.TargetLights
-                              select light.Id).ToList();
             HexColor = action.Color.ToHex();
             Brightness = action.Brightness;
             TransitionDuration = action.TransitionDuration;
             Margin = action.Margin;
+
+            if (TargetLightIds != null)
+            {
+                TargetLightIds = (from light in action.TargetLights
+                                  select light.Id).ToList();
+            }
         }
         public string Id { get; set; }
         public string Name { get; set; }

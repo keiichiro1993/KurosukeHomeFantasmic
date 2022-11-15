@@ -33,8 +33,14 @@ namespace KurosukeHomeFantasmicUWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.UnhandledException += App_UnhandledException;
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+        }
+
+        private async void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            await CommonUtils.DebugHelper.ShowErrorDialog(e.Exception, e.Message);
         }
 
         /// <summary>

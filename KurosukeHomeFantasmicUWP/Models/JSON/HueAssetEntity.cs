@@ -38,7 +38,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             TransitionDuration = action.TransitionDuration;
             Margin = action.Margin;
 
-            if (TargetLightIds != null)
+            if (action.TargetLights != null)
             {
                 TargetLightIds = (from light in action.TargetLights
                                   select light.Id).ToList();
@@ -59,13 +59,17 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
             action.Id = Id;
             action.Name = Name;
             action.Description = Description;
-            action.TargetLights = (from light in lights
-                                   where TargetLightIds.Contains(light.Id)
-                                   select light).ToList();
             action.Color = new RGBColor(HexColor);
             action.Brightness = Brightness;
             action.TransitionDuration = TransitionDuration;
             action.Margin = Margin;
+
+            if (TargetLightIds != null)
+            {
+                action.TargetLights = (from light in lights
+                                       where TargetLightIds.Contains(light.Id)
+                                       select light).ToList();
+            }
 
             return action;
         }

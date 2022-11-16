@@ -128,7 +128,9 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
                     }
                     catch (OperationCanceledException)
                     {
-                        //Ignore
+                        //TODO: await 無し非同期なのでタスクそれぞれ確認しないと catch 不能なんだが？
+                        // https://qiita.com/tera1707/items/d5a3bc12ffa5f80069a1
+                        // エラー出力コンソールみたいの実装してそこに流す案に一票
                     }
                     catch (Exception ex) 
                     {

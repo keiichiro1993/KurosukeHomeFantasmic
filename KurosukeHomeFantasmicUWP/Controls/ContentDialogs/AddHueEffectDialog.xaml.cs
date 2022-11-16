@@ -72,7 +72,8 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
 
         public string Description { get; set; }
 
-        public TimeSpan Margin { get; set; } = new TimeSpan(0, 0, 5);
+        public TimeSpan EffectMargin { get; set; } = new TimeSpan(0, 0, 0);
+        public TimeSpan IteratorMargin { get; set; } = new TimeSpan(0, 0, 0);
 
         public IteratorEffectMode IteratorEffectMode { get; set; } = IteratorEffectMode.Bounce;
 
@@ -181,7 +182,8 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             Effect.Id = getNewGuid();
             Effect.Name = Name;
             Effect.Description = Description;
-            Effect.Margin = Margin;
+            Effect.EffectMargin = EffectMargin;
+            Effect.IteratorMargin = IteratorMargin;
             Effect.TargetLights = (from light in SelectedLights
                                    select light.HueEntertainmentLight).ToList();
             Effect.Actions = HueActions.ToList();

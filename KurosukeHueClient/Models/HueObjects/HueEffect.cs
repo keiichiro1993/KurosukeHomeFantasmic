@@ -36,15 +36,21 @@ namespace KurosukeHueClient.Models.HueObjects
                 }
                 else
                 {
-                    return Margin * TargetLights.Count();
+                    return IteratorMargin * TargetLights.Count();
                 }
             }
         }
+
         /// <summary>
         /// IteratorEffect: Timespan between the action to each light. The effect for the next light iterated starts after this duration.
+        /// </summary>
+        public TimeSpan IteratorMargin { get; set; }
+        /// <summary>
+        /// IteratorEffect: Timespan between the action to each light. The effect for the next light iterated starts after this duration.
+        /// IteratorEffect: Timespan between the set of iteration.
         /// Actions: Timespan between the run of set of actions to be repeated.
         /// </summary>
-        public TimeSpan Margin { get; set; }
+        public TimeSpan EffectMargin { get; set; }
         /// <summary>
         /// The list of actions to apply.
         /// IteratorEffect: Applied to each iterated light.
@@ -57,7 +63,7 @@ namespace KurosukeHueClient.Models.HueObjects
         /// Target Lights for the Iterator Effect/Light Source Effect.
         /// This will be ignored with Actions mode.
         /// </summary>
-        public IEnumerable<EntertainmentLight> TargetLights { get; set; }
+        public List<EntertainmentLight> TargetLights { get; set; }
         public IteratorEffectMode IteratorEffectMode { get; set; }
     }
 }

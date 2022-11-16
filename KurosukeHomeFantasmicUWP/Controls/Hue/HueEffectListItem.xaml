@@ -36,9 +36,9 @@
                     <TextBlock Text="Duration:"/>
                     <TextBlock Margin="5,0,0,0" Text="{x:Bind Path=Effect.Duration, Mode=OneWay}"/>
                     <TextBlock Margin="10,0,0,0"
-                               Text="Margin:" />
+                               Text="Effect Margin:" />
                     <TextBlock Margin="5,0,0,0"
-                               Text="{x:Bind Path=Effect.Margin, Mode=OneWay}" />
+                               Text="{x:Bind Path=Effect.EffectMargin, Mode=OneWay}" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Lights:"/>

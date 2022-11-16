@@ -35,6 +35,7 @@
                 <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch">
@@ -75,10 +76,14 @@
                 </Button>
             </StackPanel>
             <StackPanel Grid.Row="5" Orientation="Vertical" HorizontalAlignment="Stretch">
-                <TextBlock x:Uid="AddHueEffectContentDialog-MarginTitle"/>
-                <parts:TimeSpanTextBox TotalCanvasDuration="{x:Bind ViewModel.Margin, Mode=TwoWay}"/>
+                <TextBlock x:Uid="AddHueEffectContentDialog-EffectMarginTitle"/>
+                <parts:TimeSpanTextBox TotalCanvasDuration="{x:Bind ViewModel.EffectMargin, Mode=TwoWay}"/>
             </StackPanel>
-            <StackPanel Grid.Row="6" Orientation="Vertical" HorizontalAlignment="Stretch">
+            <StackPanel Grid.Row="6" Orientation="Vertical" HorizontalAlignment="Stretch" Visibility="{x:Bind ViewModel.BulkLightSelectorVisibility, Mode=OneWay}">
+                <TextBlock x:Uid="AddHueEffectContentDialog-IteratorMarginTitle"/>
+                <parts:TimeSpanTextBox TotalCanvasDuration="{x:Bind ViewModel.IteratorMargin, Mode=TwoWay}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="7" Orientation="Vertical" HorizontalAlignment="Stretch">
                 <TextBlock x:Uid="AddHueEffectContentDialog-ActionTitle"/>
                 <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <StackPanel Orientation="Horizontal">
@@ -116,7 +121,7 @@
                     </Button.Flyout>
                 </Button>
             </StackPanel>
-            <ListView Grid.Row="7" ItemsSource="{x:Bind ViewModel.HueActions, Mode=OneWay}">
+            <ListView Grid.Row="8" ItemsSource="{x:Bind ViewModel.HueActions, Mode=OneWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:HueAction">
                         <huecontrol:HueActionListItem Action="{x:Bind local:AddHueEffectDialogViewModel.HueAction((models:HueAction))}" MarginTextboxEnabled="True" CanDrag="False"/>

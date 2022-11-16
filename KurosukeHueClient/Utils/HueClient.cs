@@ -108,9 +108,7 @@ namespace KurosukeHueClient.Utils
                          where ids.Contains(light.Id)
                          select light;
             //set light state
-            string targets = "";
-            foreach (var target in action.TargetLights) { targets += (target.Id + ", "); }
-            CommonUtils.DebugHelper.WriteDebugLog($"HueClient: Sending action with Color '{action.Color.ToHex()}' Brightness '{action.Brightness}' Duration '{action.TransitionDuration.TotalSeconds} sec' Margin '{action.Margin.TotalSeconds} sec' Target '{targets}'");
+            CommonUtils.DebugHelper.WriteDebugLog($"HueClient: Sending action with Color '{action.Color.ToHex()}' Brightness '{action.Brightness}' Duration '{action.TransitionDuration.TotalSeconds} sec' Margin '{action.Margin.TotalSeconds} sec'");
             lights.SetState(cancellationTokenSource.Token, action.Color, action.Brightness, action.TransitionDuration);
         }
 
@@ -152,13 +150,12 @@ namespace KurosukeHueClient.Utils
                     SendEntertainmentAction(action);
                     await Task.Delay(action.Margin);
                 }
-                await Task.Delay(effect.Margin);
+                await Task.Delay(effect.EffectMargin);
             }
         }
 
         private async Task sendIteratorEffect(HueEffect effect, TimeSpan duration, CancellationToken cancellationToken)
         {
-
             //pick lights selected in EntertainmentAction
             var ids = from target in effect.TargetLights
                       select target.Id;
@@ -166,6 +163,8 @@ namespace KurosukeHueClient.Utils
                          where ids.Contains(light.Id)
                          select light;
             //call effect
+            int iteration = 0;
+            int lightCount = lights.Count();
             await lights.IteratorEffect(
                 cancellationToken: cancellationToken,
                 effectFunction: async (currentLight, cancel, timespan) =>
@@ -180,8 +179,21 @@ namespace KurosukeHueClient.Utils
                         await Task.Delay(action.Margin);
                     }
                 },
-                mode: effect.IteratorEffectMode,
-                waitTime: () => { return effect.Margin; },
+            mode: effect.IteratorEffectMode,
+            waitTime: () =>
+            {
+                // twice as the actual count because waitTime is called before and after the execution
+                if (Interlocked.Increment(ref iteration) >= lightCount * 2) 
+                {
+                    // reset when it reaches to the last light
+                    Interlocked.Exchange(ref iteration, 0); 
+                    return effect.EffectMargin;
+                }
+                else
+                {
+                    return effect.IteratorMargin;
+                }
+            },
                 duration: duration
             );
         }

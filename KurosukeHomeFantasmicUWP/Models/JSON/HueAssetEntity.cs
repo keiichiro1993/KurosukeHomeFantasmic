@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace KurosukeHomeFantasmicUWP.Models.JSON
 {
@@ -66,9 +67,13 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
 
             if (TargetLightIds != null)
             {
-                action.TargetLights = (from light in lights
-                                       where TargetLightIds.Contains(light.Id)
-                                       select light).ToList();
+                action.TargetLights = new List<EntertainmentLight>();
+                foreach (var targetId in TargetLightIds)
+                {
+                    action.TargetLights.AddRange(from light in lights
+                                                 where light.Id == targetId
+                                                 select light);
+                }
             }
 
             return action;
@@ -88,7 +93,8 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
                               select light.Id).ToList();
             EffectMode = effect.EffectMode;
             IteratorEffectMode = effect.IteratorEffectMode;
-            EffectMargin = effect.Margin;
+            EffectMargin = effect.EffectMargin;
+            IteratorMargin = effect.IteratorMargin;
 
             // Convert to HueActionEntity
             Actions = new List<HueActionEntity>();
@@ -105,6 +111,7 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
         public List<byte> TargetLightIds { get; set; }
         public IteratorEffectMode IteratorEffectMode { get; set; }
         public TimeSpan EffectMargin { get; set; }
+        public TimeSpan IteratorMargin { get; set; }
 
         public List<HueActionEntity> Actions { get; set; }
 
@@ -120,7 +127,19 @@ namespace KurosukeHomeFantasmicUWP.Models.JSON
                                    select light).ToList();
             effect.EffectMode = EffectMode;
             effect.IteratorEffectMode = IteratorEffectMode;
-            effect.Margin = EffectMargin;
+            effect.EffectMargin = EffectMargin;
+            effect.IteratorMargin = IteratorMargin;
+
+            if (TargetLightIds != null)
+            {
+                effect.TargetLights = new List<EntertainmentLight>();
+                foreach (var targetId in TargetLightIds)
+                {
+                    effect.TargetLights.AddRange(from light in lights
+                                                 where light.Id == targetId
+                                                 select light);
+                }
+            }
 
             // Convert back to HueAction
             effect.Actions = new List<HueAction>();

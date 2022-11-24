@@ -1,10 +1,14 @@
 ﻿using CommonUtils;
 using KurosukeHomeFantasmicUWP.Models;
 using KurosukeHomeFantasmicUWP.Models.JSON;
+using KurosukeHomeFantasmicUWP.Models.Timeline;
+using KurosukeHomeFantasmicUWP.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
+using Windows.UI.Popups;
+using System.Linq;
 
 namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace
 {
@@ -62,6 +66,32 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace
             catch (Exception ex)
             {
                 await DebugHelper.ShowErrorDialog(ex, "ビデオファイルのインポートに失敗しました。");
+            }
+
+            IsLoading = false;
+        }
+
+        public async Task RemoveVideo(VideoAsset videoAsset)
+        {
+            IsLoading = true;
+
+            try
+            {
+                var videoFolder = await Utils.AppGlobalVariables.AssetsFolder.CreateFolderAsync("Videos", Windows.Storage.CreationCollisionOption.OpenIfExists);
+                var videoFilePath = Path.Combine(videoFolder.Path, videoAsset.VideoAssetEntity.FilePath);
+                if (!File.Exists(videoFilePath))
+                {
+                    throw new InvalidOperationException($"The video file '{videoFilePath}' not found.");
+                }
+
+                LoadingMessage = "Deleting the video...";
+                await Utils.AppGlobalVariables.VideoAssetDB.RemoveVideoAsset(videoAsset.VideoAssetEntity);
+                File.Delete(videoFilePath);
+                VideoAssets.Remove(videoAsset);
+            }
+            catch (Exception ex)
+            {
+                await DebugHelper.ShowErrorDialog(ex, "ビデオファイルの削除に失敗しました。");
             }
 
             IsLoading = false;

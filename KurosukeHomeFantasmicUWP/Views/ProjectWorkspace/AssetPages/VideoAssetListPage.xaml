@@ -42,7 +42,7 @@
                       ItemsSource="{x:Bind ViewModel.VideoAssets}" SelectedItem="{x:Bind ViewModel.SelectedVideo, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:VideoAsset">
-                        <videoasset:VideoAssetListItem VideoAsset="{x:Bind Mode=OneWay}" CanDrag="True"/>
+                        <videoasset:VideoAssetListItem VideoAsset="{x:Bind Mode=OneWay}" DeleteButtonClicked="VideoAssetListItem_DeleteButtonClicked" CanDrag="True"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

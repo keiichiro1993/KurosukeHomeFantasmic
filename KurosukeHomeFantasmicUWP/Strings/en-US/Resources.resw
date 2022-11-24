@@ -195,6 +195,9 @@
   <data name="TimelineItemContextMenu-Delete.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="VideoItemContextMenu-Delete.Text" xml:space="preserve">
+    <value>Delete Video</value>
+  </data>
   <data name="VideoPlaybackPage-Title.Text" xml:space="preserve">
     <value>Preview:</value>
   </data>

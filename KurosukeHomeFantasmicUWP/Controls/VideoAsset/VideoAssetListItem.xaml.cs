@@ -1,5 +1,7 @@
 ﻿using CommonUtils;
 using KurosukeHomeFantasmicUWP.Models.JSON;
+using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
+using KurosukeHueClient.Models.HueObjects;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -35,6 +37,9 @@ namespace KurosukeHomeFantasmicUWP.Controls.VideoAsset
             }
         }
 
+        public delegate void VideoDeleteButtonClickedEventHandler(object sender, ItemDeleteButtonClickedEventArgs<Models.VideoAsset> args);
+        public event VideoDeleteButtonClickedEventHandler DeleteButtonClicked;
+
         public new bool CanDrag
         {
             get => (bool)GetValue(CanDragProperty);
@@ -48,6 +53,14 @@ namespace KurosukeHomeFantasmicUWP.Controls.VideoAsset
         {
             args.Data.Properties.Add("VideoAsset", VideoAsset);
             args.Data.Properties.Add("TimelineType", "Video");
+        }
+
+        private void ContextMenuDeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DeleteButtonClicked != null)
+            {
+                this.DeleteButtonClicked(this, new ItemDeleteButtonClickedEventArgs<Models.VideoAsset>(VideoAsset));
+            }
         }
     }
 

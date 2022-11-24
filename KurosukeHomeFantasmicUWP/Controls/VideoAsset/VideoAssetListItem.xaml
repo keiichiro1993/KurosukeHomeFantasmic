@@ -10,6 +10,11 @@
     d:DesignWidth="400">
 
     <Grid>
+        <Grid.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem x:Uid="VideoItemContextMenu-Delete" Click="ContextMenuDeleteButton_Click"/>
+            </MenuFlyout>
+        </Grid.ContextFlyout>
         <Grid Height="90" CanDrag="{x:Bind CanDrag, Mode=OneWay}" DragStarting="Grid_DragStarting">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="AUTO"/>

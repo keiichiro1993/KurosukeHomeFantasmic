@@ -19,14 +19,14 @@ using Windows.UI.Xaml.Navigation;
 
 namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
 {
-    public sealed partial class TimelineHueItemControl : UserControl, ITimelineItemControl
+    public sealed partial class TimelineHueItemControl : TimelineItemBase, ITimelineItemControl
     {
         public TimelineHueItemControl()
         {
             this.InitializeComponent();
         }
 
-        public ITimelineItem TimelineItem
+        public override ITimelineItem TimelineItem
         {
             get => (TimelineHueItem)GetValue(HueItemProperty);
             set => SetValue(HueItemProperty, value);
@@ -42,70 +42,6 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
             //instance.HueItem = e.NewValue as TimelineHueItem;
         }
 
-        public event DeleteButtonClickedEventHandler DeleteButtonClicked;
-
         public TimelineHueItem TimelineHueItem { get { return (TimelineHueItem)TimelineItem; } }
-
-        // Manipulations
-        private void UserControl_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
-        {
-            if (!TimelineItem.Locked)
-            {
-                var x = e.Delta.Translation.X;
-                TimelineItem.StartTime += TimelineItem.TotalCanvasDuration * (x / TimelineItem.CanvasWidth);
-            }
-        }
-
-        private void UserControl_ManipulationStarted(object sender, Windows.UI.Xaml.Input.ManipulationStartedRoutedEventArgs e)
-        {
-            this.Opacity = 0.7;
-        }
-
-        private void UserControl_ManipulationCompleted(object sender, Windows.UI.Xaml.Input.ManipulationCompletedRoutedEventArgs e)
-        {
-            this.Opacity = 1;
-        }
-
-        private void ResizeButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            if (!TimelineItem.Locked)
-            {
-                Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.SizeWestEast, 10);
-            }
-        }
-
-        private void ResizeButton_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            if (!TimelineItem.Locked)
-            {
-                Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 0);
-            }
-        }
-
-        private void ResizeStartButton_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
-        {
-            if (!TimelineItem.Locked)
-            {
-                var x = e.Delta.Translation.X;
-                TimelineItem.StartTime += TimelineItem.TotalCanvasDuration * (x / TimelineItem.CanvasWidth);
-            }
-        }
-
-        private void ResizeEndButton_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
-        {
-            if (!TimelineItem.Locked)
-            {
-                var x = e.Delta.Translation.X;
-                TimelineItem.Duration += TimelineItem.TotalCanvasDuration * (x / TimelineItem.CanvasWidth);
-            }
-        }
-
-        private void ContextMenuDeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.DeleteButtonClicked != null)
-            {
-                this.DeleteButtonClicked(this, new ItemDeleteButtonClickedEventArgs<ITimelineItem>(TimelineItem));
-            }
-        }
     }
 }

@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<local:TimelineItemBase
     x:Class="KurosukeHomeFantasmicUWP.Controls.Timeline.Items.TimelineVideoItemControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -95,4 +95,4 @@
             </Grid>
         </Grid>
     </Grid>
-</UserControl>
+</local:TimelineItemBase>

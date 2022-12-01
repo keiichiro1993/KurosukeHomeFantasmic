@@ -170,6 +170,7 @@
     <Compile Include="Controls\Timeline\Items\TimelineHueItemControl.xaml.cs">
       <DependentUpon>TimelineHueItemControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Timeline\Items\TimelineItemBase.cs" />
     <Compile Include="Controls\Timeline\Items\TimelineVideoItemControl.xaml.cs">
       <DependentUpon>TimelineVideoItemControl.xaml</DependentUpon>
     </Compile>
@@ -205,6 +206,7 @@
     <Compile Include="Models\JSON\VideoAssetEntity.cs" />
     <Compile Include="Models\ProjectSettings.cs" />
     <Compile Include="Models\ShowScene.cs" />
+    <Compile Include="Models\SoundAsset.cs" />
     <Compile Include="Models\SQL\RecentProjectEntity.cs" />
     <Compile Include="Models\Timeline\ITimelineItem.cs" />
     <Compile Include="Models\Timeline\ITimelineItemControl.cs" />

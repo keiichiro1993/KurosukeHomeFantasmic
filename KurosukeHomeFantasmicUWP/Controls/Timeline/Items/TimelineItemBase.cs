@@ -57,6 +57,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
             {
                 var x = e.Delta.Translation.X;
                 TimelineItem.StartTime += TimelineItem.TotalCanvasDuration * (x / TimelineItem.CanvasWidth);
+                TimelineItem.Duration -= TimelineItem.TotalCanvasDuration * (x / TimelineItem.CanvasWidth);
             }
         }
 

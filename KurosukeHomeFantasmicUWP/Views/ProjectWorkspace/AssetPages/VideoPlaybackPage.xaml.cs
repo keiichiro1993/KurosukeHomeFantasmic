@@ -1,5 +1,4 @@
-﻿using FFmpegInterop;
-using KurosukeHomeFantasmicUWP.Models;
+﻿using KurosukeHomeFantasmicUWP.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,20 +46,6 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.AssetPages
             var file = await VideoAsset.GetVideoAssetFile();
             mediaSource = MediaSource.CreateFromStorageFile(file);
             mediaPlayerElement.Source = mediaSource;
-            mediaPlayerElement.MediaPlayer.Play();
-            //SetMediaPlayerWithFFMpeg(file);
-        }
-
-        private async void SetMediaPlayerWithFFMpeg(StorageFile file)
-        {
-            // FFmpeg
-            var config = new FFmpegInteropConfig();
-            config.VideoDecoderMode = FFmpegInterop.VideoDecoderMode.Automatic;
-            var stream = (await file.OpenAsync(FileAccessMode.Read)).AsStream();
-            var ffmpegStream = await FFmpegInteropMSS.CreateFromStreamAsync(stream.AsRandomAccessStream(), config);
-            var mediaPlayer = new MediaPlayer();
-            mediaPlayer.Source = ffmpegStream.CreateMediaPlaybackItem();
-            mediaPlayerElement.SetMediaPlayer(mediaPlayer);
             mediaPlayerElement.MediaPlayer.Play();
         }
 

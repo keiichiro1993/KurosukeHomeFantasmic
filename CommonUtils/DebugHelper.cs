@@ -29,6 +29,7 @@ namespace CommonUtils
         public static void WriteErrorLog(Exception ex, string message)
         {
             WriteDebugLog(message + " : [" + ex.GetType().FullName + "] " + ex.Message);
+            WriteDebugLog(ex.ToString());
             if (ex.InnerException != null)
             {
                 WriteErrorLog(ex.InnerException, "Inner Exception: ");

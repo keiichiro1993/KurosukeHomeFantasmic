@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Controls.Players;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Controls.Players;
 using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
         }
     }
 
-    public class HueTimelinePlayerControlViewModel : ViewModels.ViewModelBase
+    public class HueTimelinePlayerControlViewModel : ViewModelBase
     {
         public ProjectWorkspaceViewModel GlobalViewModel { get { return Utils.OnMemoryCache.GlobalViewModel; } }
         private Models.Timeline.Timeline _Timeline;

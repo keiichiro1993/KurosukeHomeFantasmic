@@ -232,7 +232,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
         }
     }
 
-    public class SingleTimelineViewModel : ViewModels.ViewModelBase
+    public class SingleTimelineViewModel : ViewModelBase
     {
         private Models.Timeline.Timeline _TimelineData;
         public Models.Timeline.Timeline TimelineData

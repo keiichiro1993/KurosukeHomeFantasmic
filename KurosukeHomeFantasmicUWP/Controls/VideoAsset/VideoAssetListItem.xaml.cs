@@ -64,7 +64,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.VideoAsset
         }
     }
 
-    public class VideoAssetListItemViewModel : ViewModels.ViewModelBase
+    public class VideoAssetListItemViewModel : ViewModelBase
     {
         private Models.VideoAsset _VideoAsset;
         public Models.VideoAsset VideoAsset

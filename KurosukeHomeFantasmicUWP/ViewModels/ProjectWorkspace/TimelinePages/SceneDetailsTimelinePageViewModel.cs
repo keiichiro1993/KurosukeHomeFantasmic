@@ -1,8 +1,6 @@
-﻿using KurosukeHomeFantasmicUWP.Models;
-using KurosukeHomeFantasmicUWP.Models.Timeline;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Models;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace.TimelinePages
 {

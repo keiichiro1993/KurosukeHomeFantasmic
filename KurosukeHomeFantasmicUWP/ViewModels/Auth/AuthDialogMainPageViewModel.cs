@@ -1,4 +1,6 @@
-﻿namespace KurosukeHomeFantasmicUWP.ViewModels.Auth
+﻿using CommonUtils;
+
+namespace KurosukeHomeFantasmicUWP.ViewModels.Auth
 {
     public class AuthDialogMainPageViewModel : ViewModelBase
     {

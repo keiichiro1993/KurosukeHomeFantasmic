@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models.JSON;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Models.JSON;
 using KurosukeHomeFantasmicUWP.Utils.DBHelpers;
 using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
 using System;
@@ -10,7 +11,7 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace KurosukeHomeFantasmicUWP.Models
 {
-    public class VideoAsset : ViewModels.ViewModelBase
+    public class VideoAsset : ViewModelBase
     {
         private VideoAssetEntity _VideoAssetEntity;
         public VideoAssetEntity VideoAssetEntity

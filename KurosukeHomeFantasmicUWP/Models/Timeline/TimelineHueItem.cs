@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models.JSON;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Models.JSON;
 using KurosukeHueClient.Models.HueObjects;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using Windows.UI.Xaml;
 
 namespace KurosukeHomeFantasmicUWP.Models.Timeline
 {
-    public class TimelineHueItem : ViewModels.ViewModelBase, ITimelineItem
+    public class TimelineHueItem : ViewModelBase, ITimelineItem
     {
         public HueAction HueAction { get; set; }
         public HueEffect HueEffect { get; set; }

@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -95,7 +96,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
         }
     }
 
-    public class ScrollScallerViewModel : ViewModels.ViewModelBase
+    public class ScrollScallerViewModel : ViewModelBase
     {
         // Position on Canvas
         private double _Width;

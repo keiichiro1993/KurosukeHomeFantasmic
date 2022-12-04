@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonUtils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -74,7 +75,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Parts
         }
     }
 
-    public class CurrentPositionArrowViewModel : ViewModels.ViewModelBase
+    public class CurrentPositionArrowViewModel : ViewModelBase
     {
         private double _CanvasWidth;
         public double CanvasWidth

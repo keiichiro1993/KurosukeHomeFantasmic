@@ -9,6 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using KurosukeHomeFantasmicUWP.Utils;
+using KurosukeHomeFantasmicUWP.Utils.Auth;
 
 namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
 {
@@ -71,17 +73,17 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
                 Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
                 if (file != null)
                 {
-                    Utils.AppGlobalVariables.ProjectFile = file;
-                    Utils.AppGlobalVariables.ProjectFolder = await file.GetParentAsync();
-                    Utils.AppGlobalVariables.AssetsFolder = await Utils.AppGlobalVariables.ProjectFolder.CreateFolderAsync("Assets", Windows.Storage.CreationCollisionOption.OpenIfExists);
+                    AppGlobalVariables.ProjectFile = file;
+                    AppGlobalVariables.ProjectFolder = await file.GetParentAsync();
+                    AppGlobalVariables.AssetsFolder = await AppGlobalVariables.ProjectFolder.CreateFolderAsync("Assets", Windows.Storage.CreationCollisionOption.OpenIfExists);
 
                     LoadingMessage = "Loading User Accounts...";
-                    Utils.AppGlobalVariables.DeviceUsers = new ObservableCollection<AuthCommon.Models.IUser>(await Utils.Auth.AccountManager.GetAuthorizedUserList());
+                    AppGlobalVariables.DeviceUsers = new ObservableCollection<AuthCommon.Models.IUser>(await AccountManager.GetAuthorizedUserList());
 
                     LoadingMessage = "Loading project settings...";
                     using (var projectJsonStream = await file.OpenReadAsync())
                     {
-                        Utils.AppGlobalVariables.CurrentProject = await JsonSerializer.DeserializeAsync<FantasmicProject>(projectJsonStream.AsStream());
+                        AppGlobalVariables.CurrentProject = await JsonSerializer.DeserializeAsync<FantasmicProject>(projectJsonStream.AsStream());
                     }
 
                     LoadingMessage = "Loading Hue Assets...";
@@ -89,13 +91,13 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
                     {
                         var availableLights = (from light in await Utils.RequestHelpers.HueRequestHelper.GetHueLights()
                                                select light.HueEntertainmentLight).ToList();
-                        Utils.AppGlobalVariables.HueAssetDB = new Utils.DBHelpers.HueAssetHelper();
-                        var hueData = await Utils.AppGlobalVariables.HueAssetDB.GetHueAssets();
-                        Utils.OnMemoryCache.HueActions = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueAction>(
+                        AppGlobalVariables.HueAssetDB = new Utils.DBHelpers.HueAssetHelper();
+                        var hueData = await AppGlobalVariables.HueAssetDB.GetHueAssets();
+                        OnMemoryCache.HueActions = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueAction>(
                             from action in hueData.HueActions
                             select action.ToHueAction(availableLights)
                             );
-                        Utils.OnMemoryCache.HueEffects = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueEffect>(
+                        OnMemoryCache.HueEffects = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueEffect>(
                             from effect in hueData.HueEffects
                             select effect.ToHueEffect(availableLights)
                             );
@@ -103,20 +105,24 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
                     catch (InvalidOperationException)
                     {
                         // Ignore if the Hue Bridge/Entertainment Groups is not selected
-                        Utils.OnMemoryCache.HueActions = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueAction>();
-                        Utils.OnMemoryCache.HueEffects = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueEffect>();
+                        OnMemoryCache.HueActions = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueAction>();
+                        OnMemoryCache.HueEffects = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueEffect>();
                     }
 
+                    LoadingMessage = "Loading Remote Video Assets...";
+                    AppGlobalVariables.RemoteVideoAssetDB = new Utils.DBHelpers.RemoteVideoAssetHelper();
+                    OnMemoryCache.RemoteVideoAssets = new ObservableCollection<RemoteVideoAsset>(await AppGlobalVariables.RemoteVideoAssetDB.GetRemoteVideoAssets());
+
                     LoadingMessage = "Loading Video Asset files...";
-                    Utils.AppGlobalVariables.VideoAssetDB = new Utils.DBHelpers.VideoAssetsHelper();
+                    AppGlobalVariables.VideoAssetDB = new Utils.DBHelpers.VideoAssetsHelper();
                     var videoAssets = new ObservableCollection<VideoAsset>();
-                    var videos = await Utils.AppGlobalVariables.VideoAssetDB.GetVideoAssets();
+                    var videos = await AppGlobalVariables.VideoAssetDB.GetVideoAssets();
                     foreach (var videoAssetEntity in videos) { videoAssets.Add(new VideoAsset(videoAssetEntity)); }
-                    Utils.OnMemoryCache.VideoAssetCache = videoAssets;
+                    OnMemoryCache.VideoAssetCache = videoAssets;
 
                     LoadingMessage = "Loading Scene data...";
-                    Utils.AppGlobalVariables.SceneAssetDB = new Utils.DBHelpers.SceneAssetHelper();
-                    Utils.OnMemoryCache.Scenes = new ObservableCollection<ShowScene>(await Utils.AppGlobalVariables.SceneAssetDB.GetSceneAssets());
+                    AppGlobalVariables.SceneAssetDB = new Utils.DBHelpers.SceneAssetHelper();
+                    OnMemoryCache.Scenes = new ObservableCollection<ShowScene>(await AppGlobalVariables.SceneAssetDB.GetSceneAssets());
                 }
             }
             catch (Exception ex)
@@ -127,7 +133,7 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
             IsLoading = false;
             IsButtonEnabled = true;
 
-            return Utils.AppGlobalVariables.CurrentProject != null;
+            return AppGlobalVariables.CurrentProject != null;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using KurosukeHueClient.Models.HueObjects;
+﻿using CommonUtils;
+using KurosukeHueClient.Models.HueObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -106,7 +107,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
         }
     }
 
-    public class LightItemViewModel : ViewModels.ViewModelBase
+    public class LightItemViewModel : ViewModelBase
     {
         public LightItemViewModel(Light light, bool isSelected)
         {

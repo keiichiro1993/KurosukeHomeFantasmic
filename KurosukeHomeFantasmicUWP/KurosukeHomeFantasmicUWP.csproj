@@ -125,6 +125,9 @@
     <Compile Include="Controls\ContentDialogs\AddHueEffectDialog.xaml.cs">
       <DependentUpon>AddHueEffectDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ContentDialogs\AddRemoteVideoAssetDialog.xaml.cs">
+      <DependentUpon>AddRemoteVideoAssetDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ContentDialogs\AddSceneDialog.xaml.cs">
       <DependentUpon>AddSceneDialog.xaml</DependentUpon>
     </Compile>
@@ -205,6 +208,7 @@
     <Compile Include="Models\JSON\TimelineVideoItemEntity.cs" />
     <Compile Include="Models\JSON\VideoAssetEntity.cs" />
     <Compile Include="Models\ProjectSettings.cs" />
+    <Compile Include="Models\RemoteVideoAsset.cs" />
     <Compile Include="Models\ShowScene.cs" />
     <Compile Include="Models\SoundAsset.cs" />
     <Compile Include="Models\SQL\RecentProjectEntity.cs" />
@@ -219,12 +223,14 @@
     <Compile Include="Utils\AppGlobalVariables.cs" />
     <Compile Include="Utils\Auth\AccountManager.cs" />
     <Compile Include="Utils\DBHelpers\DBHelperBase.cs" />
+    <Compile Include="Utils\DBHelpers\RemoteVideoAssetHelper.cs" />
     <Compile Include="Utils\DBHelpers\HueBridgeCacheHelper.cs" />
     <Compile Include="Utils\DBHelpers\SceneAssetHelper.cs" />
     <Compile Include="Utils\DBHelpers\StorageFolderExtention.cs" />
     <Compile Include="Utils\DBHelpers\TimeSpanJsonConverter.cs" />
     <Compile Include="Utils\DBHelpers\HueAssetHelper.cs" />
     <Compile Include="Utils\DBHelpers\VideoAssetHelper.cs" />
+    <Compile Include="Utils\RequestHelpers\BonjourHelper.cs" />
     <Compile Include="Utils\RequestHelpers\HueRequestHelper.cs" />
     <Compile Include="Utils\UIHelpers\StorageThumbnailExtension.cs" />
     <Compile Include="Utils\UIHelpers\TimelineItemEventArgs.cs" />
@@ -240,7 +246,6 @@
     <Compile Include="ViewModels\ProjectWorkspace\AssetPages\VideoAssetListPageViewModel.cs" />
     <Compile Include="ViewModels\Settings\AccountSettingsPageViewModel.cs" />
     <Compile Include="ViewModels\Settings\HueSettingsPageViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\WelcomeScreen\CreateNewProjectPageViewModel.cs" />
     <Compile Include="ViewModels\WelcomeScreen\WelcomeScreenTopPageViewModel.cs" />
     <Compile Include="Views\Auth\AuthDialogHuePage.xaml.cs">
@@ -324,6 +329,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ContentDialogs\AddHueEffectDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ContentDialogs\AddRemoteVideoAssetDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -539,6 +548,10 @@
     <ProjectReference Include="..\CommonUtils\CommonUtils.csproj">
       <Project>{63cee799-e84d-4bd5-b5c1-c663f9f92da4}</Project>
       <Name>CommonUtils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KurosukeBonjourService\KurosukeBonjourService.csproj">
+      <Project>{d65f201c-0aea-4867-a7be-b5ad9980a907}</Project>
+      <Name>KurosukeBonjourService</Name>
     </ProjectReference>
     <ProjectReference Include="..\KurosukeHueClient\KurosukeHueClient.csproj">
       <Project>{8dc3a0ed-e7be-4a3d-95c9-b6209273a80d}</Project>

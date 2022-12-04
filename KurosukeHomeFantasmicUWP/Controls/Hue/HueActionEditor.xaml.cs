@@ -1,4 +1,5 @@
-﻿using KurosukeHueClient.Models.HueObjects;
+﻿using CommonUtils;
+using KurosukeHueClient.Models.HueObjects;
 using Q42.HueApi.ColorConverters;
 using System;
 using System.Collections.Generic;
@@ -65,7 +66,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
         }
     }
 
-    public class HueActionEditorViewModel : ViewModels.ViewModelBase
+    public class HueActionEditorViewModel : ViewModelBase
     {
         private HueAction action;
         public void SetAction(HueAction newAction)

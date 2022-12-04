@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models.Timeline;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Models.Timeline;
 using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
 using System;
 using System.Collections.Generic;
@@ -142,7 +143,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
         }
     }
 
-    public class TimelineControlViewModel : ViewModels.ViewModelBase
+    public class TimelineControlViewModel : ViewModelBase
     {
         private double _TimelineWidth;
         public double TimelineWidth

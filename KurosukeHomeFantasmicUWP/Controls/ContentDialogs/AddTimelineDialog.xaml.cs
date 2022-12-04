@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Models;
 using KurosukeHomeFantasmicUWP.Models.Timeline;
 using System;
 using System.Collections.Generic;
@@ -66,7 +67,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
         }
     }
 
-    public class AddTimelineDialogViewModel : ViewModels.ViewModelBase
+    public class AddTimelineDialogViewModel : ViewModelBase
     {
         public ShowScene Scene { get; set; }
 

@@ -1,9 +1,6 @@
-﻿using KurosukeHomeFantasmicUWP.Models;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Media.Playback;
 using Windows.System.Threading;

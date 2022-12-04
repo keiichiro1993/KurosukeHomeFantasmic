@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonUtils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,8 +33,9 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
         {
             try
             {
-                //save hue assets
+                //save assets
                 await Utils.AppGlobalVariables.HueAssetDB.SaveHueAssets(Utils.OnMemoryCache.HueActions.ToList(), Utils.OnMemoryCache.HueEffects.ToList());
+                await Utils.AppGlobalVariables.RemoteVideoAssetDB.SaveRemoteVideoAssets(Utils.OnMemoryCache.RemoteVideoAssets.ToList());
                 //save scenes
                 foreach (var item in Utils.OnMemoryCache.Scenes)
                 {
@@ -54,11 +56,12 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
                 ViewModel.ErrorOccured = true;
                 ViewModel.ErrorMessage = "Failed to Save : [" + ex.GetType().FullName + "] " + ex.Message;
                 ViewModel.IsCloseButtonEnabled = true;
+                DebugHelper.WriteErrorLog(ex, "Failed to save project.");
             }
         }
     }
 
-    public class SaveDialogViewModel : ViewModels.ViewModelBase
+    public class SaveDialogViewModel : ViewModelBase
     {
         private bool _ErrorOccured = false;
         public bool ErrorOccured

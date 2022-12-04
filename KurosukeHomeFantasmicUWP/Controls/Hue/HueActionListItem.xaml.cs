@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models.Timeline;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Models.Timeline;
 using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
 using KurosukeHueClient.Models.HueObjects;
 using Q42.HueApi.ColorConverters;
@@ -91,7 +92,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
         }
     }
 
-    public class HueActionListItemViewModel : ViewModels.ViewModelBase
+    public class HueActionListItemViewModel : ViewModelBase
     {
         private HueAction action;
         public void SetNewAction(HueAction newAction)

@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models.JSON;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Models.JSON;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using Windows.UI.Xaml;
 
 namespace KurosukeHomeFantasmicUWP.Models.Timeline
 {
-    public class TimelineVideoItem : ViewModels.ViewModelBase, ITimelineItem
+    public class TimelineVideoItem : ViewModelBase, ITimelineItem
     {
         private VideoAsset _VideoAsset;
         public VideoAsset VideoAsset

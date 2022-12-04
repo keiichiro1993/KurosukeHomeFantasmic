@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
 using KurosukeHueClient.Models.HueObjects;
 using Q42.HueApi.ColorConverters;
 using System;
@@ -74,7 +75,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Hue
         }
     }
 
-    public class HueEffectListItemViewModel : ViewModels.ViewModelBase
+    public class HueEffectListItemViewModel : ViewModelBase
     {
         private HueEffect effect;
         public void SetNewEffect(HueEffect newEffect)

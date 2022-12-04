@@ -18,6 +18,7 @@ namespace KurosukeHomeFantasmicUWP.Utils
         public static VideoAssetsHelper VideoAssetDB;
         public static HueAssetHelper HueAssetDB;
         public static SceneAssetHelper SceneAssetDB;
+        public static RemoteVideoAssetHelper RemoteVideoAssetDB;
 
         public static KurosukeHueClient.Utils.HueClient GlobalHueClient;
         public static readonly object HueClientLock = new object();
@@ -31,6 +32,7 @@ namespace KurosukeHomeFantasmicUWP.Utils
         public static ObservableCollection<ShowScene> Scenes;
         public static ObservableCollection<HueAction> HueActions;
         public static ObservableCollection<HueEffect> HueEffects;
+        public static ObservableCollection<RemoteVideoAsset> RemoteVideoAssets;
 
         public static ProjectWorkspaceViewModel GlobalViewModel; //Controls playback etc.
     }

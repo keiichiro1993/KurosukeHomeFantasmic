@@ -1,5 +1,6 @@
 ﻿using CommonUtils;
 using KurosukeHomeFantasmicUWP.Models;
+using KurosukeHomeFantasmicUWP.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -82,26 +83,29 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
                 if (!pathEditedByUser)
                 {
                     var projectParentFolder = await documentsFolder.CreateFolderAsync("FantasmicProjects", CreationCollisionOption.OpenIfExists);
-                    Utils.AppGlobalVariables.ProjectFolder = await projectParentFolder.CreateFolderAsync(ProjectName, CreationCollisionOption.FailIfExists);
-                    Utils.AppGlobalVariables.ProjectFile = await Utils.AppGlobalVariables.ProjectFolder.CreateFileAsync(ProjectName.ToLower() + ".fantproj", CreationCollisionOption.FailIfExists);
+                    AppGlobalVariables.ProjectFolder = await projectParentFolder.CreateFolderAsync(ProjectName, CreationCollisionOption.FailIfExists);
+                    AppGlobalVariables.ProjectFile = await Utils.AppGlobalVariables.ProjectFolder.CreateFileAsync(ProjectName.ToLower() + ".fantproj", CreationCollisionOption.FailIfExists);
 
                     var projectJson = JsonSerializer.Serialize(project);
                     await FileIO.WriteTextAsync(Utils.AppGlobalVariables.ProjectFile, projectJson);
 
-                    Utils.AppGlobalVariables.AssetsFolder = await Utils.AppGlobalVariables.ProjectFolder.CreateFolderAsync("Assets", Windows.Storage.CreationCollisionOption.OpenIfExists);
-                    Utils.AppGlobalVariables.VideoAssetDB = new Utils.DBHelpers.VideoAssetsHelper();
-                    Utils.OnMemoryCache.VideoAssetCache = new ObservableCollection<VideoAsset>();
+                    AppGlobalVariables.AssetsFolder = await Utils.AppGlobalVariables.ProjectFolder.CreateFolderAsync("Assets", Windows.Storage.CreationCollisionOption.OpenIfExists);
+                    AppGlobalVariables.VideoAssetDB = new Utils.DBHelpers.VideoAssetsHelper();
+                    OnMemoryCache.VideoAssetCache = new ObservableCollection<VideoAsset>();
 
-                    Utils.AppGlobalVariables.HueAssetDB = new Utils.DBHelpers.HueAssetHelper();
-                    Utils.OnMemoryCache.HueEffects = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueEffect>();
-                    Utils.OnMemoryCache.HueActions = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueAction>();
+                    AppGlobalVariables.HueAssetDB = new Utils.DBHelpers.HueAssetHelper();
+                    OnMemoryCache.HueEffects = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueEffect>();
+                    OnMemoryCache.HueActions = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueAction>();
 
-                    Utils.AppGlobalVariables.SceneAssetDB = new Utils.DBHelpers.SceneAssetHelper();
-                    Utils.OnMemoryCache.Scenes = new ObservableCollection<ShowScene>();
+                    AppGlobalVariables.RemoteVideoAssetDB = new Utils.DBHelpers.RemoteVideoAssetHelper();
+                    OnMemoryCache.RemoteVideoAssets = new ObservableCollection<RemoteVideoAsset>();
 
-                    Utils.AppGlobalVariables.DeviceUsers = new ObservableCollection<AuthCommon.Models.IUser>(await Utils.Auth.AccountManager.GetAuthorizedUserList());
+                    AppGlobalVariables.SceneAssetDB = new Utils.DBHelpers.SceneAssetHelper();
+                    OnMemoryCache.Scenes = new ObservableCollection<ShowScene>();
 
-                    Utils.AppGlobalVariables.CurrentProject = project;
+                    AppGlobalVariables.DeviceUsers = new ObservableCollection<AuthCommon.Models.IUser>(await Utils.Auth.AccountManager.GetAuthorizedUserList());
+
+                    AppGlobalVariables.CurrentProject = project;
                 }
             }
             catch (Exception ex)

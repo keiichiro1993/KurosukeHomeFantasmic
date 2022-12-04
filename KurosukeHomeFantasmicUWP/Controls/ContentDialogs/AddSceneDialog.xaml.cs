@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicUWP.Models;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicUWP.Models;
 using KurosukeHomeFantasmicUWP.ViewModels;
 using System;
 using System.Collections.Generic;

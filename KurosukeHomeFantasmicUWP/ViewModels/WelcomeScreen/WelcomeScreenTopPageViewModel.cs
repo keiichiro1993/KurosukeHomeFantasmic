@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using KurosukeHomeFantasmicUWP.Utils;
 using KurosukeHomeFantasmicUWP.Utils.Auth;
+using KurosukeHomeFantasmicUWP.Utils.RequestHelpers;
 
 namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
 {
@@ -107,6 +108,16 @@ namespace KurosukeHomeFantasmicUWP.ViewModels.WelcomeScreen
                         // Ignore if the Hue Bridge/Entertainment Groups is not selected
                         OnMemoryCache.HueActions = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueAction>();
                         OnMemoryCache.HueEffects = new ObservableCollection<KurosukeHueClient.Models.HueObjects.HueEffect>();
+                    }
+
+                    LoadingMessage = "Updating Remote Devices list...";
+                    try
+                    {
+                        await BonjourHelper.UpdateBonjourDevices();
+                    }
+                    catch (Exception ex)
+                    {
+                        DebugHelper.WriteErrorLog(ex, "Failed to find local network devices.");
                     }
 
                     LoadingMessage = "Loading Remote Video Assets...";

@@ -1,4 +1,5 @@
 ﻿using AuthCommon.Models;
+using KurosukeBonjourService.Models;
 using KurosukeHomeFantasmicUWP.Models;
 using KurosukeHomeFantasmicUWP.Utils.DBHelpers;
 using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace;
@@ -33,6 +34,7 @@ namespace KurosukeHomeFantasmicUWP.Utils
         public static ObservableCollection<HueAction> HueActions;
         public static ObservableCollection<HueEffect> HueEffects;
         public static ObservableCollection<RemoteVideoAsset> RemoteVideoAssets;
+        public static ObservableCollection<QueryResponseItem> BonjourDevices;
 
         public static ProjectWorkspaceViewModel GlobalViewModel; //Controls playback etc.
     }

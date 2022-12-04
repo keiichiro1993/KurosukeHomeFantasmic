@@ -10,7 +10,8 @@ namespace KurosukeHomeFantasmicUWP.Models
     internal class RemoteVideoAsset
     {
         public VideoInfo Info { get; set; }
-        public string Host { get; set; }
+        public string DomainName { get; set; }
+        public string HostName { get; set; }
         public string Id { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
 
             // register services
             server.Server.OnGet += Server_OnGet;
-            server.Server.AddWebSocketService<PlayVideoService>("/play", () => {
+            server.Server.AddWebSocketService("/play", () => {
                 var videoService = new PlayVideoService();
                 videoService.PlayVideoRequested += VideoService_PlayVideoRequested;
                 return videoService;
@@ -58,25 +58,36 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
             var path = req.RawUrl;
 
             // return without content if invalid path
-            if (path != "/videolist")
+            switch (path) 
             {
-                res.StatusCode = (int)HttpStatusCode.NotFound;
-                return;
+                case "/videolist":
+                    var options = new JsonSerializerOptions
+                    {
+                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                        WriteIndented = false
+                    };
+                    var stream = new MemoryStream();
+                    await JsonSerializer.SerializeAsync(stream, AppGlobalVariables.VideoList, options);
+
+                    res.ContentType = "application/json";
+                    res.ContentEncoding = Encoding.UTF8;
+                    res.ContentLength64 = stream.Length;
+
+                    res.Close(stream.ToArray(), true);
+                    break;
+                case "/alive":
+                    res.ContentType = "text/plain";
+                    var aliveContent = Encoding.GetEncoding("UTF-8").GetBytes("alive!");
+                    res.ContentLength64 = aliveContent.Length;
+                    res.ContentEncoding = Encoding.UTF8;
+                    res.Close(aliveContent, true);
+                    break;
+                default:
+                    res.StatusCode = (int)HttpStatusCode.NotFound;
+                    return;
             }
 
-            var options = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = false
-            };
-            var stream = new MemoryStream();
-            await JsonSerializer.SerializeAsync(stream, AppGlobalVariables.VideoList, options);
-
-            res.ContentType = "application/json";
-            res.ContentEncoding = Encoding.UTF8;
-            res.ContentLength64 = stream.Length;
-
-            res.Close(stream.ToArray(), true);
+            
         }
     }
 }

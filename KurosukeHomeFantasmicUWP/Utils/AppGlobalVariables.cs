@@ -8,7 +8,7 @@ using Windows.Storage;
 
 namespace KurosukeHomeFantasmicUWP.Utils
 {
-    public static class AppGlobalVariables
+    internal static class AppGlobalVariables
     {
 
         public static FantasmicProject CurrentProject;
@@ -25,7 +25,7 @@ namespace KurosukeHomeFantasmicUWP.Utils
         public static ObservableCollection<IUser> DeviceUsers;
     }
 
-    public static class OnMemoryCache
+    internal static class OnMemoryCache
     {
         public static ObservableCollection<VideoAsset> VideoAssetCache; //cache on memory since this holds bitmap images
         public static ObservableCollection<ShowScene> Scenes;

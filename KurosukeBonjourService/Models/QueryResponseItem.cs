@@ -19,6 +19,7 @@ namespace KurosukeBonjourService.Models
             foreach (PTRRecord answer in queryResult.Answers)
             {
                 var domainName = answer.DomainName.ToString();
+                var instanceName = answer.DomainName.Labels[0];
                 /*
                  * if the domain name is controller._fantasmic._tcp.local,
                  * canonical name will be controller.fantasmic.local for A/AAAA records
@@ -50,6 +51,7 @@ namespace KurosukeBonjourService.Models
 
                 items.Add(new QueryResponseItem
                 {
+                    InstanceName = instanceName,
                     DomainName = domainName,
                     CanonicalName = canonicalName,
                     Port = port,
@@ -61,6 +63,7 @@ namespace KurosukeBonjourService.Models
             return items;
         }
 
+        public string InstanceName { get; set; }
         public string DomainName { get; set; }
         public string CanonicalName { get; set; }
         public Dictionary<string, string> Attributes { get; set; }

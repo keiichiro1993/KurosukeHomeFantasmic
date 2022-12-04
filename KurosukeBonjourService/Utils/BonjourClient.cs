@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace KurosukeBonjourService.Utils
+namespace KurosukeBonjourService
 {
     public class BonjourClient
     {
@@ -15,13 +15,18 @@ namespace KurosukeBonjourService.Utils
         {
             var query = new Message();
             query.Questions.Add(new Question { Name = service, Type = DnsType.ANY });
-            var cancellation = new CancellationTokenSource(2000);
+            var cancellation = new CancellationTokenSource(5000);
 
             using (var mdns = new MulticastService())
             {
                 mdns.Start();
                 return QueryResponseItem.CreateFromQueryResult(await mdns.ResolveAsync(query, cancellation.Token));
             }
+        }
+
+        public async Task Connect(QueryResponseItem target)
+        {
+            
         }
     }
 }

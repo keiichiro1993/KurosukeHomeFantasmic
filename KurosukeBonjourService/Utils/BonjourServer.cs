@@ -48,9 +48,12 @@ namespace KurosukeBonjourService
                 mdns.QueryReceived += (s, e) =>
                 {
                     var names = e.Message.Questions
-                        .Where(x => x.Name == serviceName)
+                        .Where(x => x.Name.ToString().Contains(serviceName))
                         .Select(q => q.Name + " " + q.Type);
-                    DebugHelper.WriteDebugLog($"got a query for {String.Join(", ", names)}");
+                    if (names.Any())
+                    {
+                        DebugHelper.WriteDebugLog($"got a query for {String.Join(", ", names)}");
+                    }
                 };
                 mdns.NetworkInterfaceDiscovered += (s, e) =>
                 {

@@ -32,8 +32,14 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
 
             // register services
             server.Server.OnGet += Server_OnGet;
-            var videoService = new PlayVideoService();
-            videoService.PlayVideoRequested += VideoService_PlayVideoRequested;
+            server.Server.AddWebSocketService<PlayVideoService>("/play", () => {
+                var videoService = new PlayVideoService();
+                videoService.PlayVideoRequested += VideoService_PlayVideoRequested;
+                return videoService;
+            });
+
+            // start server
+            server.StartServer();
         }
 
         private static void VideoService_PlayVideoRequested(object sender, KurosukeBonjourService.Models.Json.PlayVideoEventArgs e)

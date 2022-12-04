@@ -58,7 +58,24 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
             }
         }
 
-        public DeviceInformation SelectedSerialDevice { get; set; }
+        private DeviceInformation _SelectedSerialDevice;
+        public DeviceInformation SelectedSerialDevice
+        {
+            get { return _SelectedSerialDevice; }
+            set
+            {
+                _SelectedSerialDevice = value;
+                var localSettings = ApplicationData.Current.LocalSettings;
+                if (localSettings.Values.ContainsKey("selectedSerialDeviceName"))
+                {
+                    localSettings.Values["selectedSerialDeviceName"] = _SelectedSerialDevice.Name;
+                }
+                else
+                {
+                    localSettings.Values.Add("selectedSerialDeviceName", _SelectedSerialDevice.Name);
+                }
+            }
+        }
 
         public async void Init(MediaPlayerElement mediaPlayer, CoreDispatcher dispatcher)
         {
@@ -67,12 +84,22 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
             this.mediaPlayer = mediaPlayer;
             this.coreDispatcher = dispatcher;
 
-            // prepare media player
-            mediaPlayer.MediaPlayer.IsVideoFrameServerEnabled = true;
-            mediaPlayer.MediaPlayer.VideoFrameAvailable += MediaPlayer_VideoFrameAvailable;
-
             // prepare I/O
             SerialDevices = await SerialClient.ListSerialDevices();
+            var localSettings = ApplicationData.Current.LocalSettings;
+            var selected = localSettings.Values["selectedSerialDeviceName"];
+            if (selected != null)
+            {
+                var match = (from device in SerialDevices
+                             where device.Name == (string)selected
+                             select device).FirstOrDefault();
+                if (match != null)
+                {
+                    SelectedSerialDevice = match;
+                    RaisePropertyChanged("SelectedSerialDevice");
+                }
+            }
+
             AppGlobalVariables.VideoList = await VideoFileHelper.GetVideoList();
             BonjourHelper.PlayVideoRequested += BonjourHelper_PlayVideoRequested;
             BonjourHelper.StartServer();
@@ -90,6 +117,9 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
             {
                 videoFilePath = path;
                 VideoMediaSource = MediaSource.CreateFromUri(new Uri(path));
+                // prepare media player
+                mediaPlayer.MediaPlayer.IsVideoFrameServerEnabled = true;
+                mediaPlayer.MediaPlayer.VideoFrameAvailable += MediaPlayer_VideoFrameAvailable;
             }
 
             // adjust position if difference is more than 500ms
@@ -119,7 +149,7 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
             {
                 return;
             }
-            
+
             client = await SerialClient.CreateFromId(SelectedSerialDevice.Id);
 
             isPlaying = true;

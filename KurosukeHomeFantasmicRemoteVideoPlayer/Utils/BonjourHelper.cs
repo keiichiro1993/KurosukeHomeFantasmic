@@ -12,7 +12,7 @@ using Windows.Storage.Streams;
 using System.IO;
 using System.Text.Encodings.Web;
 using KurosukeBonjourService.Models.WebSocketServices;
-using KurosukeBonjourService.Models.Json;
+using KurosukeBonjourService.Models.BonjourEventArgs;
 
 namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
 {
@@ -42,7 +42,7 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
             server.StartServer();
         }
 
-        private static void VideoService_PlayVideoRequested(object sender, KurosukeBonjourService.Models.Json.PlayVideoEventArgs e)
+        private static void VideoService_PlayVideoRequested(object sender, PlayVideoEventArgs e)
         {
             if (PlayVideoRequested != null)
             {

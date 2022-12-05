@@ -120,7 +120,8 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Models\Json\PlayVideoEventArgs.cs" />
+    <Compile Include="Models\BonjourEventArgs\ConnectionStatusEventArgs.cs" />
+    <Compile Include="Models\BonjourEventArgs\PlayVideoEventArgs.cs" />
     <Compile Include="Models\Json\VideoInfo.cs" />
     <Compile Include="Models\QueryResponseItem.cs" />
     <Compile Include="Models\WebSocketServices\PlayVideoService.cs" />

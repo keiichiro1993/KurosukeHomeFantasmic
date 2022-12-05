@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static KurosukeBonjourService.Models.WebSocketServices.PlayVideoService;
 
-namespace KurosukeBonjourService.Models.Json
+namespace KurosukeBonjourService.Models.BonjourEventArgs
 {
     public class PlayVideoEventArgs : EventArgs
     {

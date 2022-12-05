@@ -198,6 +198,9 @@
     <Compile Include="Controls\Timeline\TimelineControl.xaml.cs">
       <DependentUpon>TimelineControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\VideoAsset\RemoteVideoAssetListItem.xaml.cs">
+      <DependentUpon>RemoteVideoAssetListItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\VideoAsset\VideoAssetListItem.xaml.cs">
       <DependentUpon>VideoAssetListItem.xaml</DependentUpon>
     </Compile>
@@ -239,6 +242,7 @@
     <Compile Include="ViewModels\Auth\AuthDialogMainPageViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\AssetPages\HueActionListPageViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\AssetPages\HueEffectListPageViewModel.cs" />
+    <Compile Include="ViewModels\ProjectWorkspace\AssetPages\RemoteVideoAssetListPageViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\PreviewPages\PreviewPageViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\ProjectWorkspaceViewModel.cs" />
     <Compile Include="ViewModels\ProjectWorkspace\TimelinePages\SceneDetailsTimelinePageViewModel.cs" />
@@ -265,6 +269,9 @@
     </Compile>
     <Compile Include="Views\ProjectWorkspace\AssetPages\HueEffectListPage.xaml.cs">
       <DependentUpon>HueEffectListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectWorkspace\AssetPages\RemoteVideoAssetListPage.xaml.cs">
+      <DependentUpon>RemoteVideoAssetListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProjectWorkspace\PreviewPages\PreviewPage.xaml.cs">
       <DependentUpon>PreviewPage.xaml</DependentUpon>
@@ -428,6 +435,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\VideoAsset\RemoteVideoAssetListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\VideoAsset\VideoAssetListItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -453,6 +464,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProjectWorkspace\AssetPages\HueEffectListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProjectWorkspace\AssetPages\RemoteVideoAssetListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

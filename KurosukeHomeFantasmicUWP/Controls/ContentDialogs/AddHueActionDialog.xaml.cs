@@ -40,17 +40,6 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
 
     public class AddHueActionDialogViewModel : ViewModelBase
     {
-        private bool _IsPrimaryButtonEnabled = true;
-        public bool IsPrimaryButtonEnabled
-        {
-            get { return _IsPrimaryButtonEnabled; }
-            set
-            {
-                _IsPrimaryButtonEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
-
         private string _Name;
         public string Name
         {

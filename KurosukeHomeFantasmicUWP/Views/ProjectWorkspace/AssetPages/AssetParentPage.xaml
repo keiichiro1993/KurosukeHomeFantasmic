@@ -15,6 +15,7 @@
                 <muxc:NavigationViewItem  Content="Video" Tag="VideoAssetListPage" />
                 <muxc:NavigationViewItem  Content="Hue Action" Tag="HueActionListPage" />
                 <muxc:NavigationViewItem  Content="Hue Effect" Tag="HueEffectListPage" />
+                <muxc:NavigationViewItem  Content="Video (Remote Device)" Tag="RemoteVideoAssetListPage" />
             </muxc:NavigationView.MenuItems>
             <Frame x:Name="contentFrame"/>
         </muxc:NavigationView>

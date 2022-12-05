@@ -177,6 +177,15 @@
   <data name="AddNewTimelineContentDialog.Title" xml:space="preserve">
     <value>新しいタイムライン</value>
   </data>
+  <data name="AddRemoteVideoAssetContentDialog-BonjourDeviceSelectionTitle.Text" xml:space="preserve">
+    <value>リモートデバイス:</value>
+  </data>
+  <data name="AddRemoteVideoAssetContentDialog-RemoteVideoSelectionTitle.Text" xml:space="preserve">
+    <value>リモートデバイスのビデオ:</value>
+  </data>
+  <data name="AddRemoteVideoAssetContentDialog.Title" xml:space="preserve">
+    <value>リモートのビデオアセット</value>
+  </data>
   <data name="AuthContentDialog.Title" xml:space="preserve">
     <value>デバイスの追加</value>
   </data>

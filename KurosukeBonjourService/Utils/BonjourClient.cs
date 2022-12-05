@@ -1,22 +1,25 @@
 ﻿using CommonUtils;
 using KurosukeBonjourService.Models;
+using KurosukeBonjourService.Models.BonjourEventArgs;
 using Makaretu.Dns;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WebSocketSharp;
 
 namespace KurosukeBonjourService
 {
     public class BonjourClient
     {
-        private QueryResponseItem device;
+        public QueryResponseItem Device { get; }
+        private WebSocket webSocket;
+        private IPAddress validAddress;
         public BonjourClient(QueryResponseItem device)
         {
-            this.device = device;
+            Device = device;
         }
 
         public static async Task<List<QueryResponseItem>> QueryServiceAsync(string service = "_fantasmic._tcp.local")
@@ -32,25 +35,94 @@ namespace KurosukeBonjourService
             }
         }
 
-        public async Task Connect(QueryResponseItem target)
+        public async Task Connect()
         {
+            // ignore if connected
+            if (Status == ConnectionStatus.Connected ||
+                webSocket?.ReadyState == WebSocketState.Connecting ||
+                webSocket?.ReadyState == WebSocketState.Open)
+            {
+                return;
+            }
 
+            try
+            {
+                await findValidIP();
+                webSocket = new WebSocket($"ws://{validAddress}:{Device.Port}");
+                webSocket.Connect();
+                // update status
+                StatusMessage = "Success";
+                Status = ConnectionStatus.Connected;
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = ex.Message;
+                throw ex;
+            }
         }
+
+
+        public event EventHandler<ConnectionStatusEventArgs> ConnectionStatusChanged;
+        private ConnectionStatus _Status = ConnectionStatus.Disconnected;
+        public ConnectionStatus Status
+        {
+            get { return _Status; }
+            set
+            {
+                _Status = value;
+
+                // fire event for notifying the view models
+                if (ConnectionStatusChanged != null)
+                {
+                    ConnectionStatusChanged(this, new ConnectionStatusEventArgs
+                    {
+                        Status = Status,
+                        StatusMessage = StatusMessage
+                    });
+                }
+            }
+        }
+        public string StatusMessage { get; set; } = "Not connected";
 
         public async Task<string> Get(string path)
         {
+            await findValidIP();
             var httpClient = new HttpClient();
             httpClient.Timeout = TimeSpan.FromSeconds(5);
-            foreach (var address in device.IPv4Addresses)
+            var uri = $"http://{validAddress}:{Device.Port}{path}";
+            DebugHelper.WriteDebugLog($"GET Request to {uri}");
+            var result = await httpClient.GetAsync(uri);
+            if (result.IsSuccessStatusCode)
             {
-                var uri = $"http://{address}:{device.Port}{path}";
+                return await result.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                throw new Exception($"Request failed with status code {result.StatusCode}: {result.ReasonPhrase}");
+            }
+        }
+
+        private async Task findValidIP()
+        {
+            if (validAddress != null)
+            {
+                return;
+            }
+
+            // find connectable ip address by bruteforce
+            var httpClient = new HttpClient();
+            httpClient.Timeout = TimeSpan.FromSeconds(5);
+            foreach (var address in Device.IPv4Addresses)
+            {
+                var uri = $"http://{address}:{Device.Port}/alive";
                 DebugHelper.WriteDebugLog($"GET Request to {uri}");
                 try
                 {
                     var result = await httpClient.GetAsync(uri);
                     if (result.IsSuccessStatusCode)
                     {
-                        return await result.Content.ReadAsStringAsync();
+                        validAddress = address;
+                        return;
                     }
                 }
                 catch (Exception ex)
@@ -59,7 +131,7 @@ namespace KurosukeBonjourService
                 }
             }
 
-            throw new Exception($"Failed to get '{path}' from {device.DomainName}:{device.Port}");
+            throw new Exception($"Failed to find valid IP address for {Device.InstanceName}");
         }
     }
 }

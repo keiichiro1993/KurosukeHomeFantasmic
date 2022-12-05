@@ -71,17 +71,6 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
     {
         public ShowScene Scene { get; set; }
 
-        private bool _IsPrimaryButtonEnabled = true;
-        public bool IsPrimaryButtonEnabled
-        {
-            get { return _IsPrimaryButtonEnabled; }
-            set
-            {
-                _IsPrimaryButtonEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
-
         private string _Name;
         public string Name
         {

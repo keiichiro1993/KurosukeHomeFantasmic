@@ -49,17 +49,6 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
     {
         public static HueAction HueAction(HueAction action) { return action; }
 
-        private bool _IsPrimaryButtonEnabled = true;
-        public bool IsPrimaryButtonEnabled
-        {
-            get { return _IsPrimaryButtonEnabled; }
-            set
-            {
-                _IsPrimaryButtonEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
-
         private string _Name;
         public string Name
         {

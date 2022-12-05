@@ -12,8 +12,8 @@ namespace KurosukeBonjourService.Models.Json
             Path = path;
         }
 
-        public string Name { get; }
-        public TimeSpan Length { get; }
-        public string Path { get; }
+        public string Name { get; set; }
+        public TimeSpan Length { get; set; }
+        public string Path { get; set; }
     }
 }

@@ -4,14 +4,58 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:KurosukeHomeFantasmicUWP.Controls.ContentDialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
-    Title="TITLE"
-    PrimaryButtonText="Button1"
-    SecondaryButtonText="Button2"
+    x:Uid="AddRemoteVideoAssetContentDialog"
+    PrimaryButtonText="Add"
+    SecondaryButtonText="Cancel"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
-
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
+    IsPrimaryButtonEnabled="{x:Bind ViewModel.IsPrimaryButtonEnabled, Mode=OneWay}"
+    CornerRadius="3">
+    <ContentDialog.PrimaryButtonStyle>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource SystemControlBackgroundAccentBrush}"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+    </ContentDialog.PrimaryButtonStyle>
+    <ContentDialog.SecondaryButtonStyle>
+        <Style TargetType="Button">
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+    </ContentDialog.SecondaryButtonStyle>
     <Grid>
+        <!-- Dialog Content -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
+                <RowDefinition Height="AUTO"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="AddRemoteVideoAssetContentDialog-BonjourDeviceSelectionTitle"/>
+                <ComboBox MinWidth="200"
+                    ItemsSource="{x:Bind ViewModel.BonjourDevices, Mode=OneWay}" SelectedValue="{x:Bind ViewModel.SelectedDevice, Mode=TwoWay}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock x:Uid="AddRemoteVideoAssetContentDialog-RemoteVideoSelectionTitle"/>
+                <ComboBox MinWidth="200"
+                    ItemsSource="{x:Bind ViewModel.AvailableVideos, Mode=OneWay}" SelectedValue="{x:Bind ViewModel.SelectedVideo, Mode=TwoWay}"/>
+            </StackPanel>
+        </Grid>
+        <!-- Dialog Content/ -->
+
+        <controls:Loading x:Name="LoadingControl" IsEnabled="{x:Bind ViewModel.IsLoading, Mode=OneWay}">
+            <controls:Loading.Background>
+                <AcrylicBrush TintOpacity="0.6" TintColor="DarkGray" FallbackColor="DarkGray" />
+            </controls:Loading.Background>
+            <StackPanel Orientation="Horizontal">
+                <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"/>
+                <TextBlock Text="{x:Bind ViewModel.LoadingMessage, Mode=OneWay}"/>
+            </StackPanel>
+        </controls:Loading>
     </Grid>
 </ContentDialog>

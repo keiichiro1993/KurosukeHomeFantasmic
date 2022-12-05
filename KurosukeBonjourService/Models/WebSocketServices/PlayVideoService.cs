@@ -1,4 +1,4 @@
-﻿using KurosukeBonjourService.Models.Json;
+﻿using KurosukeBonjourService.Models.BonjourEventArgs;
 using System;
 using System.Text.Json;
 using WebSocketSharp;

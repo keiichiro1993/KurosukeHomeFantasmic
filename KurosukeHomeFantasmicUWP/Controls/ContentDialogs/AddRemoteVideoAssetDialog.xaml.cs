@@ -2,6 +2,7 @@
 using KurosukeBonjourService;
 using KurosukeBonjourService.Models;
 using KurosukeBonjourService.Models.Json;
+using KurosukeHomeFantasmicUWP.Models;
 using KurosukeHomeFantasmicUWP.Utils;
 using KurosukeHomeFantasmicUWP.Utils.RequestHelpers;
 using Org.BouncyCastle.Security;
@@ -12,6 +13,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage.Search;
@@ -29,13 +32,29 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
 {
     public sealed partial class AddRemoteVideoAssetDialog : ContentDialog
     {
+        public AddRemoteVideoAssetDialogViewModel ViewModel { get; set; } = new AddRemoteVideoAssetDialogViewModel();
         public AddRemoteVideoAssetDialog()
         {
             this.InitializeComponent();
+            this.Loaded += AddRemoteVideoAssetDialog_Loaded;
         }
 
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private void AddRemoteVideoAssetDialog_Loaded(object sender, RoutedEventArgs e)
         {
+            ViewModel.Init();
+        }
+
+        private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            try
+            {
+                await ViewModel.AddRemoteVideo();
+            }
+            catch (Exception ex)
+            {
+                Hide();
+                await DebugHelper.ShowErrorDialog(ex, "Failed to connect.");
+            }
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -68,8 +87,9 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             try
             {
                 AvailableVideos = await BonjourHelper.GetAvailableVideo(SelectedDevice);
+                IsVideoSelectionEnabled = true;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 DebugHelper.WriteErrorLog(ex, "Failed to retrieve available Videos.");
             }
@@ -87,6 +107,17 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             }
         }
 
+        private bool _IsVideoSelectionEnabled = false;
+        public bool IsVideoSelectionEnabled
+        {
+            get { return _IsVideoSelectionEnabled; }
+            set
+            {
+                _IsVideoSelectionEnabled = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private List<VideoInfo> _AvailableVideos;
         public List<VideoInfo> AvailableVideos
         {
@@ -98,6 +129,44 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             }
         }
 
-        public VideoInfo SelectedVideo { get; set; }
+        private VideoInfo _SelectedVideo;
+        public VideoInfo SelectedVideo
+        {
+            get { return _SelectedVideo; }
+            set
+            {
+                _SelectedVideo = value;
+                IsPrimaryButtonEnabled = true;
+            }
+        }
+
+        public async Task AddRemoteVideo()
+        {
+            IsLoading = true;
+            LoadingMessage = "Preparing connection to the device...";
+            var bonjourClient = (from client in AppGlobalVariables.BonjourClients
+                                 where client.Device.DomainName == SelectedDevice.DomainName
+                                 select client).FirstOrDefault();
+
+            if (bonjourClient == null)
+            {
+                bonjourClient = new BonjourClient(SelectedDevice);
+                await bonjourClient.Connect();
+                AppGlobalVariables.BonjourClients.Add(bonjourClient);
+            }
+
+            OnMemoryCache.RemoteVideoAssets.Add(
+                new RemoteVideoAsset
+                {
+                    Info = SelectedVideo,
+                    DomainName = SelectedDevice.DomainName,
+                    HostName = SelectedDevice.InstanceName,
+                    Id = Guid.NewGuid().ToString(),
+                    Client = bonjourClient
+                }
+            );
+
+            IsLoading = false;
+        }
     }
 }

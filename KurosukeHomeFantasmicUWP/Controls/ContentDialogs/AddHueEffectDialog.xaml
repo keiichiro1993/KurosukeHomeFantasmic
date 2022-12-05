@@ -13,7 +13,8 @@
     PrimaryButtonText="Add"
     SecondaryButtonText="Cancel"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
+    CornerRadius="3">
     <ContentDialog.PrimaryButtonStyle>
         <Style TargetType="Button">
             <Setter Property="Background" Value="{StaticResource SystemControlBackgroundAccentBrush}"/>

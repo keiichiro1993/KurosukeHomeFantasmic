@@ -50,6 +50,9 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.AssetPages
                 case "Hue Effect":
                     pageType = typeof(HueEffectListPage);
                     break;
+                case "Video (Remote Device)":
+                    pageType = typeof(RemoteVideoAssetListPage);
+                    break;
             }
             if (pageType != null)
             {

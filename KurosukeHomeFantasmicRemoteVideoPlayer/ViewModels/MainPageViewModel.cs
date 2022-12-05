@@ -107,7 +107,7 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
             IsLoading = false;
         }
 
-        private async void BonjourHelper_PlayVideoRequested(object sender, KurosukeBonjourService.Models.Json.PlayVideoEventArgs e)
+        private async void BonjourHelper_PlayVideoRequested(object sender, KurosukeBonjourService.Models.BonjourEventArgs.PlayVideoEventArgs e)
         {
             // set path if not equal
             var path = (from item in AppGlobalVariables.VideoList

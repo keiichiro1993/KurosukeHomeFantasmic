@@ -1,4 +1,5 @@
 ﻿using AuthCommon.Models;
+using KurosukeBonjourService;
 using KurosukeBonjourService.Models;
 using KurosukeHomeFantasmicUWP.Models;
 using KurosukeHomeFantasmicUWP.Utils.DBHelpers;
@@ -11,7 +12,6 @@ namespace KurosukeHomeFantasmicUWP.Utils
 {
     internal static class AppGlobalVariables
     {
-
         public static FantasmicProject CurrentProject;
         public static StorageFolder ProjectFolder;
         public static StorageFile ProjectFile;
@@ -24,6 +24,7 @@ namespace KurosukeHomeFantasmicUWP.Utils
         public static KurosukeHueClient.Utils.HueClient GlobalHueClient;
         public static readonly object HueClientLock = new object();
 
+        public static ObservableCollection<BonjourClient> BonjourClients = new ObservableCollection<BonjourClient>();
         public static ObservableCollection<IUser> DeviceUsers;
     }
 

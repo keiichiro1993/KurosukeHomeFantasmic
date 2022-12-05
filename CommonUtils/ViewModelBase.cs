@@ -44,5 +44,17 @@ namespace CommonUtils
         {
             get { return IsLoading ? Visibility.Visible : Visibility.Collapsed; }
         }
+
+        // all the dialogs need this
+        private bool _IsPrimaryButtonEnabled = true;
+        public bool IsPrimaryButtonEnabled
+        {
+            get { return _IsPrimaryButtonEnabled; }
+            set
+            {
+                _IsPrimaryButtonEnabled = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }

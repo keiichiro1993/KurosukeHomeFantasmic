@@ -57,13 +57,17 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
             }
             for (var i = 0; i < bytelist.Count; i++)
             {
-                if (bytelist[i] == 0xFF) { bytelist[i] = 0xFE; }
+                if (bytelist[i] == 0x30) { bytelist[i] = 0x31; }
             }
 
+
+            // ESP32
             dw.WriteBytes(bytelist.ToArray());
-            dw.WriteByte(0xFF);
             await dw.StoreAsync();
-            DebugHelper.WriteDebugLog($"Sent bytes: {bytelist.Count}");
+            dw.WriteByte(0x30);
+            await dw.StoreAsync();
+            await Task.Delay(10);
+            Debug.WriteLine($"Sent bytes: {bytelist.Count}");
         }
 
         public void Dispose()

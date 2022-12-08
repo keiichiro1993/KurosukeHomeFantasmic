@@ -129,6 +129,10 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
                 case Models.Timeline.Timeline.TimelineTypes.Hue:
                     control = new TimelineHueItemControl();
                     break;
+                // Remote Video Items
+                case Models.Timeline.Timeline.TimelineTypes.RemoteVideo:
+                    control = new TimelineRemoteVideoItemControl();
+                    break;
             }
 
             if (control != null)
@@ -160,6 +164,29 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
                         videoItem.CanvasWidth = singleTimelineBackground.ActualWidth;
                         videoItem.TotalCanvasDuration = TotalCanvasDuration;
                         TimelineData.TimelineItems.Add(videoItem);
+                    }
+                    catch (Exception ex)
+                    {
+                        await DebugHelper.ShowErrorDialog(ex, "Failed to add the Video to the timeline.");
+                    }
+                }
+            }
+            else if (e.DataView.Properties.TryGetValue("RemoteVideoAsset", out outObject))
+            {
+                var item = outObject as Models.RemoteVideoAsset;
+                if (item != null)
+                {
+                    try
+                    {
+                        var videoItem = new TimelineRemoteVideoItem();
+                        await videoItem.Init(item);
+                        videoItem.CanvasWidth = singleTimelineBackground.ActualWidth;
+                        videoItem.TotalCanvasDuration = TotalCanvasDuration;
+                        TimelineData.TimelineItems.Add(videoItem);
+                        if (string.IsNullOrEmpty(TimelineData.TargetDomainName))
+                        {
+                            TimelineData.TargetDomainName = item.DomainName;
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -209,15 +236,23 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
         {
             e.DragUIOverride.IsContentVisible = true;
             object outObject = null;
+            e.AcceptedOperation = DataPackageOperation.None;
             e.DataView.Properties.TryGetValue("TimelineType", out outObject);
-            if (outObject != null && (string)outObject == TimelineData.TimelineType.ToString())
+            if (outObject == null || (string)outObject != TimelineData.TimelineType.ToString())
             {
-                e.AcceptedOperation = DataPackageOperation.Copy;
+                return;
             }
-            else
+
+            if ((string)outObject == "RemoteVideo" && !string.IsNullOrEmpty(TimelineData.TargetDomainName))
             {
-                e.AcceptedOperation = DataPackageOperation.None;
+                e.DataView.Properties.TryGetValue("TargetDomainName", out outObject);
+                if ((string)outObject != TimelineData.TargetDomainName)
+                {
+                    return;
+                }
             }
+
+            e.AcceptedOperation = DataPackageOperation.Copy;
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)

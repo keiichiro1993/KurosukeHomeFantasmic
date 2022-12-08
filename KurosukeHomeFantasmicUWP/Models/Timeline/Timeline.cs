@@ -17,10 +17,17 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         public List<TimelineVideoItemEntity> TimelineVideoItemEntities { get; set; }
         public List<TimelineHueItemEntity> TimelineHueItemEntities { get; set; }
 
-        public enum TimelineTypes { Video, Hue }
+        public enum TimelineTypes { Video, Hue, RemoteVideo }
         public TimelineTypes TimelineType { get; set; }
 
+        /// <summary>
+        /// for local video playback
+        /// </summary>
         public string TargetDisplayId { get; set; }
+        /// <summary>
+        /// for remote video playback
+        /// </summary>
+        public string TargetDomainName { get; set; }
 
 
         [JsonIgnore]
@@ -52,6 +59,17 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
                         }
                     }
                     break;
+                case TimelineTypes.RemoteVideo:
+                    if (TimelineVideoItemEntities != null)
+                    {
+                        foreach (var item in TimelineVideoItemEntities)
+                        {
+                            var timelineItem = new TimelineRemoteVideoItem();
+                            await timelineItem.Init(item);
+                            TimelineItems.Add(timelineItem);
+                        }
+                    }
+                    break;
             }
         }
 
@@ -59,6 +77,7 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
         {
             switch (TimelineType)
             {
+                case TimelineTypes.RemoteVideo:
                 case TimelineTypes.Video:
                     TimelineVideoItemEntities = new List<TimelineVideoItemEntity>();
                     foreach (var item in TimelineItems)

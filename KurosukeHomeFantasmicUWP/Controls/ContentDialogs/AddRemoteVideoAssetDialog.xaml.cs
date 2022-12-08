@@ -151,7 +151,6 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             if (bonjourClient == null)
             {
                 bonjourClient = new BonjourClient(SelectedDevice);
-                await bonjourClient.Connect();
                 AppGlobalVariables.BonjourClients.Add(bonjourClient);
             }
 
@@ -162,7 +161,6 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
                     DomainName = SelectedDevice.DomainName,
                     HostName = SelectedDevice.InstanceName,
                     Id = Guid.NewGuid().ToString(),
-                    Client = bonjourClient
                 }
             );
 

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using WebSocketSharp;
@@ -59,6 +60,22 @@ namespace KurosukeBonjourService
                 StatusMessage = ex.Message;
                 throw ex;
             }
+        }
+
+        public void Disconnect()
+        {
+            webSocket?.Close();
+        }
+
+        public void SendMessage<T>(T objectToSend)
+        {
+            if (Status != ConnectionStatus.Connected)
+            {
+                throw new InvalidOperationException("WebSocket not connected. Please make sure to connect before sending message.");
+            }
+
+            var jsonData = JsonSerializer.Serialize(objectToSend);
+            webSocket.Send(jsonData);
         }
 
 

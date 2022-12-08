@@ -1,5 +1,5 @@
-﻿<UserControl
-    x:Class="KurosukeHomeFantasmicUWP.Controls.Players.TimelinePlayerBase"
+﻿<local:TimelinePlayerBase
+    x:Class="KurosukeHomeFantasmicUWP.Controls.Players.RemoteVideoTimelinePlayerChild"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:KurosukeHomeFantasmicUWP.Controls.Players"
@@ -10,6 +10,7 @@
     d:DesignWidth="400">
 
     <Grid>
-
+        <TextBlock Text="Remote Video!" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   FontSize="30"/>
     </Grid>
-</UserControl>
+</local:TimelinePlayerBase>

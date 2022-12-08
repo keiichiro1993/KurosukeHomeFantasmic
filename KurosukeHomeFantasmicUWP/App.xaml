@@ -21,6 +21,11 @@
                                 TintOpacity="0.7" 
                                 TintColor="LightGreen" 
                                 FallbackColor="LightGreen" />
+                    <media:AcrylicBrush x:Key="MediumPurpleAcrylicBrush"
+                                BackgroundSource="Backdrop"
+                                TintOpacity="0.7" 
+                                TintColor="MediumPurple" 
+                                FallbackColor="MediumPurple" />
                     <media:AcrylicBrush x:Key="HostBackdropAcrylicBrush"
                                 BackgroundSource="HostBackdrop"
                                 TintOpacity="0.8" 

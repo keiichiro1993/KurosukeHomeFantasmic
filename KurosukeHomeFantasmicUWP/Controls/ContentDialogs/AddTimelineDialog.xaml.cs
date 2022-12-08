@@ -37,29 +37,31 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             switch (ViewModel.SelectedType)
             {
                 case "Video":
-                    newTimeline = new Models.Timeline.Timeline
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        Name = ViewModel.Name,
-                        Description = ViewModel.Description,
-                        TimelineType = (Models.Timeline.Timeline.TimelineTypes)Enum.Parse(typeof(Models.Timeline.Timeline.TimelineTypes), ViewModel.SelectedType),
-                        TimelineItems = new ObservableCollection<ITimelineItem>(),
-                        TargetDisplayId = Guid.NewGuid().ToString()
-                    };
+                    newTimeline = ConstructTimeline((Models.Timeline.Timeline.TimelineTypes)Enum.Parse(typeof(Models.Timeline.Timeline.TimelineTypes), ViewModel.SelectedType));
+                    newTimeline.TargetDisplayId = Guid.NewGuid().ToString();
                     ViewModel.Scene.Timelines.Add(newTimeline);
                     break;
                 case "Hue":
-                    newTimeline = new Models.Timeline.Timeline
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        Name = ViewModel.Name,
-                        Description = ViewModel.Description,
-                        TimelineType = (Models.Timeline.Timeline.TimelineTypes)Enum.Parse(typeof(Models.Timeline.Timeline.TimelineTypes), ViewModel.SelectedType),
-                        TimelineItems = new ObservableCollection<ITimelineItem>(),
-                    };
+                    newTimeline = ConstructTimeline((Models.Timeline.Timeline.TimelineTypes)Enum.Parse(typeof(Models.Timeline.Timeline.TimelineTypes), ViewModel.SelectedType));
+                    ViewModel.Scene.Timelines.Add(newTimeline);
+                    break;
+                case "Remote Video":
+                    newTimeline = ConstructTimeline(Models.Timeline.Timeline.TimelineTypes.RemoteVideo);
                     ViewModel.Scene.Timelines.Add(newTimeline);
                     break;
             }
+        }
+
+        private Models.Timeline.Timeline ConstructTimeline(Models.Timeline.Timeline.TimelineTypes type)
+        {
+            return new Models.Timeline.Timeline
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = ViewModel.Name,
+                Description = ViewModel.Description,
+                TimelineType = type,
+                TimelineItems = new ObservableCollection<ITimelineItem>(),
+            };
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -86,7 +88,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
 
         public string Description { get; set; }
 
-        public List<string> TimelineTypes { get; set; } = new List<string> { "Video", "Hue" };
+        public List<string> TimelineTypes { get; set; } = new List<string> { "Video", "Hue", "Remote Video" };
 
         public string SelectedType { get; set; } = "Video";
     }

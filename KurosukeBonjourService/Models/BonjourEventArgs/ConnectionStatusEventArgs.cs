@@ -3,7 +3,7 @@
 namespace KurosukeBonjourService.Models.BonjourEventArgs
 {
 
-    public enum ConnectionStatus { Connected, Disconnected }
+    public enum ConnectionStatus { Connected, Disconnected, Connecting }
     public class ConnectionStatusEventArgs : EventArgs
     {
         public ConnectionStatus Status { get; set; }

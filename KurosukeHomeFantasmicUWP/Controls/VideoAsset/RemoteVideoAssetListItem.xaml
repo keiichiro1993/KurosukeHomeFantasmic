@@ -24,7 +24,7 @@
                     <TextBlock FontSize="17" 
                                Text="{x:Bind RemoteVideoAsset.Info.Name, Mode=OneWay}"/>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{x:Bind RemoteVideoAsset.Client.Device.CanonicalName, Mode=OneWay}"/>
+                        <TextBlock Text="{x:Bind RemoteVideoAsset.HostName, Mode=OneWay}"/>
                         <TextBlock Text=":"/>
                         <TextBlock Margin="5,0,0,0"
                                    Text="{x:Bind RemoteVideoAsset.Info.Path, Mode=OneWay}"/>

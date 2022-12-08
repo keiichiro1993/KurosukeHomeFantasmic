@@ -57,7 +57,8 @@ namespace KurosukeHomeFantasmicUWP.Controls.VideoAsset
         private void Grid_DragStarting(UIElement sender, DragStartingEventArgs args)
         {
             args.Data.Properties.Add("RemoteVideoAsset", RemoteVideoAsset);
-            args.Data.Properties.Add("TimelineType", "Video");
+            args.Data.Properties.Add("TimelineType", "RemoteVideo");
+            args.Data.Properties.Add("DomainName", RemoteVideoAsset.DomainName);
         }
 
         private void ContextMenuDeleteButton_Click(object sender, RoutedEventArgs e)

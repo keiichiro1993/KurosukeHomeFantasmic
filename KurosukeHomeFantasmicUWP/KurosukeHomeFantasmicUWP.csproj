@@ -152,15 +152,19 @@
     <Compile Include="Controls\Hue\HueLightSelector.xaml.cs">
       <DependentUpon>HueLightSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Players\RemoteVideoTimelinePlayer.xaml.cs">
+      <DependentUpon>RemoteVideoTimelinePlayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Players\HueTimelinePlayer.xaml.cs">
       <DependentUpon>HueTimelinePlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Players\RemoteVideoTimelinePlayerChild.xaml.cs">
+      <DependentUpon>RemoteVideoTimelinePlayerChild.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Players\HueTimelinePlayerChild.xaml.cs">
       <DependentUpon>HueTimelinePlayerChild.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Players\TimelinePlayerBase.xaml.cs">
-      <DependentUpon>TimelinePlayerBase.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\Players\TimelinePlayerBase.cs" />
     <Compile Include="Controls\Players\VideoTimelinePreviewChildControl.xaml.cs">
       <DependentUpon>VideoTimelinePreviewChildControl.xaml</DependentUpon>
     </Compile>
@@ -169,6 +173,9 @@
     </Compile>
     <Compile Include="Controls\ProjectMenuTitleBar.xaml.cs">
       <DependentUpon>ProjectMenuTitleBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Timeline\Items\TimelineRemoteVideoItemControl.xaml.cs">
+      <DependentUpon>TimelineRemoteVideoItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Timeline\Items\TimelineHueItemControl.xaml.cs">
       <DependentUpon>TimelineHueItemControl.xaml</DependentUpon>
@@ -220,6 +227,7 @@
     <Compile Include="Models\Timeline\Timeline.cs" />
     <Compile Include="Models\JSON\ITimelineItemEntity.cs" />
     <Compile Include="Models\Timeline\TimelineHueItem.cs" />
+    <Compile Include="Models\Timeline\TimelineRemoteVideoItem.cs" />
     <Compile Include="Models\Timeline\TimelineVideoItem.cs" />
     <Compile Include="Models\VideoAsset.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -375,15 +383,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Players\RemoteVideoTimelinePlayer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Players\HueTimelinePlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Players\HueTimelinePlayerChild.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Controls\Players\RemoteVideoTimelinePlayerChild.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\Players\TimelinePlayerBase.xaml">
+    <Page Include="Controls\Players\HueTimelinePlayerChild.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -398,6 +410,10 @@
     <Page Include="Controls\ProjectMenuTitleBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Timeline\Items\TimelineRemoteVideoItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Timeline\Items\TimelineHueItemControl.xaml">
       <SubType>Designer</SubType>

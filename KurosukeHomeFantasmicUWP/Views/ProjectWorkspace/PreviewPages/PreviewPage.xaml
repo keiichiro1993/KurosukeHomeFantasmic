@@ -21,8 +21,14 @@
                 <player:HueTimelinePlayer HueTimeline="{Binding}" VerticalAlignment="Top" />
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Key="RemoteVideoPlayerTemplate">
+            <Grid Width="270" Height="200" Padding="10">
+                <player:RemoteVideoTimelinePlayer RemoteVideoTimeline="{Binding}" VerticalAlignment="Top" />
+            </Grid>
+        </DataTemplate>
         <local:PreviewPlayerTemplateSelector x:Key="PreviewPlayerTemplateSelector"
             VideoTemplate="{StaticResource ResourceKey=VideoPlayerTemplate}"
+            RemoteVideoTemplate="{StaticResource ResourceKey=RemoteVideoPlayerTemplate}"
             HueTemplate="{StaticResource ResourceKey=HuePlayerTemplate}"/>
     </Page.Resources>
     <Grid>

@@ -54,17 +54,23 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
             }
             else if (PlaybackState == MediaPlaybackState.Playing)
             {
+
+                if (client == null)
+                {
+                    //TODO: さがして、無かったら作ってAppGlobalVariablesに突っ込む関数にする
+                    client = (from bonjourClient in AppGlobalVariables.BonjourClients
+                              where bonjourClient.Device.DomainName == Timeline.TargetDomainName
+                              select bonjourClient).FirstOrDefault();
+                }
+
+                if (client == null)
+                {
+                    return;
+                }
+
                 var needInit = false;
                 lock (client)
                 {
-                    if (client == null)
-                    {
-                        //TODO: さがして、無かったら作ってAppGlobalVariablesに突っ込む関数にする
-                        client = (from bonjourClient in AppGlobalVariables.BonjourClients
-                                  where bonjourClient.Device.DomainName == Timeline.TargetDomainName
-                                  select bonjourClient).FirstOrDefault();
-                    }
-
                     if (client.Status == ConnectionStatus.Disconnected)
                     {
                         client.Status = ConnectionStatus.Connecting;
@@ -103,8 +109,8 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
             var targetItem = candidates.First();
             if (videoItem == null || videoItem.ItemId != targetItem.ItemId)
             {
-                DebugHelper.WriteDebugLog($"Remote Video: Playing '{videoItem.RemoteVideoAsset.Info.Name}({videoItem.ItemId})' on HOST '{videoItem.RemoteVideoAsset.DomainName}'");
                 videoItem = targetItem;
+                DebugHelper.WriteDebugLog($"Remote Video: Playing '{videoItem.RemoteVideoAsset.Info.Name}({videoItem.ItemId})' on HOST '{videoItem.RemoteVideoAsset.DomainName}'");
             }
 
             try

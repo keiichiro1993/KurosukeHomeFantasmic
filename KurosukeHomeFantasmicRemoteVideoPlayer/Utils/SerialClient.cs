@@ -23,7 +23,7 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
             return serialDeviceInfos.ToList();
         }
 
-        public static async Task<SerialClient> CreateFromId(string serialDeviceId, uint speed = 250000)
+        public static async Task<SerialClient> CreateFromId(string serialDeviceId, uint speed = 500000)
         {
             var client = new SerialClient();
             client.device = await SerialDevice.FromIdAsync(serialDeviceId);

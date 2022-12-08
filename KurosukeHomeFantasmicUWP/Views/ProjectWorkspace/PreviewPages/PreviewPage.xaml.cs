@@ -48,6 +48,7 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.PreviewPages
     internal class PreviewPlayerTemplateSelector : DataTemplateSelector
     {
         public DataTemplate VideoTemplate { get; set; }
+        public DataTemplate RemoteVideoTemplate { get; set; }
         public DataTemplate HueTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item)
@@ -63,6 +64,8 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.PreviewPages
                     return VideoTemplate;
                 case Timeline.TimelineTypes.Hue:
                     return HueTemplate;
+                case Timeline.TimelineTypes.RemoteVideo:
+                    return RemoteVideoTemplate;
                 default:
                     throw new InvalidOperationException($"Timeline type is not defined in template selector: {timeline.TimelineType}");
             }

@@ -28,17 +28,17 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
             this.InitializeComponent();
         }
 
-        public Models.Timeline.Timeline HueTimeline
+        public Models.Timeline.Timeline RemoteVideoTimeline
         {
-            get => (Models.Timeline.Timeline)GetValue(HueTimelineProperty);
-            set => SetValue(HueTimelineProperty, value);
+            get => (Models.Timeline.Timeline)GetValue(RemoteVideoTimelineProperty);
+            set => SetValue(RemoteVideoTimelineProperty, value);
         }
 
-        public static readonly DependencyProperty HueTimelineProperty =
-            DependencyProperty.Register(nameof(HueTimeline), typeof(Models.Timeline.Timeline), typeof(HueTimelinePlayer),
-                new PropertyMetadata(null, HueTimelineChanged));
+        public static readonly DependencyProperty RemoteVideoTimelineProperty =
+            DependencyProperty.Register(nameof(RemoteVideoTimeline), typeof(Models.Timeline.Timeline), typeof(RemoteVideoTimelinePlayer),
+                new PropertyMetadata(null, RemoteVideoTimelineChanged));
 
-        private static void HueTimelineChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void RemoteVideoTimelineChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var playerControl = (RemoteVideoTimelinePlayer)d;
             playerControl.ViewModel.Timeline = (Models.Timeline.Timeline)e.NewValue;

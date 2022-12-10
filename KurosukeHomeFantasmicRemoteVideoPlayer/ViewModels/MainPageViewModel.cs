@@ -64,15 +64,21 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
             get { return _SelectedSerialDevice; }
             set
             {
-                _SelectedSerialDevice = value;
-                var localSettings = ApplicationData.Current.LocalSettings;
-                if (localSettings.Values.ContainsKey("selectedSerialDeviceName"))
+
+                if (value != null && value != _SelectedSerialDevice)
                 {
-                    localSettings.Values["selectedSerialDeviceName"] = _SelectedSerialDevice.Name;
-                }
-                else
-                {
-                    localSettings.Values.Add("selectedSerialDeviceName", _SelectedSerialDevice.Name);
+                    _SelectedSerialDevice = value;
+                    var localSettings = ApplicationData.Current.LocalSettings;
+                    if (localSettings.Values.ContainsKey("selectedSerialDeviceName"))
+                    {
+                        localSettings.Values["selectedSerialDeviceName"] = _SelectedSerialDevice.Name;
+                    }
+                    else
+                    {
+                        localSettings.Values.Add("selectedSerialDeviceName", _SelectedSerialDevice.Name);
+                    }
+
+                    InitSerialClient();
                 }
             }
         }
@@ -102,64 +108,106 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
 
             AppGlobalVariables.VideoList = await VideoFileHelper.GetVideoList();
             BonjourHelper.PlayVideoRequested += BonjourHelper_PlayVideoRequested;
-            BonjourHelper.StartServer();
+            await BonjourHelper.StartServer();
 
             IsLoading = false;
         }
 
+        public async void InitSerialClient()
+        {
+            if (client != null)
+            {
+                client.Dispose();
+            }
+            client = await SerialClient.CreateFromId(SelectedSerialDevice.Id);
+        }
+
+        object serialClientLock = new object();
+        DateTime lastTimestamp;
         private async void BonjourHelper_PlayVideoRequested(object sender, KurosukeBonjourService.Models.BonjourEventArgs.PlayVideoEventArgs e)
         {
-            // set path if not equal
-            var path = (from item in AppGlobalVariables.VideoList
-                        where item.Name == e.VideoName
-                        select item.Path).FirstOrDefault();
-            if (videoFilePath != path)
+            if (lastTimestamp != null && e.Timestamp < lastTimestamp)
             {
-                videoFilePath = path;
-                VideoMediaSource = MediaSource.CreateFromUri(new Uri(path));
-                // prepare media player
-                mediaPlayer.MediaPlayer.IsVideoFrameServerEnabled = true;
-                mediaPlayer.MediaPlayer.VideoFrameAvailable += MediaPlayer_VideoFrameAvailable;
+                // skip if old request received
+                return;
+            }
+            lastTimestamp = e.Timestamp;
+
+            DebugHelper.WriteDebugLog($"Data recieve... video position:{e.VideoTime} timestamp:{e.Timestamp}");
+
+            // set path if not equal
+            if (!string.IsNullOrEmpty(e.VideoPath) && videoFilePath != e.VideoPath)
+            {
+                videoFilePath = e.VideoPath;
+
+                await coreDispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+                {
+                    var storageFile = await StorageFile.GetFileFromPathAsync(videoFilePath);
+                    var stream = await storageFile.OpenAsync(FileAccessMode.Read);
+                    VideoMediaSource = MediaSource.CreateFromStream(stream, storageFile.ContentType);
+
+                    // prepare media player
+                    mediaPlayer.MediaPlayer.IsVideoFrameServerEnabled = true;
+                    mediaPlayer.MediaPlayer.VideoFrameAvailable += MediaPlayer_VideoFrameAvailable;
+                });
             }
 
-            // adjust position if difference is more than 500ms
-            var videoPosition = mediaPlayer.MediaPlayer.PlaybackSession.Position - e.VideoTime;
-            if ((mediaPlayer.MediaPlayer.PlaybackSession.Position - videoPosition).Duration() > TimeSpan.FromMilliseconds(500))
+            bool isMediaPlayerNull = false;
+            await coreDispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                mediaPlayer.MediaPlayer.PlaybackSession.Position = videoPosition;
+                if (mediaPlayer.MediaPlayer == null)
+                {
+                    isMediaPlayerNull = true;
+                    return;
+                }
+
+                // adjust position if difference is more than 500ms
+                if ((mediaPlayer.MediaPlayer.PlaybackSession.Position - e.VideoTime).Duration() > TimeSpan.FromMilliseconds(500))
+                {
+                    DebugHelper.WriteDebugLog($"Adjust video timing... from {mediaPlayer.MediaPlayer.PlaybackSession.Position} to {e.VideoTime}");
+                    mediaPlayer.MediaPlayer.PlaybackSession.Position = e.VideoTime;
+                }
+            });
+
+            if (isMediaPlayerNull)
+            {
+                DebugHelper.WriteDebugLog("MediaPlayer not ready.");
+                return;
             }
 
             if (e.VideoStatus == KurosukeBonjourService.Models.WebSocketServices.PlayVideoService.PlayVideoServiceStatus.Play)
             {
-                if (!isPlaying)
+                bool needToPlay = false;
+                lock (serialClientLock)
                 {
-                    await Play();
+                    if (!isPlaying)
+                    {
+                        isPlaying = true;
+                        SendSerialLoop();
+                        needToPlay = true;
+                    }
+                }
+                if (needToPlay)
+                {
+                    await coreDispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        mediaPlayer.MediaPlayer.Play();
+                    });
                 }
             }
             else
             {
                 isPlaying = false;
-                mediaPlayer.MediaPlayer.Pause();
+                await coreDispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    mediaPlayer.MediaPlayer.Pause();
+                });
             }
-        }
-
-        public async Task Play()
-        {
-            if (SelectedSerialDevice == null || client != null)
-            {
-                return;
-            }
-
-            client = await SerialClient.CreateFromId(SelectedSerialDevice.Id);
-
-            isPlaying = true;
-            SendSerialLoop();
-            mediaPlayer.MediaPlayer.Play();
         }
 
         private int width = 64;
         private int height = 8;
-        private int units = 2;
+        private int units = 4;
         private async void MediaPlayer_VideoFrameAvailable(MediaPlayer sender, object args)
         {
             CanvasDevice canvasDevice = CanvasDevice.GetSharedDevice();

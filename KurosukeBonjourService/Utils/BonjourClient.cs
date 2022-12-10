@@ -4,12 +4,16 @@ using KurosukeBonjourService.Models.BonjourEventArgs;
 using Makaretu.Dns;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using WebSocketSharp;
+using Windows.Networking;
+using Windows.Networking.Sockets;
+using Windows.Storage.Streams;
 
 namespace KurosukeBonjourService
 {
@@ -17,6 +21,8 @@ namespace KurosukeBonjourService
     {
         public QueryResponseItem Device { get; }
         private WebSocket webSocket;
+        private DatagramSocket udpSocket;
+        private HostName udpHostName;
         private IPAddress validAddress;
         public BonjourClient(QueryResponseItem device)
         {
@@ -36,7 +42,8 @@ namespace KurosukeBonjourService
             }
         }
 
-        public async Task Connect()
+        #region WebSocket
+        public async Task ConnectWebSocket()
         {
             // ignore if connected
             if (Status == ConnectionStatus.Connected ||
@@ -49,7 +56,7 @@ namespace KurosukeBonjourService
             try
             {
                 await findValidIP();
-                webSocket = new WebSocket($"ws://{validAddress}:{Device.Port}");
+                webSocket = new WebSocket($"ws://{validAddress}:{Device.Port}/play");
                 webSocket.Connect();
                 // update status
                 StatusMessage = "Success";
@@ -62,12 +69,14 @@ namespace KurosukeBonjourService
             }
         }
 
-        public void Disconnect()
+        public void DisconnectWebSocket()
         {
             webSocket?.Close();
+            StatusMessage = "Disconnected";
+            Status = ConnectionStatus.Disconnected;
         }
 
-        public void SendMessage<T>(T objectToSend)
+        public void SendWebSocketMessage<T>(T objectToSend)
         {
             if (Status != ConnectionStatus.Connected)
             {
@@ -77,7 +86,62 @@ namespace KurosukeBonjourService
             var jsonData = JsonSerializer.Serialize(objectToSend);
             webSocket.Send(jsonData);
         }
+        #endregion
 
+        #region UDPSocket (Datagram)
+        public async Task ConnectUDPSocket()
+        {
+            // ignore if connected
+            if (Status == ConnectionStatus.Connected ||
+                udpSocket != null)
+            {
+                return;
+            }
+
+            try
+            {
+                await findValidIP();
+                udpSocket = new DatagramSocket();
+                udpHostName = new HostName(validAddress.ToString());
+                //outputUdpStream = (await udpSocket.GetOutputStreamAsync(hostName, Device.Port.ToString())).AsStreamForWrite();
+
+                // update status
+                StatusMessage = "Success";
+                Status = ConnectionStatus.Connected;
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = ex.Message;
+                throw ex;
+            }
+        }
+
+        public void DisconnectUDPSocket()
+        {
+            //outputUdpStream?.Dispose();
+            udpSocket?.Dispose();
+            StatusMessage = "Disconnected";
+            Status = ConnectionStatus.Disconnected;
+        }
+
+        public async Task SendUDPMessage<T>(T objectToSend)
+        {
+            if (Status != ConnectionStatus.Connected)
+            {
+                throw new InvalidOperationException("UDPSocket not connected. Please make sure to connect before sending message.");
+            }
+
+            var jsonData = JsonSerializer.Serialize(objectToSend);
+            using (var outputUdpStream = (await udpSocket.GetOutputStreamAsync(udpHostName, Device.Port.ToString())).AsStreamForWrite())
+            {
+                using (var streamWriter = new StreamWriter(outputUdpStream))
+                {
+                    await streamWriter.WriteLineAsync(jsonData);
+                    await streamWriter.FlushAsync();
+                }
+            }
+        }
+        #endregion
 
         public event EventHandler<ConnectionStatusEventArgs> ConnectionStatusChanged;
         private ConnectionStatus _Status = ConnectionStatus.Disconnected;

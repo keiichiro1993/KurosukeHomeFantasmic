@@ -37,18 +37,32 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
                     return;
                 }
 
-                lock (client)
+
+                if (client.Status == ConnectionStatus.Connected)
                 {
-                    if (client.Status == ConnectionStatus.Connected)
+                    var videoPosition = CurrentPosition - videoItem?.StartTime;
+                    /*client.SendWebSocketMessage(new PlayVideoEventArgs
                     {
-                        var videoPosition = CurrentPosition - videoItem?.StartTime;
-                        client.SendMessage(new PlayVideoEventArgs
+                        VideoStatus = KurosukeBonjourService.Models.WebSocketServices.PlayVideoService.PlayVideoServiceStatus.Pause,
+                        VideoPath = videoItem?.RemoteVideoAsset.Info.Path,
+                        VideoTime = videoPosition ?? TimeSpan.Zero
+                    });
+                    client.DisconnectWebSocket();*/
+
+                    await client.SendUDPMessage(new PlayVideoEventArgs
+                    {
+                        VideoStatus = KurosukeBonjourService.Models.WebSocketServices.PlayVideoService.PlayVideoServiceStatus.Pause,
+                        VideoPath = videoItem?.RemoteVideoAsset.Info.Path,
+                        VideoTime = videoPosition ?? TimeSpan.Zero,
+                        Timestamp = DateTime.UtcNow
+                    });
+
+                    lock (client)
+                    {
+                        if (client.Status == ConnectionStatus.Connected)
                         {
-                            VideoStatus = KurosukeBonjourService.Models.WebSocketServices.PlayVideoService.PlayVideoServiceStatus.Pause,
-                            VideoName = videoItem?.RemoteVideoAsset.Info.Name,
-                            VideoTime = videoPosition ?? TimeSpan.Zero
-                        });
-                        client.Disconnect();
+                            client.DisconnectUDPSocket();
+                        }
                     }
                 }
             }
@@ -80,11 +94,14 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
 
                 if (needInit)
                 {
-                    await client.Connect();
+                    //await client.ConnectWebSocket();
+                    await client.ConnectUDPSocket();
                 }
             }
         }
 
+        DateTime lastSent = DateTime.Now;
+        TimeSpan threashold = TimeSpan.FromMilliseconds(500);
         public override async void UpdatePosition()
         {
             // Skip if null or disconnected
@@ -113,15 +130,32 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
                 DebugHelper.WriteDebugLog($"Remote Video: Playing '{videoItem.RemoteVideoAsset.Info.Name}({videoItem.ItemId})' on HOST '{videoItem.RemoteVideoAsset.DomainName}'");
             }
 
+            if (DateTime.Now - lastSent < threashold)
+            {
+                // skip if more frequent than threashold
+                return;
+            }
+
             try
             {
+                lastSent = DateTime.Now;
                 var videoPosition = CurrentPosition - videoItem.StartTime;
-                client.SendMessage(new PlayVideoEventArgs
+                DebugHelper.WriteDebugLog($"Sending position: {videoPosition}");
+                /*client.SendWebSocketMessage(new PlayVideoEventArgs
                 {
-                    VideoName = videoItem.RemoteVideoAsset.Info.Name,
+                    VideoPath = videoItem.RemoteVideoAsset.Info.Path,
                     VideoStatus = KurosukeBonjourService.Models.WebSocketServices.PlayVideoService.PlayVideoServiceStatus.Play,
-                    VideoTime = videoPosition
+                    VideoTime = videoPosition,
+                    Timestamp = DateTime.UtcNow
+                });*/
+                await client.SendUDPMessage(new PlayVideoEventArgs
+                {
+                    VideoPath = videoItem.RemoteVideoAsset.Info.Path,
+                    VideoStatus = KurosukeBonjourService.Models.WebSocketServices.PlayVideoService.PlayVideoServiceStatus.Play,
+                    VideoTime = videoPosition,
+                    Timestamp = DateTime.UtcNow
                 });
+                DebugHelper.WriteDebugLog($"Sent position: {videoPosition}");
             }
             catch (OperationCanceledException)
             {
@@ -132,7 +166,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Players
             catch (Exception ex)
             {
                 OnMemoryCache.GlobalViewModel.GlobalPlaybackState = MediaPlaybackState.Paused;
-                await DebugHelper.ShowErrorDialog(ex, "Error in Hue Player");
+                await DebugHelper.ShowErrorDialog(ex, "Error in Remote Video Player");
             }
         }
     }

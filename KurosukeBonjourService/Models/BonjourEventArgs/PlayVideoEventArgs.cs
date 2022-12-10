@@ -11,6 +11,11 @@ namespace KurosukeBonjourService.Models.BonjourEventArgs
     {
         public TimeSpan VideoTime { get; set; }
         public PlayVideoServiceStatus VideoStatus { get; set; }
-        public string VideoName { get; set; }
+        public string VideoPath { get; set; }
+        /// <summary>
+        /// The timestamp of the data send.
+        /// For determining the invalid ordered data receive.
+        /// </summary>
+        public DateTime Timestamp { get; set; }
     }
 }

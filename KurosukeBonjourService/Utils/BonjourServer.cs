@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebSocketSharp.Server;
+using Windows.Networking.Sockets;
 
 namespace KurosukeBonjourService
 {
@@ -13,6 +14,7 @@ namespace KurosukeBonjourService
     {
         private MulticastService mdns;
         public HttpServer Server { get; set; }
+        public DatagramSocket UDPServer { get; set; }
 
         private string instanceName;
         private string serviceName;
@@ -24,9 +26,10 @@ namespace KurosukeBonjourService
             this.serviceName = serviceName;
             this.port = port;
             Server = new HttpServer(port);
+            UDPServer = new DatagramSocket();
         }
 
-        public void StartServer()
+        public void StartTCPServer()
         {
             if (Server.WebSocketServices.Count == 0)
             {
@@ -38,6 +41,12 @@ namespace KurosukeBonjourService
 
             // enable service discovery
             startBonjourServer(instanceName, serviceName, port);
+        }
+
+        public async Task StartUDPServer()
+        {
+            // open UDP port
+            await UDPServer.BindServiceNameAsync(port.ToString());
         }
 
         private void startBonjourServer(string instanceName, string serviceName, ushort port)

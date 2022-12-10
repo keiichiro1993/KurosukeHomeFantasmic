@@ -13,13 +13,14 @@ using System.IO;
 using System.Text.Encodings.Web;
 using KurosukeBonjourService.Models.WebSocketServices;
 using KurosukeBonjourService.Models.BonjourEventArgs;
+using System.Text.Json.Serialization;
 
 namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
 {
     internal static class BonjourHelper
     {
         public static event EventHandler<PlayVideoEventArgs> PlayVideoRequested;
-        public static void StartServer()
+        public static async Task StartServer()
         {
             // create server
             var hostName = NetworkInformation.GetHostNames().FirstOrDefault(name => name.Type == HostNameType.DomainName);
@@ -39,7 +40,31 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
             });
 
             // start server
-            server.StartServer();
+            server.StartTCPServer();
+
+            // start UDP server
+            server.UDPServer.MessageReceived += UDPServer_MessageReceived;
+            await server.StartUDPServer();
+        }
+
+        private static async void UDPServer_MessageReceived(Windows.Networking.Sockets.DatagramSocket sender, Windows.Networking.Sockets.DatagramSocketMessageReceivedEventArgs args)
+        {
+            PlayVideoEventArgs playVideoData;
+            using (var dataStream = args.GetDataStream()) 
+            {
+                playVideoData = await JsonSerializer.DeserializeAsync<PlayVideoEventArgs>(dataStream.AsStreamForRead());
+            }
+
+            if (playVideoData == null)
+            {
+                // skip if null
+                return;
+            }
+
+            if (PlayVideoRequested != null)
+            {
+                PlayVideoRequested(sender, playVideoData);
+            }
         }
 
         private static void VideoService_PlayVideoRequested(object sender, PlayVideoEventArgs e)

@@ -1,4 +1,6 @@
-﻿using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace;
+﻿using KurosukeHomeFantasmicUWP.Models.Timeline;
+using KurosukeHomeFantasmicUWP.Utils;
+using KurosukeHomeFantasmicUWP.ViewModels.ProjectWorkspace;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -37,9 +40,33 @@ namespace KurosukeHomeFantasmicUWP.Views.ProjectWorkspace.AssetPages
             ((Button)sender).IsEnabled = true;
         }
 
-        private void RemoteVideoAssetListItem_DeleteButtonClicked(object sender, Utils.UIHelpers.ItemDeleteButtonClickedEventArgs<Models.RemoteVideoAsset> args)
+        private async void RemoteVideoAssetListItem_DeleteButtonClicked(object sender, Utils.UIHelpers.ItemDeleteButtonClickedEventArgs<Models.RemoteVideoAsset> args)
         {
+            var dialog = new MessageDialog($"Are you sure to delete Remote Video {args.DeleteItem.Info.Name} (Host: {args.DeleteItem.HostName})?", "Delete Remote Video");
+            dialog.Commands.Add(new UICommand("Delete"));
+            dialog.Commands.Add(new UICommand("Cancel"));
+            dialog.DefaultCommandIndex = 0;
+            dialog.CancelCommandIndex = 1;
 
+            var result = await dialog.ShowAsync();
+
+            if (result.Label == "Delete")
+            {
+                foreach (var scene in OnMemoryCache.Scenes)
+                {
+                    var remoteVideoTimelines = from timeline in scene.Timelines
+                                       where timeline.TimelineType == Timeline.TimelineTypes.RemoteVideo
+                                       select timeline;
+                    foreach (var timeline in remoteVideoTimelines)
+                    {
+                        var items = (from TimelineRemoteVideoItem item in timeline.TimelineItems
+                                     where item.RemoteVideoAsset.DomainName == args.DeleteItem.DomainName && item.ItemId == args.DeleteItem.Id
+                                     select item).ToList();
+                        foreach (var item in items) { timeline.TimelineItems.Remove(item); }
+                    }
+                }
+                OnMemoryCache.RemoteVideoAssets.Remove(args.DeleteItem);
+            }
         }
     }
 }

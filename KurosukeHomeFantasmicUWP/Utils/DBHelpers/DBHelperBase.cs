@@ -9,7 +9,7 @@ using Windows.Storage;
 
 namespace KurosukeHomeFantasmicUWP.Utils.DBHelpers
 {
-    public class DBHelperBase
+    public abstract class DBHelperBase
     {
         private protected JsonSerializerOptions serializerOptions = new JsonSerializerOptions()
         {

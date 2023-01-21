@@ -57,6 +57,7 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
             }
             for (var i = 0; i < bytelist.Count; i++)
             {
+                if (bytelist[i] < 0x20) { bytelist[i] = 0x00; }
                 if (bytelist[i] == 0x30) { bytelist[i] = 0x31; }
             }
 

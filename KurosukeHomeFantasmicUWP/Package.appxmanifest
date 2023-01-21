@@ -44,9 +44,10 @@
 	</Applications>
 
 	<Capabilities>
-		<Capability Name="internetClient" />
 		<uap:Capability Name="videosLibrary"/>
 		<uap:Capability Name="documentsLibrary"/>
+		<Capability Name="internetClient"/>
 		<Capability Name="privateNetworkClientServer"/>
+		<Capability Name="internetClientServer"/>
 	</Capabilities>
 </Package>

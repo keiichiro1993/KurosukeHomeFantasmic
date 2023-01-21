@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using WebSocketSharp;
 using Windows.Networking;
 using Windows.Networking.Sockets;
-using Windows.Storage.Streams;
 
 namespace KurosukeBonjourService
 {
@@ -33,7 +32,7 @@ namespace KurosukeBonjourService
         {
             var query = new Message();
             query.Questions.Add(new Question { Name = service, Type = DnsType.ANY });
-            var cancellation = new CancellationTokenSource(2000);
+            var cancellation = new CancellationTokenSource(5000);
 
             using (var mdns = new MulticastService())
             {

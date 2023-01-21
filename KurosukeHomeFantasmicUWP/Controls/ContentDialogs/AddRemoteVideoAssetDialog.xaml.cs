@@ -103,7 +103,10 @@ namespace KurosukeHomeFantasmicUWP.Controls.ContentDialogs
             set
             {
                 _SelectedDevice = value;
-                RetrieveVideoList();
+                if (_SelectedDevice != null)
+                {
+                    RetrieveVideoList();
+                }
             }
         }
 

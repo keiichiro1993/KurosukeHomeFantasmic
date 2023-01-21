@@ -119,6 +119,7 @@ namespace KurosukeBonjourService
         {
             //outputUdpStream?.Dispose();
             udpSocket?.Dispose();
+            udpSocket = null;
             StatusMessage = "Disconnected";
             Status = ConnectionStatus.Disconnected;
         }
@@ -130,6 +131,19 @@ namespace KurosukeBonjourService
                 throw new InvalidOperationException("UDPSocket not connected. Please make sure to connect before sending message.");
             }
 
+            try
+            {
+                await SendUDPMessageInternal(objectToSend);
+            }
+            catch (ObjectDisposedException)
+            {
+                // Ignore as expected
+                DebugHelper.WriteDebugLog("UDP object disposed.");
+            }
+        }
+
+        private async Task SendUDPMessageInternal<T>(T objectToSend)
+        {
             var jsonData = JsonSerializer.Serialize(objectToSend);
             using (var outputUdpStream = (await udpSocket.GetOutputStreamAsync(udpHostName, Device.Port.ToString())).AsStreamForWrite())
             {

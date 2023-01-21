@@ -133,7 +133,7 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
             }
             lastTimestamp = e.Timestamp;
 
-            DebugHelper.WriteDebugLog($"Data recieve... video position:{e.VideoTime} timestamp:{e.Timestamp}");
+            DebugHelper.WriteDebugLog($"Data recieve... video position:{e.VideoTime} timestamp:{e.Timestamp} video status:{e.VideoStatus}");
 
             // set path if not equal
             if (!string.IsNullOrEmpty(e.VideoPath) && videoFilePath != e.VideoPath)

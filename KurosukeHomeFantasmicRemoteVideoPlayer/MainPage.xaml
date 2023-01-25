@@ -30,5 +30,11 @@
         <MediaPlayerElement Grid.Column="1" x:Name="mediaPlayer"
                             Source="{x:Bind ViewModel.VideoMediaSource, Mode=OneWay}"/>
         <Image Grid.Column="1" Source="{x:Bind ViewModel.VideoBitmap, Mode=OneWay}"/>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Button HorizontalAlignment="Right" Click="SettingsButton_Click">
+                <SymbolIcon Symbol="Setting"/>
+            </Button>
+        </Grid>
     </Grid>
 </Page>

@@ -1,0 +1,81 @@
+﻿<Page
+    x:Class="KurosukeHomeFantasmicRemoteVideoPlayer.Views.Settings.PanelLayout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:KurosukeHomeFantasmicRemoteVideoPlayer.Views.Settings"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="./SettingsStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid MaxWidth="1000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="AUTO"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Style="{StaticResource SettingsPageTitleTextBlockStyle}">LED Unit Design and Placement</TextBlock>
+        <ScrollViewer Grid.Row="1" Margin="10" VerticalScrollMode="Auto" HorizontalScrollMode="Disabled">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Style="{StaticResource SettingsSectionTitleTextBlockStyle}">LED Panel Size</TextBlock>
+                    <Grid Style="{StaticResource SettingsItemGridStyle}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="AUTO"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="AUTO"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon Grid.Column="0" Margin="20,0" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE76F;"/>
+                        <TextBlock Grid.Column="1" Style="{StaticResource SettingsItemTextBlockStyle}">Panel Pixel Width</TextBlock>
+                        <TextBox Grid.Column="2" Margin="20,20" Text="{x:Bind ViewModel.UnitPixelWidth, Mode=TwoWay}"/>
+                    </Grid>
+                    <Grid Style="{StaticResource SettingsItemGridStyle}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="AUTO"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="AUTO"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon Grid.Column="0" Margin="20,0" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE784;"/>
+                        <TextBlock Grid.Column="1" Style="{StaticResource SettingsItemTextBlockStyle}">Panel Pixel Height</TextBlock>
+                        <TextBox Grid.Column="2" Margin="20,20" Text="{x:Bind ViewModel.UnitPixelHeight, Mode=TwoWay}"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Style="{StaticResource SettingsSectionTitleTextBlockStyle}">LED Panel Unit Size</TextBlock>
+                    <Grid Style="{StaticResource SettingsItemGridStyle}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="AUTO"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="AUTO"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon Grid.Column="0" Margin="20,0" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE76F;"/>
+                        <StackPanel Grid.Column="1" Style="{StaticResource SettingsItemNameStackpanelStyle}">
+                            <TextBlock Style="{StaticResource SettingsItemTextBlockStyle}">Horizontal Panel Count</TextBlock>
+                            <TextBlock>The number of the panels horizontally placed in one Unit. (Controlled by a single ESP32 module.)</TextBlock>
+                        </StackPanel>
+                        <TextBox Grid.Column="2" Margin="20,20" Text="{x:Bind ViewModel.UnitHorizontalPanelCount, Mode=TwoWay}"/>
+                    </Grid>
+                    <Grid Style="{StaticResource SettingsItemGridStyle}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="AUTO"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="AUTO"/>
+                        </Grid.ColumnDefinitions>
+                        <FontIcon Grid.Column="0" Margin="20,0" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE784;"/>
+                        <StackPanel Grid.Column="1" Style="{StaticResource SettingsItemNameStackpanelStyle}">
+                            <TextBlock Style="{StaticResource SettingsItemTextBlockStyle}">Vertical Panel Count</TextBlock>
+                            <TextBlock>The number of the panels vertically placed in one Unit. (Controlled by a single ESP32 module.)</TextBlock>
+                        </StackPanel>
+                        <TextBox Grid.Column="2" Margin="20,20" Text="{x:Bind ViewModel.UnitVerticalPanelCount, Mode=TwoWay}"/>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

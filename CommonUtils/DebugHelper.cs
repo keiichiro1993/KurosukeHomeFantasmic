@@ -38,7 +38,9 @@ namespace CommonUtils
 
         public static void WriteDebugLog(string message)
         {
+#if DEBUG
             Debug.WriteLine(logHeader + message);
+#endif
         }
     }
 }

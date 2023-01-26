@@ -1,19 +1,19 @@
-﻿using System;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicRemoteVideoPlayer.Utils;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
+using Windows.Devices.Enumeration;
+using Windows.Devices.SerialCommunication;
 
 namespace KurosukeHomeFantasmicRemoteVideoPlayer.Models
 {
     internal class LEDPanelUnitSet
     {
-        // UnitPixelWidth/Height should be global
-        public int UnitPixelWidth { get; set; }
-        public int UnitPixelHeight { get; set; }
-
-        public int HorizontalUnitCount { get; set; }
-        public int VerticalUnitCount { get; set; }
+        // should be global
+        public int UnitPixelWidth { get { return SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitPixelWidth); } }
+        public int UnitPixelHeight { get { return SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitPixelHeight); } }
+        public int HorizontalUnitCount { get { return SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitHorizontalPanelCount); } }
+        public int VerticalUnitCount { get { return SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitVerticalPanelCount); } }
 
         /// <summary>
         /// Serial Device ID of ESP32 board
@@ -29,5 +29,8 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Models
         /// (Because the client reads/sends data in that order and I don't wanna change it.)
         /// </summary>
         public LEDPanelUnitSetCoordinate Coordinate { get; set; }
+
+        [JsonIgnore]
+        public DeviceInformation SerialDeviceInformation { get; set; }
     }
 }

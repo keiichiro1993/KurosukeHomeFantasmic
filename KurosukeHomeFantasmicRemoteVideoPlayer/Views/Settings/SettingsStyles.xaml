@@ -15,6 +15,15 @@
         <Setter Property="Height" Value="70"/>
         <Setter Property="Background" Value="{StaticResource ResourceKey=SkyBlueAcrylicBrush}"/>
     </Style>
+    <Style TargetType="Grid" x:Key="SettingsListGridStyle">
+        <Setter Property="CornerRadius" Value="3"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Margin" Value="0,0,0,10"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Background" Value="{StaticResource ResourceKey=ButtonDisabledBackgroundThemeBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ResourceKey=SystemControlTransientBorderBrush}"/>
+    </Style>
     <Style TargetType="StackPanel" x:Key="SettingsItemNameStackpanelStyle">
         <Setter Property="Orientation" Value="Vertical"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -23,5 +32,8 @@
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
-
+    <Style TargetType="FontIcon" x:Key="SettingsItemFontIconStyle">
+        <Setter Property="Margin" Value="20,0"/>
+        <Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}"/>
+    </Style>
 </ResourceDictionary>

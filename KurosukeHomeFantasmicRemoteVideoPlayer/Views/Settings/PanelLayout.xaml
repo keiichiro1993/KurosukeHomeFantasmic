@@ -5,6 +5,7 @@
     xmlns:local="using:KurosukeHomeFantasmicRemoteVideoPlayer.Views.Settings"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:unitmodel="using:KurosukeHomeFantasmicRemoteVideoPlayer.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
@@ -31,7 +32,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="AUTO"/>
                         </Grid.ColumnDefinitions>
-                        <FontIcon Grid.Column="0" Margin="20,0" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE76F;"/>
+                        <FontIcon Grid.Column="0" Style="{StaticResource SettingsItemFontIconStyle}" Glyph="&#xE76F;"/>
                         <TextBlock Grid.Column="1" Style="{StaticResource SettingsItemTextBlockStyle}">Panel Pixel Width</TextBlock>
                         <TextBox Grid.Column="2" Margin="20,20" Text="{x:Bind ViewModel.UnitPixelWidth, Mode=TwoWay}"/>
                     </Grid>
@@ -41,7 +42,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="AUTO"/>
                         </Grid.ColumnDefinitions>
-                        <FontIcon Grid.Column="0" Margin="20,0" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE784;"/>
+                        <FontIcon Grid.Column="0" Style="{StaticResource SettingsItemFontIconStyle}" Glyph="&#xE784;"/>
                         <TextBlock Grid.Column="1" Style="{StaticResource SettingsItemTextBlockStyle}">Panel Pixel Height</TextBlock>
                         <TextBox Grid.Column="2" Margin="20,20" Text="{x:Bind ViewModel.UnitPixelHeight, Mode=TwoWay}"/>
                     </Grid>
@@ -54,7 +55,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="AUTO"/>
                         </Grid.ColumnDefinitions>
-                        <FontIcon Grid.Column="0" Margin="20,0" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE76F;"/>
+                        <FontIcon Grid.Column="0" Style="{StaticResource SettingsItemFontIconStyle}" Glyph="&#xE76F;"/>
                         <StackPanel Grid.Column="1" Style="{StaticResource SettingsItemNameStackpanelStyle}">
                             <TextBlock Style="{StaticResource SettingsItemTextBlockStyle}">Horizontal Panel Count</TextBlock>
                             <TextBlock>The number of the panels horizontally placed in one Unit. (Controlled by a single ESP32 module.)</TextBlock>
@@ -67,12 +68,45 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="AUTO"/>
                         </Grid.ColumnDefinitions>
-                        <FontIcon Grid.Column="0" Margin="20,0" FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE784;"/>
+                        <FontIcon Grid.Column="0" Style="{StaticResource SettingsItemFontIconStyle}" Glyph="&#xE784;"/>
                         <StackPanel Grid.Column="1" Style="{StaticResource SettingsItemNameStackpanelStyle}">
                             <TextBlock Style="{StaticResource SettingsItemTextBlockStyle}">Vertical Panel Count</TextBlock>
                             <TextBlock>The number of the panels vertically placed in one Unit. (Controlled by a single ESP32 module.)</TextBlock>
                         </StackPanel>
                         <TextBox Grid.Column="2" Margin="20,20" Text="{x:Bind ViewModel.UnitVerticalPanelCount, Mode=TwoWay}"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Style="{StaticResource SettingsSectionTitleTextBlockStyle}">Unit Placement</TextBlock>
+                    <Grid Style="{StaticResource SettingsListGridStyle}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="AUTO"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                            <Button>
+                                <StackPanel Orientation="Horizontal">
+                                    <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE948;"/>
+                                    <TextBlock>Add Unit</TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        <ListView Grid.Row="1">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="unitmodel:LEDPanelUnitSet">
+                                    <Grid Height="300" Width="200">
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Text="{x:Bind SerialDeviceInformation.Name}"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock>(</TextBlock>
+                                                <TextBlock Text="{x:Bind SerialDeviceInformation.Id}"/>
+                                                <TextBlock>)</TextBlock>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
                 </StackPanel>
             </StackPanel>

@@ -37,7 +37,7 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Views.Settings.PanelLayout));
+            Frame.Navigate(typeof(Views.Settings.SettingsParentPage));
         }
     }
 }

@@ -9,12 +9,6 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Models
 {
     internal class LEDPanelUnitSet
     {
-        // should be global
-        public int UnitPixelWidth { get { return SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitPixelWidth); } }
-        public int UnitPixelHeight { get { return SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitPixelHeight); } }
-        public int HorizontalUnitCount { get { return SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitHorizontalPanelCount); } }
-        public int VerticalUnitCount { get { return SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitVerticalPanelCount); } }
-
         /// <summary>
         /// Serial Device ID of ESP32 board
         /// </summary>
@@ -32,5 +26,15 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Models
 
         [JsonIgnore]
         public DeviceInformation SerialDeviceInformation { get; set; }
+
+        [JsonIgnore]
+        public int UnitPixelWidth { get { return SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitPixelWidth); } }
+        [JsonIgnore]
+        public int UnitPixelHeight { get { return SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitPixelHeight); } }
+        [JsonIgnore]
+        public int HorizontalUnitCount { get { return SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitHorizontalPanelCount); } }
+        [JsonIgnore]
+        public int VerticalUnitCount { get { return SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitVerticalPanelCount); } }
+
     }
 }

@@ -238,8 +238,8 @@
     <Compile Include="Utils\DBHelpers\HueBridgeCacheHelper.cs" />
     <Compile Include="Utils\DBHelpers\SceneAssetHelper.cs" />
     <Compile Include="Utils\DBHelpers\StorageFolderExtention.cs" />
-    <Compile Include="Utils\DBHelpers\TimeSpanJsonConverter.cs" />
     <Compile Include="Utils\DBHelpers\HueAssetHelper.cs" />
+    <Compile Include="Utils\DBHelpers\TimeSpanJsonConverter.cs" />
     <Compile Include="Utils\DBHelpers\VideoAssetHelper.cs" />
     <Compile Include="Utils\RequestHelpers\BonjourHelper.cs" />
     <Compile Include="Utils\RequestHelpers\HueRequestHelper.cs" />

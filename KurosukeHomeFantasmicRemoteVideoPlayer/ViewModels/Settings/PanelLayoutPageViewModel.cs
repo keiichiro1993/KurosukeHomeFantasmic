@@ -13,15 +13,9 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels.Settings
 {
     internal class PanelLayoutPageViewModel : ViewModelBase
     {
-        private ObservableCollection<LEDPanelUnitSet> _LEDPanelUnitSets;
         public ObservableCollection<LEDPanelUnitSet> LEDPanelUnitSets
         {
-            get { return _LEDPanelUnitSets; }
-            set
-            {
-                _LEDPanelUnitSets = value;
-                RaisePropertyChanged();
-            }
+            get { return AppGlobalVariables.LEDPanelUnitSets; }
         }
 
         public string UnitPixelWidth

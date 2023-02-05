@@ -1,4 +1,5 @@
-﻿using KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels.Settings;
+﻿using KurosukeHomeFantasmicRemoteVideoPlayer.Controls.ContentDialogs;
+using KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,6 +28,12 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Views.Settings
         public PanelLayout()
         {
             this.InitializeComponent();
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new AddUnitDialog();
+            await dialog.ShowAsync();
         }
     }
 }

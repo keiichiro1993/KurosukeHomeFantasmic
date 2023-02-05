@@ -122,6 +122,9 @@
     <Compile Include="Controls\ContentDialogs\AddUnitDialog.xaml.cs">
       <DependentUpon>AddUnitDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ListItems\PanelLayoutListItem.xaml.cs">
+      <DependentUpon>PanelLayoutListItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\AppGlobalVariables.cs" />
     <Compile Include="Utils\BonjourHelper.cs" />
+    <Compile Include="Utils\DBHelpers\DBHelperBase.cs" />
+    <Compile Include="Utils\DBHelpers\PanelLayoutHelper.cs" />
+    <Compile Include="Utils\DBHelpers\StorageFolderExtention.cs" />
+    <Compile Include="Utils\DBHelpers\TimeSpanJsonConverter.cs" />
     <Compile Include="Utils\SerialClient.cs" />
     <Compile Include="Utils\SettingNameMappings.cs" />
     <Compile Include="Utils\VideoFileHelper.cs" />
@@ -137,6 +144,12 @@
     <Compile Include="ViewModels\Settings\PanelLayoutPageViewModel.cs" />
     <Compile Include="Views\Settings\PanelLayout.xaml.cs">
       <DependentUpon>PanelLayout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsParentPage.xaml.cs">
+      <DependentUpon>SettingsParentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SplashScreen.xaml.cs">
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +176,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ListItems\PanelLayoutListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -171,7 +188,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Settings\SettingsParentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Settings\SettingsStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SplashScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -5,7 +5,7 @@
     xmlns:local="using:KurosukeHomeFantasmicRemoteVideoPlayer.Views.Settings"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:unitmodel="using:KurosukeHomeFantasmicRemoteVideoPlayer.Models"
+    xmlns:controls="using:KurosukeHomeFantasmicRemoteVideoPlayer.Controls.ListItems"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
@@ -84,26 +84,17 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal">
-                            <Button>
+                            <Button Click="Button_Click">
                                 <StackPanel Orientation="Horizontal">
                                     <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xE948;"/>
                                     <TextBlock>Add Unit</TextBlock>
                                 </StackPanel>
                             </Button>
                         </StackPanel>
-                        <ListView Grid.Row="1">
+                        <ListView Grid.Row="1" ItemsSource="{x:Bind ViewModel.LEDPanelUnitSets, Mode=TwoWay}">
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="unitmodel:LEDPanelUnitSet">
-                                    <Grid Height="300" Width="200">
-                                        <StackPanel Orientation="Vertical">
-                                            <TextBlock Text="{x:Bind SerialDeviceInformation.Name}"/>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock>(</TextBlock>
-                                                <TextBlock Text="{x:Bind SerialDeviceInformation.Id}"/>
-                                                <TextBlock>)</TextBlock>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </Grid>
+                                <DataTemplate>
+                                    <controls:PanelLayoutListItem LEDPanelUnitSet="{Binding}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>

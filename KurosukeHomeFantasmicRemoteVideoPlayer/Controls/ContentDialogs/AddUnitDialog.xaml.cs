@@ -38,6 +38,7 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Controls.ContentDialogs
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            ViewModel.AddLEDPanelUnitSet();
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -95,6 +96,29 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Controls.ContentDialogs
                 await DebugHelper.ShowErrorDialog(ex, "Failed to load serial devices.");
             }
             IsLoading = false;
+        }
+
+        public async void AddLEDPanelUnitSet()
+        {
+            var width = SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitPixelWidth);
+            var height = SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitPixelHeight);
+            AppGlobalVariables.LEDPanelUnitSets.Add(new Models.LEDPanelUnitSet
+            {
+                SerialDeviceId = SelectedSerialDevice.Id,
+                SerialDeviceInformation = SelectedSerialDevice,
+                Coordinate = new Models.LEDPanelUnitSetCoordinate(0, AppGlobalVariables.LEDPanelUnitSets.Count + 1),
+                EnabledUnitMatrix = Enumerable.Repeat(Enumerable.Repeat(true, width).ToList(), height).ToList()
+            });
+
+            try 
+            {
+                var ledUnitSetsHelper = new Utils.DBHelpers.PanelLayoutHelper();
+                await ledUnitSetsHelper.SaveLEDPanelUnitSets(AppGlobalVariables.LEDPanelUnitSets.ToList());
+            }
+            catch (Exception ex)
+            {
+                await DebugHelper.ShowErrorDialog(ex, "Failed to save panel layout.");
+            }
         }
     }
 }

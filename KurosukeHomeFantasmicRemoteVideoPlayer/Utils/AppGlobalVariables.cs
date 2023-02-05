@@ -15,6 +15,5 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
         public static BonjourServer BonjourServer { get; set; }
         public static List<VideoInfo> VideoList { get; set; }
         public static ObservableCollection<LEDPanelUnitSet> LEDPanelUnitSets { get; set; } 
-        //TODO:初期化+AddUnitDialogで追加+PanelLayoutページのViewModelで参照
     }
 }

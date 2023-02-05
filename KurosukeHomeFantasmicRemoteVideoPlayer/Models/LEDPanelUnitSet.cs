@@ -7,7 +7,7 @@ using Windows.Devices.SerialCommunication;
 
 namespace KurosukeHomeFantasmicRemoteVideoPlayer.Models
 {
-    internal class LEDPanelUnitSet
+    public class LEDPanelUnitSet
     {
         /// <summary>
         /// Serial Device ID of ESP32 board

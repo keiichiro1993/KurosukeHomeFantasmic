@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KurosukeHomeFantasmicRemoteVideoPlayer.Models
 {
-    internal class LEDPanelUnitSetCoordinate
+    public class LEDPanelUnitSetCoordinate
     {
         public LEDPanelUnitSetCoordinate() { }
         public LEDPanelUnitSetCoordinate(int x, int y)

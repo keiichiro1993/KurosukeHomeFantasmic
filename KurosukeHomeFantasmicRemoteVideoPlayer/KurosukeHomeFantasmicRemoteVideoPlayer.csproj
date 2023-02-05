@@ -137,6 +137,7 @@
     <Compile Include="Utils\DBHelpers\PanelLayoutHelper.cs" />
     <Compile Include="Utils\DBHelpers\StorageFolderExtention.cs" />
     <Compile Include="Utils\DBHelpers\TimeSpanJsonConverter.cs" />
+    <Compile Include="Utils\EventArgs.cs" />
     <Compile Include="Utils\SerialClient.cs" />
     <Compile Include="Utils\SettingNameMappings.cs" />
     <Compile Include="Utils\VideoFileHelper.cs" />

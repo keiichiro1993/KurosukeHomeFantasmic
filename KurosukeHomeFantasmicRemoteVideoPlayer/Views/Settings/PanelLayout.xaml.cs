@@ -1,4 +1,7 @@
-﻿using KurosukeHomeFantasmicRemoteVideoPlayer.Controls.ContentDialogs;
+﻿using CommonUtils;
+using KurosukeHomeFantasmicRemoteVideoPlayer.Controls.ContentDialogs;
+using KurosukeHomeFantasmicRemoteVideoPlayer.Utils;
+using KurosukeHomeFantasmicRemoteVideoPlayer.Utils.DBHelpers;
 using KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels.Settings;
 using System;
 using System.Collections.Generic;
@@ -34,6 +37,19 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Views.Settings
         {
             var dialog = new AddUnitDialog();
             await dialog.ShowAsync();
+        }
+
+        private async void PanelLayoutListItem_DeleteButtonClicked(object sender, ItemDeleteButtonClickedEventArgs<Models.LEDPanelUnitSet> args)
+        {
+            try
+            {
+                AppGlobalVariables.LEDPanelUnitSets.Remove(args.DeleteItem);
+                var helper = new PanelLayoutHelper();
+                await helper.SaveLEDPanelUnitSets(AppGlobalVariables.LEDPanelUnitSets.ToList());
+            }
+            catch(Exception ex) {
+                await DebugHelper.ShowErrorDialog(ex, "Failed to remove or save panel unit data.");
+            }
         }
     }
 }

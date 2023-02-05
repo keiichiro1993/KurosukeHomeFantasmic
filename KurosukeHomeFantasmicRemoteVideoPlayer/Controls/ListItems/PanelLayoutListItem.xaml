@@ -5,16 +5,22 @@
     xmlns:local="using:KurosukeHomeFantasmicRemoteVideoPlayer.Controls.ListItems"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid Height="300" Width="400">
+    <Grid>
+        <Grid.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem Text="Delete" Click="MenuFlyoutItem_Click" />
+            </MenuFlyout>
+        </Grid.ContextFlyout>
         <StackPanel Orientation="Vertical">
-            <TextBlock Text="{x:Bind LEDPanelUnitSet.SerialDeviceInformation.Name, Mode=OneTime}"/>
+            <TextBlock Text="{x:Bind LEDPanelUnitSet.SerialDeviceInformation?.Name, Mode=OneWay}"/>
             <StackPanel Orientation="Horizontal">
                 <TextBlock>(</TextBlock>
-                <TextBlock Text="{x:Bind LEDPanelUnitSet.SerialDeviceId, Mode=OneTime}"/>
+                <TextBlock Text="{x:Bind LEDPanelUnitSet.SerialDeviceId, Mode=OneWay}"/>
                 <TextBlock>)</TextBlock>
             </StackPanel>
         </StackPanel>

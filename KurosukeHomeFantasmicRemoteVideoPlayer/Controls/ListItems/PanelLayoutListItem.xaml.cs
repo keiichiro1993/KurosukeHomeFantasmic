@@ -1,4 +1,5 @@
 ﻿using KurosukeHomeFantasmicRemoteVideoPlayer.Models;
+using KurosukeHomeFantasmicRemoteVideoPlayer.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,18 +26,29 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Controls.ListItems
             this.InitializeComponent();
         }
 
-        internal LEDPanelUnitSet LEDPanelUnitSet
+        public LEDPanelUnitSet LEDPanelUnitSet
         {
             get => (LEDPanelUnitSet)GetValue(LEDPanelUnitSetProperty);
             set => SetValue(LEDPanelUnitSetProperty, value);
         }
 
-        internal static readonly DependencyProperty LEDPanelUnitSetProperty =
+        public static readonly DependencyProperty LEDPanelUnitSetProperty =
           DependencyProperty.Register(nameof(LEDPanelUnitSet), typeof(LEDPanelUnitSet), typeof(PanelLayoutListItem),
-              new PropertyMetadata(null, ActionPropertyChanged));
+              new PropertyMetadata(null, LEDPanelUnitSetPropertyChanged));
 
-        private static void ActionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void LEDPanelUnitSetPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+        }
+
+        public delegate void LEDPanelUnitSetDeleteButtonClickedEventHandler(object sender, ItemDeleteButtonClickedEventArgs<LEDPanelUnitSet> args);
+        public event LEDPanelUnitSetDeleteButtonClickedEventHandler DeleteButtonClicked;
+
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (DeleteButtonClicked != null)
+            {
+                DeleteButtonClicked(this, new ItemDeleteButtonClickedEventArgs<LEDPanelUnitSet>(LEDPanelUnitSet));
+            }
         }
     }
 }

@@ -47,6 +47,7 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Views.Settings
         {
             var navView = (Microsoft.UI.Xaml.Controls.NavigationView)sender;
             navView.SelectedItem = navView.MenuItems.First();
+            NavView_Navigate("PanelLayout", null);
         }
 
         private void NavigationView_BackRequested(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs args)

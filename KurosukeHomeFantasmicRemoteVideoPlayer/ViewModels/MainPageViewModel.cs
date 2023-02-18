@@ -11,6 +11,7 @@ using Windows.Devices.Enumeration;
 using Windows.Graphics.Imaging;
 using Windows.Media.Core;
 using Windows.Media.Playback;
+using Windows.Media.Protection.PlayReady;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
@@ -33,7 +34,6 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
             }
         }
         private CoreDispatcher coreDispatcher;
-        private SerialClient client;
         private byte[] currentFrameBytes;
         private MediaPlayerElement mediaPlayer;
         private SoftwareBitmapSource _VideoBitmap;
@@ -47,64 +47,12 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
             }
         }
 
-        private List<DeviceInformation> _SerialDevices;
-        public List<DeviceInformation> SerialDevices
-        {
-            get { return _SerialDevices; }
-            set
-            {
-                _SerialDevices = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private DeviceInformation _SelectedSerialDevice;
-        public DeviceInformation SelectedSerialDevice
-        {
-            get { return _SelectedSerialDevice; }
-            set
-            {
-
-                if (value != null && value != _SelectedSerialDevice)
-                {
-                    _SelectedSerialDevice = value;
-                    var localSettings = ApplicationData.Current.LocalSettings;
-                    if (localSettings.Values.ContainsKey("selectedSerialDeviceName"))
-                    {
-                        localSettings.Values["selectedSerialDeviceName"] = _SelectedSerialDevice.Name;
-                    }
-                    else
-                    {
-                        localSettings.Values.Add("selectedSerialDeviceName", _SelectedSerialDevice.Name);
-                    }
-
-                    InitSerialClient();
-                }
-            }
-        }
-
         public async void Init(MediaPlayerElement mediaPlayer, CoreDispatcher dispatcher)
         {
             IsLoading = true;
 
             this.mediaPlayer = mediaPlayer;
             this.coreDispatcher = dispatcher;
-
-            // prepare I/O
-            SerialDevices = await SerialClient.ListSerialDevices();
-            var localSettings = ApplicationData.Current.LocalSettings;
-            var selected = localSettings.Values["selectedSerialDeviceName"];
-            if (selected != null)
-            {
-                var match = (from device in SerialDevices
-                             where device.Name == (string)selected
-                             select device).FirstOrDefault();
-                if (match != null)
-                {
-                    SelectedSerialDevice = match;
-                    RaisePropertyChanged("SelectedSerialDevice");
-                }
-            }
 
             AppGlobalVariables.VideoList = await VideoFileHelper.GetVideoList();
             BonjourHelper.PlayVideoRequested += BonjourHelper_PlayVideoRequested;
@@ -113,13 +61,26 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
             IsLoading = false;
         }
 
+        /// <summary>
+        /// Re-initialize Serial Client/Re-calculate image size when the Player (MainPage) is reloaded
+        /// </summary>
         public async void InitSerialClient()
         {
-            if (client != null)
+            foreach (var unitSet in AppGlobalVariables.LEDPanelUnitSets)
             {
-                client.Dispose();
+                await unitSet.InitSerialClient();
             }
-            client = await SerialClient.CreateFromId(SelectedSerialDevice.Id);
+
+            _unitWidth = SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitPixelWidth) * SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitHorizontalPanelCount);
+            _unitHeight = SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitPixelHeight) * SettingsHelper.ReadSettings<int>(SettingNameMappings.UnitVerticalPanelCount);
+            _byteCountPerUnit = _unitWidth * _unitHeight * 4;
+
+            if (AppGlobalVariables.LEDPanelUnitSets.Count > 0)
+            {
+                _unitCount = AppGlobalVariables.LEDPanelUnitSets.Max(panel => panel.Coordinate.Y) + 1;
+                _imageWidth = _unitWidth;
+                _imageHeight = _unitHeight * _unitCount;
+            }
         }
 
         object serialClientLock = new object();
@@ -205,15 +166,21 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
             }
         }
 
-        private int width = 64;
-        private int height = 8;
-        private int units = 4;
+
+        private int _unitWidth;
+        private int _unitHeight;
+        private int _byteCountPerUnit;
+        private int _unitCount;
+
+        private int _imageWidth;
+        private int _imageHeight;
+
         private async void MediaPlayer_VideoFrameAvailable(MediaPlayer sender, object args)
         {
             CanvasDevice canvasDevice = CanvasDevice.GetSharedDevice();
             await coreDispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
-                SoftwareBitmap frameServerDest = new SoftwareBitmap(BitmapPixelFormat.Rgba8, width, height * units, BitmapAlphaMode.Premultiplied);
+                SoftwareBitmap frameServerDest = new SoftwareBitmap(BitmapPixelFormat.Rgba8, _imageWidth, _imageHeight, BitmapAlphaMode.Premultiplied);
 
                 using (CanvasBitmap canvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(canvasDevice, frameServerDest))
                 {
@@ -222,35 +189,49 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
                 }
 
                 var bitmapSource = new SoftwareBitmapSource();
-                await bitmapSource.SetBitmapAsync(SoftwareBitmap.Convert(SoftwareBitmap.CreateCopyFromBuffer(currentFrameBytes.AsBuffer(), BitmapPixelFormat.Rgba8, width, height * units), BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied));
+                await bitmapSource.SetBitmapAsync(SoftwareBitmap.Convert(SoftwareBitmap.CreateCopyFromBuffer(currentFrameBytes.AsBuffer(), BitmapPixelFormat.Rgba8, _imageWidth, _imageHeight), BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied));
                 VideoBitmap = bitmapSource; //to display result
             });
         }
 
+        private List<Task> _sendSerialJobList = new List<Task>();
         private async void SendSerialLoop()
         {
             while (isPlaying)
             {
                 if (currentFrameBytes != null)
                 {
-                    try
+                    foreach (var panel in AppGlobalVariables.LEDPanelUnitSets)
                     {
-                        Debug.WriteLine($"Source frame bytes: {currentFrameBytes.Length}");
-                        await client.WriteByteAsync(currentFrameBytes);
+                        if (panel.SerialClient == null)
+                        {
+                            // skip if the device is unavailable
+                            continue;
+                        }
+
+                        _sendSerialJobList.Add(SendSerialJobPerUnit(panel));
                     }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine(ex.Message);
-                        // dispose and recover client
-                        client.Dispose();
-                        var serialDevices = await SerialClient.ListSerialDevices();
-                        var sameNameDevice = (from serialdevice in serialDevices
-                                              where serialdevice.Name == SelectedSerialDevice.Name
-                                              select serialdevice).FirstOrDefault();
-                        client = await SerialClient.CreateFromId(sameNameDevice.Id);
-                    }
+
+                    await Task.WhenAll(_sendSerialJobList);
                 }
                 await Task.Delay(20);
+            }
+        }
+
+        private async Task SendSerialJobPerUnit(Models.LEDPanelUnitSet panel)
+        {
+            var start = _byteCountPerUnit * panel.Coordinate.Y;
+            var end = start + _byteCountPerUnit;
+            
+            try
+            {
+                await panel.SerialClient.WriteByteAsync(currentFrameBytes.Skip(start).Take(end).ToArray());
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                // dispose and recover client
+                await panel.InitSerialClient();
             }
         }
     }

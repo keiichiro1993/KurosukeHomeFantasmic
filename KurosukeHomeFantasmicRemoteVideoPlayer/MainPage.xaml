@@ -13,25 +13,13 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="AUTO"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="AUTO"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
 
-        <ListView Grid.Column="0" 
-                  ItemsSource="{x:Bind ViewModel.SerialDevices, Mode=OneWay}" SelectionMode="Single" SelectedItem="{x:Bind ViewModel.SelectedSerialDevice, Mode=TwoWay}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=Name}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
 
-        <MediaPlayerElement Grid.Column="1" x:Name="mediaPlayer"
+        <MediaPlayerElement x:Name="mediaPlayer"
                             Source="{x:Bind ViewModel.VideoMediaSource, Mode=OneWay}"/>
-        <Image Grid.Column="1" Source="{x:Bind ViewModel.VideoBitmap, Mode=OneWay}"/>
+        <Image Source="{x:Bind ViewModel.VideoBitmap, Mode=OneWay}"/>
 
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+        <Grid Grid.Row="1">
             <Button HorizontalAlignment="Right" Click="SettingsButton_Click">
                 <SymbolIcon Symbol="Setting"/>
             </Button>

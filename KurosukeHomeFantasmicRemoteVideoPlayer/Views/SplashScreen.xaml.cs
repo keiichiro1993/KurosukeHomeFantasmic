@@ -29,26 +29,17 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Views
 
         private async void SplashScreen_Loaded(object sender, RoutedEventArgs e)
         {
-            List<DeviceInformation> serialDevices;
-
             var ledpanelHelper = new Utils.DBHelpers.PanelLayoutHelper();
             AppGlobalVariables.LEDPanelUnitSets = new ObservableCollection<LEDPanelUnitSet>(await ledpanelHelper.GetLEDPanelUnitSets());
 
             try
             {
                 var notFoundDevices = new List<string>();
-                serialDevices = await SerialClient.ListSerialDevices();
                 foreach (var unitSet in AppGlobalVariables.LEDPanelUnitSets)
                 {
-                    var matchedDevice = (from device in serialDevices
-                                        where device.Id == unitSet.SerialDeviceId
-                                        select device).FirstOrDefault();
+                    await unitSet.InitSerialClient();
 
-                    if (matchedDevice != null)
-                    {
-                        unitSet.SerialDeviceInformation = matchedDevice;
-                    }
-                    else
+                    if(unitSet.SerialClient == null)
                     {
                         notFoundDevices.Add(unitSet.SerialDeviceId);
                     }

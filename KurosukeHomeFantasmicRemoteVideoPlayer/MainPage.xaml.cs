@@ -39,5 +39,11 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer
         {
             Frame.Navigate(typeof(Views.Settings.SettingsParentPage));
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            ViewModel.InitSerialClient();
+        }
     }
 }

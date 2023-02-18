@@ -11,7 +11,7 @@ using Windows.Storage.Streams;
 
 namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
 {
-    internal class SerialClient : IDisposable
+    public class SerialClient : IDisposable
     {
         private SerialDevice device;
         DataWriter dw;

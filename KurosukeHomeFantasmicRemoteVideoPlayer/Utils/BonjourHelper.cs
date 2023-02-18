@@ -20,8 +20,11 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
     internal static class BonjourHelper
     {
         public static event EventHandler<PlayVideoEventArgs> PlayVideoRequested;
+        public static bool IsInitialized { get; set; } = false;
         public static async Task StartServer()
         {
+            IsInitialized = true;
+
             // create server
             var hostName = NetworkInformation.GetHostNames().FirstOrDefault(name => name.Type == HostNameType.DomainName);
             if (string.IsNullOrEmpty(hostName?.DisplayName))

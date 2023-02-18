@@ -55,8 +55,12 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
             this.coreDispatcher = dispatcher;
 
             AppGlobalVariables.VideoList = await VideoFileHelper.GetVideoList();
-            BonjourHelper.PlayVideoRequested += BonjourHelper_PlayVideoRequested;
-            await BonjourHelper.StartServer();
+
+            if (!BonjourHelper.IsInitialized)
+            {
+                BonjourHelper.PlayVideoRequested += BonjourHelper_PlayVideoRequested;
+                await BonjourHelper.StartServer();
+            }
 
             IsLoading = false;
         }
@@ -213,6 +217,7 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
                     }
 
                     await Task.WhenAll(_sendSerialJobList);
+                    _sendSerialJobList.Clear();
                 }
                 await Task.Delay(20);
             }

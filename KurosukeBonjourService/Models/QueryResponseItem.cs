@@ -27,11 +27,11 @@ namespace KurosukeBonjourService.Models
                 var canonicalName = domainName.Replace("_tcp.", "").Replace("_", "");
 
                 var port = (from record in queryResult.AdditionalRecords
-                            where record.Type == DnsType.SRV && record.CanonicalName == domainName
+                            where record.Type == DnsType.SRV && string.Equals(record.CanonicalName, domainName, StringComparison.OrdinalIgnoreCase)
                             select (record as SRVRecord).Port).First();
 
                 var txtStrings = (from record in queryResult.AdditionalRecords
-                                  where record.Type == DnsType.TXT && record.CanonicalName == domainName
+                                  where record.Type == DnsType.TXT && string.Equals(record.CanonicalName, domainName, StringComparison.OrdinalIgnoreCase)
                                   select (record as TXTRecord).Strings).FirstOrDefault();
 
                 // expand attributes in txt
@@ -43,10 +43,10 @@ namespace KurosukeBonjourService.Models
                 }
 
                 var ipv4 = from record in queryResult.AdditionalRecords
-                           where record.Type == DnsType.A && record.CanonicalName == canonicalName
+                           where record.Type == DnsType.A && string.Equals(record.CanonicalName, canonicalName, StringComparison.OrdinalIgnoreCase)
                            select (record as ARecord).Address;
                 var ipv6 = from record in queryResult.AdditionalRecords
-                           where record.Type == DnsType.AAAA && record.CanonicalName == canonicalName
+                           where record.Type == DnsType.AAAA && string.Equals(record.CanonicalName, canonicalName, StringComparison.OrdinalIgnoreCase)
                            select (record as AAAARecord).Address;
 
                 items.Add(new QueryResponseItem

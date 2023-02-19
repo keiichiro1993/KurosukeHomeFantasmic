@@ -31,6 +31,18 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Views.Settings
         public PanelLayout()
         {
             this.InitializeComponent();
+            this.Loaded += PanelLayout_Loaded;
+        }
+
+        private void PanelLayout_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.Init();
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            ViewModel.Dispose();
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)

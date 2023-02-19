@@ -226,11 +226,9 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.ViewModels
         private async Task SendSerialJobPerUnit(Models.LEDPanelUnitSet panel)
         {
             var start = _byteCountPerUnit * panel.Coordinate.Y;
-            var end = start + _byteCountPerUnit;
-            
             try
             {
-                await panel.SerialClient.WriteByteAsync(currentFrameBytes.Skip(start).Take(end).ToArray());
+                await panel.SerialClient.WriteByteAsync(currentFrameBytes.Skip(start).Take(_byteCountPerUnit).ToArray());
             }
             catch (Exception ex)
             {

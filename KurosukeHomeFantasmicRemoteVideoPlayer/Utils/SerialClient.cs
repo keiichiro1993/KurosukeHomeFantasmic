@@ -57,7 +57,7 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
             }
             for (var i = 0; i < bytelist.Count; i++)
             {
-                if (bytelist[i] < 0x20) { bytelist[i] = 0x00; }
+                if (bytelist[i] < 0x10) { bytelist[i] = 0x00; }
                 if (bytelist[i] == 0x30) { bytelist[i] = 0x31; }
             }
 
@@ -67,8 +67,8 @@ namespace KurosukeHomeFantasmicRemoteVideoPlayer.Utils
             await dw.StoreAsync();
             dw.WriteByte(0x30);
             await dw.StoreAsync();
-            await Task.Delay(10);
-            Debug.WriteLine($"Sent bytes: {bytelist.Count}");
+            //await Task.Delay(10);
+            //Debug.WriteLine($"Sent bytes: {bytelist.Count}");
         }
 
         public void Dispose()

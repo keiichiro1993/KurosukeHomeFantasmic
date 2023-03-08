@@ -43,5 +43,24 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
         }
 
         public TimelineRemoteVideoItem TimelineRemoteVideoItem { get { return (TimelineRemoteVideoItem)TimelineItem; } }
+
+        // Manipulations
+        private new void ResizeStartButton_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
+        {
+            if (!TimelineItem.Locked)
+            {
+                var x = e.Delta.Translation.X;
+                ((TimelineRemoteVideoItem)TimelineItem).VideoStartPosition += TimelineItem.TotalCanvasDuration * (x / TimelineItem.CanvasWidth);
+            }
+        }
+
+        private new void ResizeEndButton_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
+        {
+            if (!TimelineItem.Locked)
+            {
+                var x = e.Delta.Translation.X;
+                ((TimelineRemoteVideoItem)TimelineItem).VideoEndPosition += TimelineItem.TotalCanvasDuration * (x / TimelineItem.CanvasWidth);
+            }
+        }
     }
 }

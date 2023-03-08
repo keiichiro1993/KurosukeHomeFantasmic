@@ -245,7 +245,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
 
             if ((string)outObject == "RemoteVideo" && !string.IsNullOrEmpty(TimelineData.TargetDomainName))
             {
-                e.DataView.Properties.TryGetValue("TargetDomainName", out outObject);
+                e.DataView.Properties.TryGetValue("DomainName", out outObject);
                 if ((string)outObject != TimelineData.TargetDomainName)
                 {
                     return;

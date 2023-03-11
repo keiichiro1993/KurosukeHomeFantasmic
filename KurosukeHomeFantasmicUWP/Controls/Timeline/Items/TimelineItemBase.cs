@@ -13,7 +13,7 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline.Items
     public abstract class TimelineItemBase : UserControl, ITimelineItemControl
     {
         public abstract ITimelineItem TimelineItem { get; set; }
-        public event DeleteButtonClickedEventHandler DeleteButtonClicked;
+        public event DeleteButtonClickedEventHandler<ITimelineItem> DeleteButtonClicked;
 
         // Manipulations
         protected void UserControl_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)

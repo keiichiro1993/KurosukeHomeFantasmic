@@ -30,6 +30,14 @@
                     <TextBlock Text="{x:Bind ViewModel.TimelineData.Name, Mode=OneWay}" VerticalAlignment="Center" Margin="10,0"/>
                     <TextBlock Text="-" VerticalAlignment="Center"/>
                     <TextBlock Text="{x:Bind ViewModel.TimelineData.TimelineType, Mode=OneWay}" VerticalAlignment="Center" Margin="10,0"/>
+                    <Button>
+                        <FontIcon FontFamily="Segoe Fluent Icons" FontSize="10" Glyph="&#xE700;"/>
+                        <Button.Flyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem x:Uid="TimelineContextMenu-Delete" Click="DeleteButton_Click"/>
+                            </MenuFlyout>
+                        </Button.Flyout>
+                    </Button>
                 </StackPanel>
             </toolkit:DropShadowPanel>
         </Grid>

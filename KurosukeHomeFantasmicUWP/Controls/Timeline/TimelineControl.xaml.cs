@@ -1,5 +1,6 @@
 ﻿using CommonUtils;
 using KurosukeHomeFantasmicUWP.Models.Timeline;
+using KurosukeHomeFantasmicUWP.Utils;
 using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
 using System;
 using System.Collections.Generic;
@@ -94,8 +95,14 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
                     TotalCanvasDuration = TotalCanvasDuration,
                     ScrollViewerHorizontalOffset = timelineScrollViewer.HorizontalOffset
                 };
+                timelineElement.DeleteButtonClicked += TimelineElement_DeleteButtonClicked;
                 timelineParentPanel.Children.Add(timelineElement);
             }
+        }
+
+        private void TimelineElement_DeleteButtonClicked(object sender, ItemDeleteButtonClickedEventArgs<Models.Timeline.Timeline> args)
+        {
+            Timelines.Remove(args.DeleteItem);
         }
 
         public TimeSpan TotalCanvasDuration

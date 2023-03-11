@@ -1,6 +1,7 @@
 ﻿using CommonUtils;
 using KurosukeHomeFantasmicUWP.Controls.Timeline.Items;
 using KurosukeHomeFantasmicUWP.Models.Timeline;
+using KurosukeHomeFantasmicUWP.Utils.UIHelpers;
 using KurosukeHueClient.Models.HueObjects;
 using System;
 using System.Collections.Generic;
@@ -263,6 +264,15 @@ namespace KurosukeHomeFantasmicUWP.Controls.Timeline
             foreach (var item in TimelineData.TimelineItems)
             {
                 item.CanvasWidth = grid.ActualWidth;
+            }
+        }
+
+        public event DeleteButtonClickedEventHandler<Models.Timeline.Timeline> DeleteButtonClicked;
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DeleteButtonClicked != null)
+            {
+                this.DeleteButtonClicked(this, new ItemDeleteButtonClickedEventArgs<Models.Timeline.Timeline>(TimelineData));
             }
         }
     }

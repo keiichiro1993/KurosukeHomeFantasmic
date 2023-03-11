@@ -11,6 +11,6 @@ namespace KurosukeHomeFantasmicUWP.Models.Timeline
     public interface ITimelineItemControl
     {
         ITimelineItem TimelineItem { get; set; }
-        event DeleteButtonClickedEventHandler DeleteButtonClicked;
+        event DeleteButtonClickedEventHandler<ITimelineItem> DeleteButtonClicked;
     }
 }

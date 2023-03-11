@@ -42,5 +42,5 @@ namespace KurosukeHomeFantasmicUWP.Utils.UIHelpers
             get { return item; }
         }
     }
-    public delegate void DeleteButtonClickedEventHandler(object sender, ItemDeleteButtonClickedEventArgs<ITimelineItem> args);
+    public delegate void DeleteButtonClickedEventHandler<T>(object sender, ItemDeleteButtonClickedEventArgs<T> args);
 }

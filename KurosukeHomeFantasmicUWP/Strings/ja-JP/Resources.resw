@@ -201,6 +201,9 @@
   <data name="NewProjectPage-ProjectNameTitle.Text" xml:space="preserve">
     <value>プロジェクト名:</value>
   </data>
+  <data name="TimelineContextMenu-Delete.Text" xml:space="preserve">
+    <value>タイムラインを削除</value>
+  </data>
   <data name="TimelineItemContextMenu-Delete.Text" xml:space="preserve">
     <value>削除</value>
   </data>
